@@ -1,9 +1,9 @@
-# Matchup
-La plateforme de recrutement "TalentMatcher" vise à simplifier et accélérer le processus de mise en relation entre les recruteurs et les candidats. Ce service innovant répond aux besoins croissants des entreprises cherchant des profils qualifiés et des professionnels en quête d'opportunités correspondant à leurs compétences et aspirations.
+
+
 
 # TalentMatcher
 
-**TalentMatcher** est une plateforme innovante de mise en relation entre recruteurs et candidats, conçue pour simplifier et optimiser le processus de recrutement tout en offrant une expérience utilisateur intuitive et efficace.
+La plateforme de recrutement "TalentMatcher" vise à simplifier et accélérer le processus de mise en relation entre les recruteurs et les candidats. Ce service innovant répond aux besoins croissants des entreprises cherchant des profils qualifiés et des professionnels en quête d'opportunités correspondant à leurs compétences et aspirations.
 
 ---
 
