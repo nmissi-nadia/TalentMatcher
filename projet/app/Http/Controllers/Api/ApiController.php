@@ -10,6 +10,11 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class ApiController extends Controller
 {
+    // index
+    public function index()
+    {
+        return view('auth.login');
+    }
     //Register API (POST ,formdata)
     public function register(Request $request)
     {

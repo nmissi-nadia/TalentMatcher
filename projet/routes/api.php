@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\CandidatureController;
 |
 */
 
+
 // Authentification et Sécurité
 Route::post("register", [ApiController::class, "register"]);
 Route::post("login", [ApiController::class, "login"]);
