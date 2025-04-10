@@ -31,4 +31,12 @@ class AdminController extends Controller
         $candidatures = Candidature::all();
         return view('admin.candidatures', compact('candidatures'));
     }
+    public function moderation()
+    {
+        return view('admin.moderation');
+    }
+    public function annonce()
+    {
+        return view('admin.annonces');
+    }
 }

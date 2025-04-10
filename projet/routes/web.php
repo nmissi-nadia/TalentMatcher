@@ -16,6 +16,7 @@ use App\Http\Controllers\AdminController;
 */
 // route vers view de login
 Route::get('/login', [ApiController::class, 'index'])->name('login');
+Route::get('/register', [ApiController::class, 'register'])->name('register');
 Route::post('/api/register', [ApiController::class, 'register'])->name('api.register');
 Route::post('/api/login', [ApiController::class, 'login'])->name('api.login');
 Route::post('/api/reset', [ApiController::class, 'resetPassword'])->name('password.request');
@@ -27,6 +28,8 @@ Route::get('/', function () {
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
 Route::get('/admin/candidatures', [AdminController::class, 'candidatures'])->name('admin.candidatures');
 Route::get('/admin/utilisateurs', [AdminController::class, 'utilisateurs'])->name('admin.utilisateurs');
+Route::get('/admin/annonces', [AdminController::class, 'annonces'])->name('admin.annonces');
+Route::get('/admin/moderation', [AdminController::class, 'moderation'])->name('admin.moderation');
 
 
 
