@@ -64,4 +64,6 @@ Route::group([
 ], function() {
     Route::get("stats/annonces", [AnnonceController::class, "getStats"]); 
     Route::get("stats/candidatures", [CandidatureController::class, "getStats"]);
+    Route::get("stats/users", [\App\Http\Controllers\Api\StatsController::class, "getUserStats"]);
+    Route::get("stats/dashboard", [\App\Http\Controllers\Api\StatsController::class, "getDashboardStats"]);
 });
