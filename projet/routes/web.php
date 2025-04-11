@@ -36,12 +36,15 @@ Route::get('/jobs/{id}', function ($id) {
     return view('jobs.show', ['id' => $id]);
 })->name('jobs.show');
 
-// Admin Routes
-Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
-Route::get('/admin/candidatures', [AdminController::class, 'candidatures'])->name('admin.candidatures');
-Route::get('/admin/utilisateurs', [AdminController::class, 'utilisateurs'])->name('admin.utilisateurs');
-Route::get('/admin/annonces', [AdminController::class, 'annonces'])->name('admin.annonces');
-Route::get('/admin/moderation', [AdminController::class, 'moderation'])->name('admin.moderation');
+// Admin Routes (Protected by Auth and Admin Role Middleware)
+Route::middleware(['auth', 'check.role:admin'])->prefix('admin')->group(function () {
+    Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/candidatures', [AdminController::class, 'candidatures'])->name('admin.candidatures');
+    Route::get('/utilisateurs', [AdminController::class, 'utilisateurs'])->name('admin.utilisateurs');
+    Route::get('/annonces', [AdminController::class, 'annonces'])->name('admin.annonces');
+    Route::get('/annonce/{id}', [AdminController::class, 'annonce'])->name('admin.annonce');
+    Route::get('/moderation', [AdminController::class, 'moderation'])->name('admin.moderation');
+});
 // Candidate Routes (Protected by Auth Middleware)
 // Route::middleware(['auth', 'check.role:candidat'])->prefix('candidat')->group(function () {
     Route::get('/dashboard', function () {
