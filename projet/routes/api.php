@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Api\AnnonceController;
 use App\Http\Controllers\Api\CandidatureController;
+use App\Http\Controllers\Api\StatsController;
 
 
 /*
@@ -64,6 +65,6 @@ Route::group([
 ], function() {
     Route::get("stats/annonces", [AnnonceController::class, "getStats"]); 
     Route::get("stats/candidatures", [CandidatureController::class, "getStats"]);
-    Route::get("stats/users", [\App\Http\Controllers\Api\StatsController::class, "getUserStats"]);
-    Route::get("stats/dashboard", [\App\Http\Controllers\Api\StatsController::class, "getDashboardStats"]);
+    Route::get("stats/users", [StatsController::class, "getUserStats"]);
+    Route::get("stats/dashboard", [StatsController::class, "getDashboardStats"]);
 });
