@@ -43,7 +43,7 @@ Route::get('/admin/utilisateurs', [AdminController::class, 'utilisateurs'])->nam
 Route::get('/admin/annonces', [AdminController::class, 'annonces'])->name('admin.annonces');
 Route::get('/admin/moderation', [AdminController::class, 'moderation'])->name('admin.moderation');
 // Candidate Routes (Protected by Auth Middleware)
-Route::middleware(['auth', 'check.role:candidat'])->prefix('candidat')->group(function () {
+// Route::middleware(['auth', 'check.role:candidat'])->prefix('candidat')->group(function () {
     Route::get('/dashboard', function () {
         return view('candidat.dashboard');
     })->name('candidat.dashboard');
@@ -63,7 +63,7 @@ Route::middleware(['auth', 'check.role:candidat'])->prefix('candidat')->group(fu
     Route::get('/profile', function () {
         return view('candidat.profile');
     })->name('candidat.profile');
-});
+// });
 
 // Recruiter Routes (Protected by Auth Middleware)
 Route::middleware(['auth', 'check.role:recruteur'])->prefix('recruteur')->group(function () {
