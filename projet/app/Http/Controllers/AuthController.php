@@ -49,83 +49,79 @@ class AuthController extends Controller
     {
         // Data validation
         $request->validate([
-            "email" => "required|email",
-            "password" => "required",
+            'email' => 'required|email',
+            'password' => 'required',
         ]);
 
         // Attempt to log in
-        $credentials = $request->only('email', 'password');
-        
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            $user = Auth::user();
+
             // Redirect based on user role
-            if (Auth::user()->role == 'candidat') {
-                return redirect()->route('candidat.dashboard');
-            } elseif (Auth::user()->role == 'recruteur') {
-                return redirect()->route('recruteur.dashboard');
-            } elseif (Auth::user()->role == 'admin') {
-                return redirect()->route('admin.dashboard');
+            switch ($user->role) {
+                case 'admin':
+                    return redirect()->route('admin.dashboard');
+                case 'recruteur':
+                    return redirect()->route('recruteur.dashboard');
+                case 'candidat':
+                    return redirect()->route('candidat.dashboard');
+                default:
+                    return redirect()->route('login')->with('error', 'Rôle utilisateur invalide');
             }
         }
 
         return back()->withErrors([
-            'email' => 'Les informations fournies ne correspondent pas à nos enregistrements.',
-        ])->withInput();
+            'email' => 'Les identifiants fournis ne correspondent pas à nos enregistrements.',
+        ])->onlyInput('email');
     }
-    
+
     // Handle logout
     public function logout(Request $request)
     {
         Auth::logout();
-        
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        
-        return redirect()->route('login')->with('success', 'Déconnexion réussie');
-    }
-    
-    // Display user profile
-    public function profile()
-    {
-        $user = Auth::user();
-        
-        if ($user->role == 'candidat') {
-            return view('candidat.profile', compact('user'));
-        } elseif ($user->role == 'recruteur') {
-            return view('recruteur.profile', compact('user'));
-        } elseif ($user->role == 'admin') {
-            return view('admin.profile', compact('user'));
-        }
-        
         return redirect()->route('login');
     }
-    
-    // Display password reset form
-    public function resetPasswordForm()
+
+    // Password reset routes
+    public function showResetForm($token = null)
     {
-        return view('auth.passwords.reset');
+        return view('auth.passwords.reset', ['token' => $token]);
     }
-    
-    // Handle password reset
-    public function resetPassword(Request $request)
+
+    public function sendResetLinkEmail(Request $request)
+    {
+        $request->validate(['email' => 'required|email']);
+        $status = \Illuminate\Support\Facades\Password::sendResetLink(
+            $request->only('email')
+        );
+        return $status === \Illuminate\Support\Facades\Password::RESET_LINK_SENT
+            ? back()->with(['status' => __($status)])
+            : back()->withErrors(['email' => __($status)]);
+    }
+
+    public function reset(Request $request)
     {
         $request->validate([
-            "email" => "required|email",
-            "password" => "required|min:8|confirmed",
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|min:8|confirmed',
         ]);
 
-        $user = User::where("email", $request->email)->first();
+        $status = \Illuminate\Support\Facades\Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function ($user, $password) {
+                $user->forceFill([
+                    'password' => \Illuminate\Support\Facades\Hash::make($password)
+                ])->save();
+                \Illuminate\Support\Facades\Auth::login($user);
+            }
+        );
 
-        if (!$user) {
-            return back()->withErrors([
-                'email' => 'Utilisateur non trouvé',
-            ])->withInput();
-        }
+        return $status === \Illuminate\Support\Facades\Password::PASSWORD_RESET
+            ? redirect()->route('login')->with('status', __($status))
+            : back()->withErrors(['email' => [__($status)]]);
 
-        $user->password = Hash::make($request->password);
-        $user->save();
-
-        return redirect()->route('login')->with('success', 'Mot de passe réinitialisé avec succès');
     }
 }
