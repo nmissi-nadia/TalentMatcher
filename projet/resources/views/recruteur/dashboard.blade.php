@@ -276,11 +276,11 @@
     // Load all dashboard data from API
     async function loadDashboardData() {
         // Get current user
-        const user = await window.auth.getCurrentUser();
-        if (!user) {
-            window.location.href = '/login';
-            return;
-        }
+        // const user = await window.auth.getCurrentUser();
+        // if (!user) {
+        //     window.location.href = '/login';
+        //     return;
+        // }
         
         // Load data in parallel
         const [jobs, applications, activities] = await Promise.all([

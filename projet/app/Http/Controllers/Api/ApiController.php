@@ -34,12 +34,12 @@ class ApiController extends Controller
             "role" => $request->role
         ]);
         
-        // return response
-        return response()->json([
-            "status" => true,
-            "message" => "inscription reussie",
-            "user" => $user
-        ]);
+        // return response()->json([
+        //     "status" => true,
+        //     "message" => "inscription reussie",
+        //     "user" => $user
+        // ]);
+        return view('auth.login');
         
     }
     //Login API (POST ,formdata)
@@ -58,12 +58,14 @@ class ApiController extends Controller
         ]);
 
         if(!empty($token)){
-
-            return response()->json([
-                "status" => true,
-                "message" => "Connexion reussie",
-                "token" => $token
-            ]);
+            // redirection d'apres le role d'utilisateur
+            if(auth()->user()->role == 'candidat') {
+                return view('candidat.dashboard');
+            } elseif(auth()->user()->role == 'recruteur') {
+                return view('recruteur.dashboard');
+            } elseif(auth()->user()->role == 'admin') {
+                return view('admin.dashboard');
+            }
         }
 
         return response()->json([

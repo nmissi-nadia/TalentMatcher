@@ -328,6 +328,7 @@
                     console.error('Error fetching user stats:', error);
                     
                     // Generate fallback user stats
+
                     const totalUsers = {{ $statistics['totalUsers'] ?? 0 }};
                     
                     // Return fallback data
@@ -340,7 +341,7 @@
                             admins: Math.round(totalUsers * 0.05),
                             visiteurs: 0
                         }
-                    };
+                    }
                 }
             },
             
@@ -361,7 +362,7 @@
                 };
                 
                 const annonceStats = {
-                    total: {{ $statistics['activeAnnonces'] ?? 0 }},
+                    total: {{ $statistics['activeAnnonces'] ?? 0 }}
                     trend: 8,
                     popular: this.generateSampleJobs(5),
                     sectors: {
@@ -374,7 +375,7 @@
                 };
                 
                 const candidatureStats = {
-                    total: {{ $statistics['totalCandidatures'] ?? 0 }},
+                    total: { $statistics['totalCandidatures'] ?? 0 },
                     pending: Math.round({{ $statistics['totalCandidatures'] ?? 0 }} * 0.4),
                     trend: 12
                 };

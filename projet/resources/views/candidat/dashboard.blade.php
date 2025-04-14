@@ -205,10 +205,10 @@
     async function loadDashboardData() {
         // Get current user
         const user = await window.auth.getCurrentUser();
-        if (!user) {
-            window.location.href = '/login';
-            return;
-        }
+        // if (!user) {
+        //     window.location.href = '/login';
+        //     return;
+        // }
         
         // Load data in parallel
         const [applications, recommendations, profileInfo] = await Promise.all([
