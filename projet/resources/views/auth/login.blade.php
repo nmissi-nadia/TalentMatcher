@@ -35,7 +35,7 @@
 
                 <!-- Formulaire Connexion -->
                 <div id="form-connexion" class="space-y-6">
-                    <form method="POST" action="{{ route('api.login') }}">
+                    <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <div>
                             <label for="email" class="block text-sm text-gray-700 mb-2">Adresse email</label>
@@ -66,7 +66,7 @@
 
                 <!-- Formulaire Inscription -->
                 <div id="form-inscription" class="space-y-6 hidden">
-                    <form method="POST" action="{{ route('api.register') }}">
+                    <form method="POST" action="{{ route('register') }}">
                         @csrf
                         <div>
                             <label for="name" class="block text-sm text-gray-700 mb-2">Nom complet ou entreprise</label>

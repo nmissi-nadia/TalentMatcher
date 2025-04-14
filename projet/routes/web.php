@@ -37,7 +37,7 @@ Route::get('/jobs', [AnnonceController::class, 'index'])->name('jobs.index');
 Route::get('/jobs/{id}', [AnnonceController::class, 'show'])->name('jobs.show');
 
 // Candidate Routes (Protected by Auth Middleware)
-Route::middleware(['auth', 'role:candidat'])->prefix('candidat')->name('candidat.')->group(function () {
+Route::middleware(['auth', 'check.role:candidat'])->prefix('candidat')->name('candidat.')->group(function () {
     Route::get('/dashboard', [CandidatController::class, 'dashboard'])->name('dashboard');
     Route::get('/profile', [CandidatController::class, 'showProfile'])->name('profile');
     Route::post('/profile/update', [CandidatController::class, 'updateProfile'])->name('profile.update');
@@ -49,7 +49,7 @@ Route::middleware(['auth', 'role:candidat'])->prefix('candidat')->name('candidat
 });
 
 // Recruiter Routes (Protected by Auth Middleware)
-Route::middleware(['auth', 'role:recruteur'])->prefix('recruteur')->name('recruteur.')->group(function () {
+Route::middleware(['auth', 'check.role:recruteur'])->prefix('recruteur')->name('recruteur.')->group(function () {
     Route::get('/dashboard', [RecruteurController::class, 'dashboard'])->name('dashboard');
     Route::get('/annonces/create', [RecruteurController::class, 'createAnnonce'])->name('annonces.create');
     Route::post('/annonces/store', [RecruteurController::class, 'storeAnnonce'])->name('annonces.store');
@@ -63,7 +63,7 @@ Route::middleware(['auth', 'role:recruteur'])->prefix('recruteur')->name('recrut
 });
 
 // Admin Routes (Protected by Auth and Admin Role Middleware)
-Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'check.role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::get('/users', [AdminController::class, 'manageUsers'])->name('users');
     Route::get('/annonces', [AdminController::class, 'manageAnnonces'])->name('annonces');
