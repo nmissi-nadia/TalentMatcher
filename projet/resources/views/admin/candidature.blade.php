@@ -1,4 +1,3 @@
-<!-- resources/views/admin/candidatures.blade.php -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>

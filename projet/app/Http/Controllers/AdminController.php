@@ -72,7 +72,7 @@ class AdminController extends Controller
     public function candidatures()
     {
         $candidatures = Candidature::with(['candidat', 'annonce'])->orderBy('created_at', 'desc')->get();
-        return view('admin.candidatures', compact('candidatures'));
+        return view('admin.candidature', compact('candidatures'));
     }
     public function moderation()
     {
