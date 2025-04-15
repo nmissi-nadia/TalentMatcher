@@ -86,10 +86,36 @@ class AdminController extends Controller
     }
     public function annonces()
     {
-        $annonces = Annonce::with(['recruteur', 'tags'])->orderBy('created_at', 'desc')->get();
-        return view('admin.annoces', compact('annonces'));
+        $annonces = Annonce::with(['recruteur', 'tags'])
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+    $stats = [
+        'total' => $annonces->count(),
+        'actives' => $annonces->where('statut', 'ouverte')->count(),
+        'expirees' => $annonces->where('statut', 'fermee')->count()
+    ];
+
+    return view('admin.annoces', compact('annonces', 'stats'));
     }
-    
+
+    public function annoncesActives()
+    {
+        $annonces = Annonce::with(['recruteur', 'tags'])
+            ->where('statut', 'ouverte')
+            ->orderBy('created_at', 'desc')
+            ->get();
+        return view('admin.annonces', compact('annonces'));
+    }
+
+    public function annoncesExpirees()
+    {
+        $annonces = Annonce::with(['recruteur', 'tags'])
+            ->where('statut', 'fermee')
+            ->orderBy('created_at', 'desc')
+            ->get();
+        return view('admin.annonces', compact('annonces'));
+    }
     public function annonce($id)
     {
         $annonce = Annonce::with(['recruteur', 'tags'])->findOrFail($id);

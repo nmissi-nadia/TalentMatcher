@@ -76,6 +76,13 @@ Route::middleware(['auth', 'check.role:admin'])->prefix('admin')->name('admin.')
         Route::get('/utilisateurs-supprimes', [AdminController::class, 'utilisateursSupprimes'])->name('utilisateursSupprimes');
         Route::post('/utilisateurs/restore/{id}', [AdminController::class, 'restaurerUtilisateur'])->name('admin.users.restore');
         Route::delete('/utilisateurs/force-delete/{id}', [AdminController::class, 'supprimerDefinitivement'])->name('admin.users.force-delete');
+        Route::get('/annonces', [AdminController::class, 'annonces'])->name('annonces');
+        Route::get('/annonces/actives', [AdminController::class, 'annoncesActives'])->name('annonces.actives');
+        Route::get('/annonces/expirees', [AdminController::class, 'annoncesExpirees'])->name('annonces.expirees');
+        Route::get('/annonces/create', [AnnonceController::class, 'create'])->name('annonce.create');
+        Route::get('/annonce/{id}', [AnnonceController::class, 'show'])->name('annonce.show');
+        Route::get('/annonce/{id}/edit', [AnnonceController::class, 'edit'])->name('annonce.edit');
+        Route::delete('/annonce/{id}', [AnnonceController::class, 'delete'])->name('annonce.delete');
 });
 
 // API Routes for Job Applications
