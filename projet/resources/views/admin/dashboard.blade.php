@@ -1,4 +1,3 @@
-<!-- resources/views/admin/dashboard.blade.php -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -31,7 +30,7 @@
                         <span>Tableau de bord</span>
                     </a>
                     
-                    <a href="{{ route('admin.utilisateurs') }}" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-100 rounded-lg mt-1">
+                    <a href="" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-100 rounded-lg mt-1">
                         <i class="fas fa-users mr-3"></i>
                         <span>Utilisateurs</span>
                     </a>
@@ -48,98 +47,76 @@
 
                     <a href="{{ route('admin.moderation') }}" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-100 rounded-lg mt-1">
                         <i class="fas fa-shield-alt mr-3"></i>
-                        <span>Modération</span>
+                        <span>Moderation</span>
                     </a>
 
-                    <a href="#" data-action="logout" class="flex items-center px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg mt-6">
-                        <i class="fas fa-sign-out-alt mr-3"></i>
-                        <span>Déconnexion</span>
+                    <a href="" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-100 rounded-lg mt-1">
+                        <i class="fas fa-trash-restore mr-3"></i>
+                        <span>Utilisateurs supprimés</span>
                     </a>
                 </div>
             </nav>
         </div>
-        
+
         <!-- Main Content -->
         <div class="flex-1 overflow-auto">
             <!-- Header -->
             <header class="bg-white border-b border-gray-200 flex items-center justify-between px-6 py-4">
                 <div>
                     <h1 class="text-2xl font-bold">Tableau de bord</h1>
-                    <p class="text-sm text-gray-500">Vue d'ensemble de l'activité</p>
+                    <p class="text-sm text-gray-600">Bienvenue dans votre espace administrateur</p>
                 </div>
                 
                 <div class="flex items-center space-x-4">
-                    <button class="relative">
-                        <i class="fas fa-bell text-gray-500"></i>
-                        <span class="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
-                    </button>
-                    
-                    <div class="h-10 w-10 rounded-full bg-gray-300 overflow-hidden">
-                        <img src="{{ asset('images/avatar.jpg') }}" alt="Avatar" class="h-full w-full object-cover">
+                    <div class="relative">
+                        <span class="inline-flex items-center px-3 py-1 text-xs font-medium bg-green-100 text-green-800 rounded">
+                            <i class="fas fa-check-circle mr-1"></i>
+                            {{ $progression['users']['percentage'] }}% des utilisateurs actifs
+                        </span>
                     </div>
                 </div>
             </header>
-            
+
             <main class="p-6">
                 <!-- Stats Cards -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
                     <!-- Total Users -->
-                    <div class="bg-white rounded-lg p-6 flex items-center justify-between shadow-sm" id="stats-users">
+                    <div class="bg-white rounded-lg p-6 flex items-center justify-between shadow-sm">
                         <div>
-                            <div class="flex items-center mb-2">
-                                <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center">
-                                    <i class="fas fa-users text-blue-600"></i>
-                                </div>
-                            </div>
-                            <h3 class="text-3xl font-bold">--</h3>
-                            <p class="text-sm text-gray-500">Utilisateurs totaux</p>
+                            <h3 class="text-2xl font-bold">{{ $totalUsers }}</h3>
+                            <p class="text-gray-600">Utilisateurs actifs</p>
                         </div>
-                        <div class="text-green-500 font-medium" id="users-trend">+0%</div>
+                        <i class="fas fa-users text-blue-600 text-4xl"></i>
                     </div>
-                    
-                    <!-- Published Jobs -->
-                    <div class="bg-white rounded-lg p-6 flex items-center justify-between shadow-sm" id="stats-jobs">
+
+                    <!-- Active Jobs -->
+                    <div class="bg-white rounded-lg p-6 flex items-center justify-between shadow-sm">
                         <div>
-                            <div class="flex items-center mb-2">
-                                <div class="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center">
-                                    <i class="fas fa-briefcase text-purple-600"></i>
-                                </div>
-                            </div>
-                            <h3 class="text-3xl font-bold">--</h3>
-                            <p class="text-sm text-gray-500">Offres publiées</p>
+                            <h3 class="text-2xl font-bold">{{ $activeAnnonces }}</h3>
+                            <p class="text-gray-600">Offres actives</p>
                         </div>
-                        <div class="text-green-500 font-medium" id="jobs-trend">+0%</div>
+                        <i class="fas fa-briefcase text-green-600 text-4xl"></i>
                     </div>
-                    
-                    <!-- Monthly Visits -->
-                    <div class="bg-white rounded-lg p-6 flex items-center justify-between shadow-sm" id="stats-visits">
+
+                    <!-- New Candidates -->
+                    <div class="bg-white rounded-lg p-6 flex items-center justify-between shadow-sm">
                         <div>
-                            <div class="flex items-center mb-2">
-                                <div class="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center">
-                                    <i class="fas fa-chart-bar text-orange-600"></i>
-                                </div>
-                            </div>
-                            <h3 class="text-3xl font-bold">--</h3>
-                            <p class="text-sm text-gray-500">Visites ce mois</p>
+                            <h3 class="text-2xl font-bold">{{ $newCandidates }}</h3>
+                            <p class="text-gray-600">Nouveaux candidats (30j)</p>
                         </div>
-                        <div class="text-green-500 font-medium" id="visits-trend">+0%</div>
+                        <i class="fas fa-user-plus text-purple-600 text-4xl"></i>
                     </div>
-                    
-                    <!-- Pending Applications -->
-                    <div class="bg-white rounded-lg p-6 flex items-center justify-between shadow-sm" id="stats-applications">
+
+                    <!-- Total Applications -->
+                    <div class="bg-white rounded-lg p-6 flex items-center justify-between shadow-sm">
                         <div>
-                            <div class="flex items-center mb-2">
-                                <div class="w-10 h-10 rounded-lg bg-red-100 flex items-center justify-center">
-                                    <i class="fas fa-clock text-red-600"></i>
-                                </div>
-                            </div>
-                            <h3 class="text-3xl font-bold">--</h3>
-                            <p class="text-sm text-gray-500">Candidatures en attente</p>
+                            <h3 class="text-2xl font-bold">{{ $totalCandidatures }}</h3>
+                            <p class="text-gray-600">Candidatures totales</p>
                         </div>
-                        <div class="text-yellow-500 font-medium" id="applications-trend">+0%</div>
+                        <i class="fas fa-file-alt text-yellow-600 text-4xl"></i>
                     </div>
                 </div>
-                
+
                 <!-- Charts -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <!-- User Distribution -->
@@ -160,34 +137,60 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Most Viewed Jobs -->
                 <div class="bg-white rounded-lg shadow-sm mb-6">
                     <div class="p-6">
                         <h2 class="text-lg font-bold mb-4">Offres les plus consultées</h2>
                         
                         <div class="overflow-x-auto">
-                            <table class="w-full">
+                            <table class="min-w-full">
                                 <thead>
-                                    <tr class="text-left text-gray-500 border-b">
-                                        <th class="pb-3 font-medium">Titre</th>
-                                        <th class="pb-3 font-medium">Entreprise</th>
-                                        <th class="pb-3 font-medium">Vues</th>
-                                        <th class="pb-3 font-medium">Candidatures</th>
-                                        <th class="pb-3 font-medium">Statut</th>
-                                        <th class="pb-3 font-medium">Actions</th>
+                                    <tr class="bg-gray-50">
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Titre</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Entreprise</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Consultations</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody id="top-jobs-table">
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    @foreach($topJobs as $job)
                                     <tr>
-                                        <td colspan="6" class="py-4 text-center text-gray-500">Chargement des données...</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm font-medium text-gray-900">{{ $job->titre }}</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900">{{ $job->recruteur->name ?? 'Non spécifié' }}</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900">{{ $job->views_count }}</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $job->statut === 'ouverte' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                                {{ ucfirst($job->statut) }}
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <form action="{{ route('admin.deleteJob', $job->id) }}" method="POST" class="inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette offre ?')">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                            <a href="{{ route('admin.annonce', $job->id) }}" class="ml-2 text-blue-600 hover:text-blue-900">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                        </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Action Buttons -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <a href="{{ route('admin.utilisateurs') }}" class="bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg flex items-center justify-center transition">
@@ -206,386 +209,60 @@
             </main>
         </div>
     </div>
-    
-    <script>
-        // Admin Dashboard module
-        const adminDashboard = {
-            /**
-             * Initialize the dashboard
-             */
-            init: async function() {
-                // Set up charts with placeholder data
-                this.initCharts();
-                
-                // Load the actual data
-                try {
-                    await this.loadDashboardData();
-                } catch (error) {
-                    console.error('Error loading dashboard data:', error);
-                    window.showNotification('Erreur lors du chargement des données du tableau de bord', 'error');
-                    // Use fallback data
-                    this.loadFallbackData();
-                }
-                
-                // Set up event listeners
-                this.setupEventListeners();
-            },
-            
-            /**
-             * Initialize charts with placeholder data
-             */
-            initCharts: function() {
-                // User Distribution Chart
-                const userDistribution = document.getElementById('userDistributionChart').getContext('2d');
-                window.userDistributionChart = new Chart(userDistribution, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Recruteurs', 'Candidats', 'Admins', 'Visiteurs'],
-                        datasets: [{
-                            data: [0, 0, 0, 0],
-                            backgroundColor: ['#3b82f6', '#8b5cf6', '#ef4444', '#f59e0b'],
-                            borderWidth: 0
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: 'bottom'
-                            }
-                        }
-                    }
-                });
-                
-                // Active Sectors Chart
-                const activeSectors = document.getElementById('activeSectorsChart').getContext('2d');
-                window.activeSectorsChart = new Chart(activeSectors, {
-                    type: 'bar',
-                    data: {
-                        labels: [],
-                        datasets: [{
-                            label: 'Nombre d\'offres',
-                            data: [],
-                            backgroundColor: '#3b82f6',
-                            borderRadius: 5
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                display: false
-                            }
-                        },
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        }
-                    }
-                });
-            },
-            
-            /**
-             * Load dashboard data from API
-             */
-            loadDashboardData: async function() {
-                // Get current user
-                const user = await window.auth.getCurrentUser();
-                if (!user) {
-                    window.location.href = '/login';
-                    return;
-                }
-                
-                // Prepare API request promises
-                const statsPromises = [
-                    this.getUserStats(),
-                    window.annonces.getStats(),
-                    window.candidatures.getStats()
-                ];
-                
-                // Wait for all requests to complete
-                const [usersStats, annonceStats, candidatureStats] = await Promise.all(statsPromises);
-                
-                // Update UI with data
-                this.updateStatsCards(usersStats, annonceStats, candidatureStats);
-                this.updateUserDistributionChart(usersStats);
-                this.updateActiveSectorsChart(annonceStats);
-                this.updateTopJobsTable(annonceStats.popular || []);
-            },
-            
-            /**
-             * Get user statistics
-             */
-            getUserStats: async function() {
-                try {
-                    // Try to get user stats from API
-                    const response = await window.apiClient.get('/stats/users');
-                    return response;
-                } catch (error) {
-                    console.error('Error fetching user stats:', error);
-                    
-                    // Generate fallback user stats
 
-                    const totalUsers = {{ $statistics['totalUsers'] ?? 0 }};
-                    
-                    // Return fallback data
-                    return {
-                        total: totalUsers,
-                        trend: 5, // Assume 5% growth
-                        distribution: {
-                            recruteurs: Math.round(totalUsers * 0.3),
-                            candidats: Math.round(totalUsers * 0.65),
-                            admins: Math.round(totalUsers * 0.05),
-                            visiteurs: 0
-                        }
-                    }
-                }
+    <script>
+        // Chart configuration
+        const userDistributionChart = new Chart(document.getElementById('userDistributionChart'), {
+            type: 'pie',
+            data: {
+                labels: ['Utilisateurs actifs', 'Utilisateurs supprimés'],
+                datasets: [{
+                    data: [{{ $progression['users']['total'] }}, {{ $progression['users']['deleted'] }}],
+                    backgroundColor: ['#3b82f6', '#ef4444']
+                }]
             },
-            
-            /**
-             * Load fallback data when API calls fail
-             */
-            loadFallbackData: function() {
-                // Create fallback data using statistics from controller
-                const usersStats = {
-                    total: {{ $statistics['totalUsers'] ?? 0 }},
-                    trend: 5,
-                    distribution: {
-                        recruteurs: {{ $statistics['totalUsers'] ? round($statistics['totalUsers'] * 0.3) : 0 }},
-                        candidats: {{ $statistics['totalUsers'] ? round($statistics['totalUsers'] * 0.65) : 0 }},
-                        admins: {{ $statistics['totalUsers'] ? round($statistics['totalUsers'] * 0.05) : 0 }},
-                        visiteurs: 0
-                    }
-                };
-                
-                const annonceStats = {
-                    total: {{ $statistics['activeAnnonces'] ?? 0 }}
-                    trend: 8,
-                    popular: this.generateSampleJobs(5),
-                    sectors: {
-                        'Informatique': 245,
-                        'Marketing': 187,
-                        'Finance': 125,
-                        'RH': 98,
-                        'Design': 65
-                    }
-                };
-                
-                const candidatureStats = {
-                    total: { $statistics['totalCandidatures'] ?? 0 },
-                    pending: Math.round({{ $statistics['totalCandidatures'] ?? 0 }} * 0.4),
-                    trend: 12
-                };
-                
-                // Update UI with fallback data
-                this.updateStatsCards(usersStats, annonceStats, candidatureStats);
-                this.updateUserDistributionChart(usersStats);
-                this.updateActiveSectorsChart(annonceStats);
-                this.updateTopJobsTable(annonceStats.popular);
-            },
-            
-            /**
-             * Generate sample jobs for fallback
-             */
-            generateSampleJobs: function(count) {
-                const jobs = [];
-                const titles = [
-                    'Développeur Full Stack',
-                    'UX Designer',
-                    'Chef de Projet Digital',
-                    'Data Analyst',
-                    'Développeur Mobile',
-                    'DevOps Engineer',
-                    'Product Manager',
-                    'Marketing Digital'
-                ];
-                
-                const companies = [
-                    'TechCorp',
-                    'DigitalSolutions',
-                    'InnovateLab',
-                    'DataTech',
-                    'MobileSoft'
-                ];
-                
-                for (let i = 0; i < count; i++) {
-                    const title = titles[Math.floor(Math.random() * titles.length)];
-                    const company = companies[Math.floor(Math.random() * companies.length)];
-                    const views = Math.floor(Math.random() * 5000) + 500;
-                    const applications = Math.floor(Math.random() * 100) + 5;
-                    const status = Math.random() > 0.2 ? 'ouverte' : 'fermee';
-                    
-                    jobs.push({
-                        id: i + 1,
-                        titre: title,
-                        recruteur: { name: company },
-                        vues: views,
-                        candidatures_count: applications,
-                        statut: status
-                    });
-                }
-                
-                return jobs;
-            },
-            
-            /**
-             * Update statistics cards with data
-             */
-            updateStatsCards: function(usersStats, annonceStats, candidatureStats) {
-                // Users stats
-                document.querySelector('#stats-users h3').textContent = usersStats.total || '0';
-                const usersTrend = document.getElementById('users-trend');
-                usersTrend.textContent = `${usersStats.trend > 0 ? '+' : ''}${usersStats.trend}%`;
-                usersTrend.className = usersStats.trend > 0 
-                    ? 'text-green-500 font-medium' 
-                    : (usersStats.trend < 0 ? 'text-red-500 font-medium' : 'text-yellow-500 font-medium');
-                
-                // Jobs stats
-                document.querySelector('#stats-jobs h3').textContent = annonceStats.total || '0';
-                const jobsTrend = document.getElementById('jobs-trend');
-                jobsTrend.textContent = `${annonceStats.trend > 0 ? '+' : ''}${annonceStats.trend}%`;
-                jobsTrend.className = annonceStats.trend > 0 
-                    ? 'text-green-500 font-medium' 
-                    : (annonceStats.trend < 0 ? 'text-red-500 font-medium' : 'text-yellow-500 font-medium');
-                
-                // Visits stats (simulated)
-                const visitsCount = Math.floor(Math.random() * 20000) + 5000;
-                const visitsTrend = Math.floor(Math.random() * 30) - 5;
-                document.querySelector('#stats-visits h3').textContent = visitsCount.toLocaleString();
-                const visitsTrendEl = document.getElementById('visits-trend');
-                visitsTrendEl.textContent = `${visitsTrend > 0 ? '+' : ''}${visitsTrend}%`;
-                visitsTrendEl.className = visitsTrend > 0 
-                    ? 'text-green-500 font-medium' 
-                    : (visitsTrend < 0 ? 'text-red-500 font-medium' : 'text-yellow-500 font-medium');
-                
-                // Applications stats
-                document.querySelector('#stats-applications h3').textContent = candidatureStats.pending || '0';
-                const appsTrend = document.getElementById('applications-trend');
-                appsTrend.textContent = `${candidatureStats.trend > 0 ? '+' : ''}${candidatureStats.trend}%`;
-                appsTrend.className = candidatureStats.trend > 0 
-                    ? 'text-green-500 font-medium' 
-                    : (candidatureStats.trend < 0 ? 'text-red-500 font-medium' : 'text-yellow-500 font-medium');
-            },
-            
-            /**
-             * Update user distribution chart
-             */
-            updateUserDistributionChart: function(usersStats) {
-                const { distribution } = usersStats;
-                
-                if (distribution) {
-                    window.userDistributionChart.data.datasets[0].data = [
-                        distribution.recruteurs || 0,
-                        distribution.candidats || 0,
-                        distribution.admins || 0,
-                        distribution.visiteurs || 0
-                    ];
-                    window.userDistributionChart.update();
-                }
-            },
-            
-            /**
-             * Update active sectors chart
-             */
-            updateActiveSectorsChart: function(annonceStats) {
-                const { sectors } = annonceStats;
-                
-                if (sectors) {
-                    const sectorLabels = Object.keys(sectors);
-                    const sectorData = sectorLabels.map(key => sectors[key]);
-                    
-                    window.activeSectorsChart.data.labels = sectorLabels;
-                    window.activeSectorsChart.data.datasets[0].data = sectorData;
-                    window.activeSectorsChart.update();
-                } else {
-                    // Use placeholder data
-                    window.activeSectorsChart.data.labels = ['Informatique', 'Marketing', 'Finance', 'RH', 'Design'];
-                    window.activeSectorsChart.data.datasets[0].data = [245, 187, 125, 98, 65];
-                    window.activeSectorsChart.update();
-                }
-            },
-            
-            /**
-             * Update top jobs table
-             */
-            updateTopJobsTable: function(popularJobs) {
-                const tableBody = document.getElementById('top-jobs-table');
-                
-                // Clear loading message
-                tableBody.innerHTML = '';
-                
-                if (popularJobs && popularJobs.length > 0) {
-                    popularJobs.forEach(job => {
-                        const statusClass = job.statut === 'ouverte' 
-                            ? 'bg-green-100 text-green-600' 
-                            : 'bg-yellow-100 text-yellow-600';
-                        
-                        const statusText = job.statut === 'ouverte' ? 'Active' : 'En pause';
-                        
-                        const row = document.createElement('tr');
-                        row.className = 'border-b';
-                        row.innerHTML = `
-                            <td class="py-4">${job.titre}</td>
-                            <td class="py-4">${job.recruteur?.name || 'N/A'}</td>
-                            <td class="py-4">${job.vues || 0}</td>
-                            <td class="py-4">${job.candidatures_count || 0}</td>
-                            <td class="py-4">
-                                <span class="px-3 py-1 text-xs rounded-full ${statusClass}">${statusText}</span>
-                            </td>
-                            <td class="py-4">
-                                <a href="/admin/annonces/${job.id}" class="text-blue-600 hover:text-blue-800 mr-2">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <button data-id="${job.id}" class="text-red-600 hover:text-red-800 delete-job-btn">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </td>
-                        `;
-                        
-                        tableBody.appendChild(row);
-                    });
-                } else {
-                    // No data available
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td colspan="6" class="py-4 text-center text-gray-500">
-                            Aucune donnée disponible
-                        </td>
-                    `;
-                    tableBody.appendChild(row);
-                }
-            },
-            
-            /**
-             * Set up event listeners
-             */
-            setupEventListeners: function() {
-                // Add event listeners to delete buttons
-                document.querySelectorAll('.delete-job-btn').forEach(btn => {
-                    btn.addEventListener('click', async (e) => {
-                        const jobId = e.currentTarget.getAttribute('data-id');
-                        if (confirm('Êtes-vous sûr de vouloir supprimer cette offre ?')) {
-                            try {
-                                await window.annonces.delete(jobId);
-                                window.showNotification('Offre supprimée avec succès', 'success');
-                                
-                                // Reload data
-                                this.loadDashboardData();
-                            } catch (error) {
-                                window.showNotification('Erreur lors de la suppression de l\'offre', 'error');
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                    label += context.parsed + ' (' + Math.round((context.parsed / ({{ $progression['users']['total'] }} + {{ $progression['users']['deleted'] }}) * 100)) + '%)';
+                                }
+                                return label;
                             }
                         }
-                    });
-                });
+                    }
+                }
             }
-        };
-        
-        // Initialize when the document is loaded
-        document.addEventListener('DOMContentLoaded', () => {
-            adminDashboard.init();
+        });
+
+        const activeSectorsChart = new Chart(document.getElementById('activeSectorsChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Offres actives', 'Offres inactives'],
+                datasets: [{
+                    label: 'Nombre d\'offres',
+                    data: [{{ $progression['annonces']['active'] }}, {{ $progression['annonces']['total'] - $progression['annonces']['active'] }}],
+                    backgroundColor: ['#3b82f6', '#ef4444']
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
         });
     </script>
 </body>

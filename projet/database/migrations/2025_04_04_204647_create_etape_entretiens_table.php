@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('etape_entretiens', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('id_candidature');
+            $table->unsignedBigInteger('id_annonce');
+            $table->string('statut');
             $table->timestamps();
         });
     }

@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('etape_test_techniques', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('id_candidature');
-            $table->unsignedBigInteger('id_annonce');
-            $table->string('statut');
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->softDeletes();
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('etape_test_techniques');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
     }
 };

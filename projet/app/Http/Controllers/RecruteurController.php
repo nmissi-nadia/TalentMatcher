@@ -16,20 +16,40 @@ class RecruteurController extends Controller
     public function dashboard()
     {
         $user = Auth::user();
-        $annonces = Annonce::where('user_id', $user->id)
+        $annonces = Annonce::where('recruteur_id', $user->id)
             ->withCount('candidatures')
             ->get();
 
         $stats = [
             'total_annonce' => $annonces->count(),
             'total_candidature' => $annonces->sum('candidatures_count'),
-            'active_annonce' => $annonces->where('status', 'active')->count(),
-            'en_attente' => Candidature::where('annonce.user_id', $user->id)
-                ->where('status', 'en_attente')
-                ->count()
-        ];
+            'active_annonce' => $annonces->where('statut', 'active')->count(),
+            'en_attente' => Candidature::whereHas('annonce', function($query) use ($user) {
+                $query->where('recruteur_id', $user->id);
+            })
+            ->where('statut', 'en_attente')
+            ->count(),
+            'statut_candidatures' => Candidature::whereHas('annonce', function($query) use ($user) {
+                    $query->where('recruteur_id', $user->id);
+                })
+                ->select('statut', DB::raw('count(*) as count'))
+                ->groupBy('statut')
+                ->get()
+                ->mapWithKeys(function($item) {
+                    return [$item->statut => $item->count];
+                })
 
-        return view('recruteur.dashboard', compact('annonces', 'stats'));
+        ];
+        // Récupérer les candidatures récentes
+        $recentCandidatures = Candidature::whereHas('annonce', function($query) use ($user) {
+            $query->where('recruteur_id', $user->id);
+        })
+        ->with(['annonce', 'candidat'])
+        ->orderBy('created_at', 'desc')
+        ->take(5)
+        ->get();
+
+        return view('recruteur.dashboard', compact('annonces', 'stats', 'recentCandidatures'));
     }
 
     // Créer une nouvelle offre

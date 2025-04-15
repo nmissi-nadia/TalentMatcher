@@ -138,12 +138,7 @@
                             <div class="bg-gray-50 p-4 rounded-lg">
                                 <h3 class="text-sm font-medium text-gray-900">Catégories</h3>
                                 <div class="mt-2">
-                                    @foreach($stats['categories'] as $category)
-                                        <div class="flex items-center justify-between py-1">
-                                            <span class="text-sm text-gray-500">{{ $category->category }}</span>
-                                            <span class="text-sm text-gray-900">{{ $category->count }}</span>
-                                        </div>
-                                    @endforeach
+                                   
                                 </div>
                             </div>
 

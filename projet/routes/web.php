@@ -64,10 +64,18 @@ Route::middleware(['auth', 'check.role:recruteur'])->prefix('recruteur')->name('
 
 // Admin Routes (Protected by Auth and Admin Role Middleware)
 Route::middleware(['auth', 'check.role:admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-    Route::get('/users', [AdminController::class, 'manageUsers'])->name('users');
-    Route::get('/annonces', [AdminController::class, 'manageAnnonces'])->name('annonces');
-    Route::get('/comments', [AdminController::class, 'manageComments'])->name('comments');
+    Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+  
+    // teste
+    Route::delete('/job/{id}', [AdminController::class, 'deleteJob'])->name('admin.deleteJob');
+        Route::get('/utilisateurs', [AdminController::class, 'utilisateurs'])->name('utilisateurs');
+        Route::get('/candidatures', [AdminController::class, 'candidatures'])->name('candidatures');
+        Route::get('/moderation', [AdminController::class, 'moderation'])->name('moderation');
+        Route::get('/annonces', [AdminController::class, 'annonces'])->name('annonces');
+        Route::get('/annonce/{id}', [AdminController::class, 'showAnnonce'])->name('annonce');
+        Route::get('/utilisateurs-supprimes', [AdminController::class, 'utilisateursSupprimes'])->name('utilisateursSupprimes');
+        Route::post('/utilisateurs/restore/{id}', [AdminController::class, 'restaurerUtilisateur'])->name('admin.users.restore');
+        Route::delete('/utilisateurs/force-delete/{id}', [AdminController::class, 'supprimerDefinitivement'])->name('admin.users.force-delete');
 });
 
 // API Routes for Job Applications

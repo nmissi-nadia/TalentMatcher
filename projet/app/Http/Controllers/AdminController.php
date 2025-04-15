@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Annonce;
 use App\Models\Candidature;
 use App\Models\Tag;
+
 use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
@@ -14,21 +15,54 @@ class AdminController extends Controller
     public function index()
     {
         // Récupérer les statistiques
-        $totalUsers = User::count();
+        $totalUsers = User::whereNull('deleted_at')->count();
+        $deletedUser = User::onlyTrashed()->count();
         $activeAnnonces = Annonce::where('statut', 'ouverte')->count();
-        $newCandidates = User::where('role', 'candidat')->where('created_at', '>', now()->subDays(30))->count();
+        $newCandidates = User::where('role', 'candidat')
+            ->where('created_at', '>', now()->subDays(30))
+            ->whereNull('deleted_at')
+            ->count();
         $totalCandidatures = Candidature::count();
         $totalTags = Tag::count();
+        $deletedUsers = User::onlyTrashed()->get();
         
-        $statistics = [
+        // Récupérer les offres les plus consultées
+        $topJobs = Annonce::where('statut', 'ouverte')
+            ->with(['recruteur', 'tags'])
+            ->orderByDesc('created_at')
+            ->limit(5)
+            ->get();
+        
+        // Calculer les pourcentages de progression
+        $progression = [
+            'users' => [
+                'total' => $totalUsers,
+                'deleted' => $deletedUser,
+                'percentage' => ($totalUsers + $deletedUser) > 0 ? round(($totalUsers / ($totalUsers + $deletedUser)) * 100) : 0
+            ],
+            'annonces' => [
+                'active' => $activeAnnonces,
+                'total' => Annonce::count(),
+                'percentage' => ($activeAnnonces + Annonce::count()) > 0 ? round(($activeAnnonces / (Annonce::count())) * 100) : 0
+            ],
+            'candidats' => [
+                'new' => $newCandidates,
+                'total' => User::where('role', 'candidat')->whereNull('deleted_at')->count(),
+                'percentage' => ($newCandidates + User::where('role', 'candidat')->whereNull('deleted_at')->count()) > 0 ? round(($newCandidates / (User::where('role', 'candidat')->whereNull('deleted_at')->count())) * 100) : 0
+            ]
+        ];
+
+        return view('admin.dashboard', [
             'totalUsers' => $totalUsers,
+            'deletedUser' => $deletedUser,
             'activeAnnonces' => $activeAnnonces,
             'newCandidates' => $newCandidates,
             'totalCandidatures' => $totalCandidatures,
-            'totalTags' => $totalTags
-        ];
-
-        return view('admin.dashboard', compact('statistics'));
+            'totalTags' => $totalTags,
+            'deletedUsers' => $deletedUsers,
+            'topJobs' => $topJobs,
+            'progression' => $progression
+        ]);
     }
     public function utilisateurs()
     {
@@ -53,7 +87,7 @@ class AdminController extends Controller
     public function annonces()
     {
         $annonces = Annonce::with(['recruteur', 'tags'])->orderBy('created_at', 'desc')->get();
-        return view('admin.annonces', compact('annonces'));
+        return view('admin.annoces', compact('annonces'));
     }
     
     public function annonce($id)
@@ -62,5 +96,26 @@ class AdminController extends Controller
         $candidatures = Candidature::where('annonce_id', $id)->with('candidat')->get();
         
         return view('admin.annonce', compact('annonce', 'candidatures'));
+    }
+    public function utilisateursSupprimes()
+    {
+        $users = User::onlyTrashed()
+            ->orderBy('deleted_at', 'desc')
+            ->paginate(10);
+        return view('admin.utilisateurs_supprimes', compact('users'));
+    }
+    
+    public function restaurerUtilisateur($id)
+    {
+        $user = User::withTrashed()->findOrFail($id);
+        $user->restore();
+        return redirect()->route('admin.users.supprimes')->with('success', 'Utilisateur restauré avec succès');
+    }
+    
+    public function supprimerDefinitivement($id)
+    {
+        $user = User::withTrashed()->findOrFail($id);
+        $user->forceDelete();
+        return redirect()->route('admin.users.supprimes')->with('success', 'Utilisateur supprimé définitivement');
     }
 }
