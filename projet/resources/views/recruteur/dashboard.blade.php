@@ -162,18 +162,3 @@
     </div>
 </div>
 @endsection
-
-@push('scripts')
-<script>
-    // Update status colors and labels
-    @foreach($recentCandidatures as $candidature)
-        document.addEventListener('DOMContentLoaded', function() {
-            let statusElement = document.getElementById('status-{{ $candidature->id }}');
-            if (statusElement) {
-                statusElement.style.backgroundColor = '{{ $candidature->status_color }}';
-                statusElement.textContent = '{{ $candidature->status_label }}';
-            }
-        });
-    @endforeach
-</script>
-@endpush
