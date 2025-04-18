@@ -55,6 +55,22 @@
                 @endif
         </div>
     </nav>
+    <!-- Hero Section -->
+    <header class="pt-24 pb-12 md:pt-32 md:pb-20 bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
+        <div class="max-w-screen-xl mx-auto px-4 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 text-center md:text-left">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6">Trouvez le talent idéal ou l'emploi parfait</h1>
+                <p class="text-xl mb-8">Une plateforme simple et efficace qui connecte candidats et recruteurs</p>
+                <div class="flex flex-col sm:flex-row justify-center md:justify-start gap-4">
+                    <a href="#" class="px-6 py-3 bg-white text-blue-600 rounded-md hover:bg-gray-100 transition duration-300 font-bold text-center">Je suis candidat</a>
+                    <a href="#" class="px-6 py-3 bg-blue-800 text-white rounded-md hover:bg-blue-900 transition duration-300 font-bold text-center">Je suis recruteur</a>
+                </div>
+            </div>
+            <div class="md:w-1/2 mt-10 md:mt-0">
+                <img src="{{ asset('storage/images/img.png') }}" alt="Plateforme de recrutement illustration" class="rounded-lg shadow-xl">
+            </div>
+        </div>
+    </header>
      <!-- Footer -->
      <footer class="bg-gray-800 text-white py-12">
         <div class="max-w-screen-xl mx-auto px-4">
