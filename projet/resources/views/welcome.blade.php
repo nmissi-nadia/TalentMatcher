@@ -55,7 +55,49 @@
                 @endif
         </div>
     </nav>
-
+     <!-- Footer -->
+     <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-screen-xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">TalentConnect</h3>
+                    <p class="text-gray-400">La plateforme qui révolutionne le recrutement en connectant les meilleurs talents aux entreprises innovantes.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Liens rapides</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition duration-300">Accueil</a></li>
+                        <li><a href="#fonctionnalites" class="hover:text-white transition duration-300">Fonctionnalités</a></li>
+                        <li><a href="#pour-qui" class="hover:text-white transition duration-300">Pour qui</a></li>
+                        <li><a href="#temoignages" class="hover:text-white transition duration-300">Témoignages</a></li>
+                        <li><a href="#contact" class="hover:text-white transition duration-300">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Légal</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition duration-300">Conditions d'utilisation</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-300">Politique de confidentialité</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-300">Mentions légales</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-300">Cookies</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Newsletter</h3>
+                    <p class="text-gray-400 mb-4">Restez informé de nos dernières actualités</p>
+                    <form class="flex">
+                        <input type="email" placeholder="Votre email" class="p-2 w-full rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800">
+                        <button type="submit" class="bg-blue-600 px-4 rounded-r-md hover:bg-blue-700 transition duration-300">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 TalentConnect. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
     <script>
         // Navigation responsive
         document.addEventListener('DOMContentLoaded', function() {
