@@ -38,7 +38,7 @@ Route::get('/jobs/{id}', [AnnonceController::class, 'show'])->name('jobs.show');
 
 // Candidate Routes (Protected by Auth Middleware)
 Route::middleware(['auth', 'check.role:candidat'])->prefix('candidat')->name('candidat.')->group(function () {
-    Route::get('/dashboard', [CandidatController::class, 'dashboard'])->name('dashboard');
+    Route::get('/dashboard', [CandidatController::class, 'dashboard'])->name('candidat.dashboard');
     Route::get('/profile', [CandidatController::class, 'showProfile'])->name('profile');
     Route::post('/profile/update', [CandidatController::class, 'updateProfile'])->name('profile.update');
     Route::get('/search', [CandidatController::class, 'search'])->name('search');
@@ -60,6 +60,8 @@ Route::middleware(['auth', 'check.role:recruteur'])->prefix('recruteur')->name('
     Route::get('/stats', [RecruteurController::class, 'stats'])->name('stats');
     Route::get('/tags', [RecruteurController::class, 'manageTags'])->name('tags');
     Route::post('/tags/create', [RecruteurController::class, 'createTag'])->name('tags.create');
+    // telecharger le cv
+    Route::get('/candidatures/{id}/cv', [CandidatureController::class, 'downloadCV'])->name('candidatures.cv');
 });
 
 // Admin Routes (Protected by Auth and Admin Role Middleware)
@@ -67,7 +69,7 @@ Route::middleware(['auth', 'check.role:admin'])->prefix('admin')->name('admin.')
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
   
     // teste
-    Route::delete('/job/{id}', [AdminController::class, 'deleteJob'])->name('admin.deleteJob');
+    Route::delete('/offre/{id}', [AdminController::class, 'deleteJob'])->name('admin.deleteJob');
         Route::get('/utilisateurs', [AdminController::class, 'utilisateurs'])->name('utilisateurs');
         Route::get('/candidatures', [AdminController::class, 'candidatures'])->name('candidatures');
         Route::get('/moderation', [AdminController::class, 'moderation'])->name('moderation');

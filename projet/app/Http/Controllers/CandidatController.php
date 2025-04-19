@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\Auth;
 
 class CandidatController extends Controller
 {
+    // dashboard d candidat
+    public function dashboard()
+    {
+        $candidatures = Candidature::where('candidat_id', Auth::id())->get();
+        return view('candidat.dashboard', compact('candidatures'));
+    }
     // Afficher le profil du candidat
     public function showProfile()
     {

@@ -30,12 +30,16 @@ class CandidatureController extends Controller
     {
         $validated = $request->validate([
             'annonce_id' => 'required|exists:annonces,id',
-            'cv' => 'required|string',
+            'cv' => 'required|file|mimes:pdf,doc,docx|max:5120',
             'lettre_motivation' => 'required|string',
             'statut' => 'required|in:en_attente,acceptee,refusee',
         ]);
 
         try {
+            // la one veut gérer le procesus d'upload des cv 
+            if($request->hasFile('cv') && $request->file('cv')->isValid()) {
+                $validated['cv'] = $request->file('cv')->store('cvs','public');
+            }
             $candidature = $this->service->create($validated);
             return redirect()->route('candidat.applications')->with('success', 'Candidature envoyée avec succès');
         } catch (\Exception $e) {
@@ -43,6 +47,19 @@ class CandidatureController extends Controller
         }
     }
 
+    // fonction pour telecharger le cv
+    public function dowloadcv($id)
+    {
+        try {
+            $candidature = $this->service->get($id);
+            if (!$candidature->cv) {
+                abort(404);
+            }
+            return response()->download(storage_path('app/public/' . $candidature->cv));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
     public function show($id)
     {
         try {
