@@ -36,7 +36,7 @@ return [
 
         'database' => [
             'driver' => 'database',
-            'table' => 'jobs',
+            'table' => 'offres',
             'queue' => 'default',
             'retry_after' => 90,
             'after_commit' => false,
@@ -75,10 +75,10 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Job Batching
+    | offre Batching
     |--------------------------------------------------------------------------
     |
-    | The following options configure the database and table that store job
+    | The following options configure the database and table that store offre
     | batching information. These options can be updated to any database
     | connection and table which has been defined by your application.
     |
@@ -86,16 +86,16 @@ return [
 
     'batching' => [
         'database' => env('DB_CONNECTION', 'mysql'),
-        'table' => 'job_batches',
+        'table' => 'offre_batches',
     ],
 
     /*
     |--------------------------------------------------------------------------
-    | Failed Queue Jobs
+    | Failed Queue offres
     |--------------------------------------------------------------------------
     |
-    | These options configure the behavior of failed queue job logging so you
-    | can control which database and table are used to store the jobs that
+    | These options configure the behavior of failed queue offre logging so you
+    | can control which database and table are used to store the offres that
     | have failed. You may change them to any database / table you wish.
     |
     */
@@ -103,7 +103,7 @@ return [
     'failed' => [
         'driver' => env('QUEUE_FAILED_DRIVER', 'database-uuids'),
         'database' => env('DB_CONNECTION', 'mysql'),
-        'table' => 'failed_jobs',
+        'table' => 'failed_offres',
     ],
 
 ];

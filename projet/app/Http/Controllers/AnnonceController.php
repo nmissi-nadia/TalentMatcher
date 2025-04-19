@@ -19,22 +19,22 @@ class AnnonceController extends Controller
     public function index()
     {
         $annonces = $this->service->getAll();
-        return view('candidat.jobs', compact('annonces'));
+        return view('candidat.offres', compact('annonces'));
     }
 
     public function show($id)
     {
         try {
             $annonce = $this->service->get($id);
-            return view('candidat.job-detail', compact('annonce'));
+            return view('candidat.offre-detail', compact('annonce'));
         } catch (\Exception $e) {
-            return redirect()->route('candidat.jobs')->with('error', $e->getMessage());
+            return redirect()->route('candidat.offres')->with('error', $e->getMessage());
         }
     }
 
     public function create()
     {
-        return view('recruteur.job-form');
+        return view('recruteur.offre-form');
     }
 
     public function store(Request $request)
@@ -47,7 +47,7 @@ class AnnonceController extends Controller
 
         try {
             $annonce = $this->service->create($validated);
-            return redirect()->route('recruteur.jobs')->with('success', 'Annonce créée avec succès');
+            return redirect()->route('recruteur.offres')->with('success', 'Annonce créée avec succès');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage())->withInput();
         }
@@ -57,9 +57,9 @@ class AnnonceController extends Controller
     {
         try {
             $annonce = $this->service->get($id);
-            return view('recruteur.job-form', compact('annonce'));
+            return view('recruteur.offre-form', compact('annonce'));
         } catch (\Exception $e) {
-            return redirect()->route('recruteur.jobs')->with('error', $e->getMessage());
+            return redirect()->route('recruteur.offres')->with('error', $e->getMessage());
         }
     }
 
@@ -73,7 +73,7 @@ class AnnonceController extends Controller
 
         try {
             $annonce = $this->service->update($id, $validated);
-            return redirect()->route('recruteur.jobs')->with('success', 'Annonce mise à jour avec succès');
+            return redirect()->route('recruteur.offres')->with('success', 'Annonce mise à jour avec succès');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage())->withInput();
         }
@@ -83,7 +83,7 @@ class AnnonceController extends Controller
     {
         try {
             $this->service->delete($id);
-            return redirect()->route('recruteur.jobs')->with('success', 'Annonce supprimée avec succès');
+            return redirect()->route('recruteur.offres')->with('success', 'Annonce supprimée avec succès');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
@@ -99,12 +99,12 @@ class AnnonceController extends Controller
     {
         $recruteurId = auth()->id();
         $annonces = $this->service->getByRecruteur($recruteurId);
-        return view('recruteur.jobs', compact('annonces'));
+        return view('recruteur.offres', compact('annonces'));
     }
 
     public function statutAnnonces($statut)
     {
         $annonces = $this->service->getByStatut($statut);
-        return view('candidat.jobs', compact('annonces'));
+        return view('candidat.offres', compact('annonces'));
     }
 }

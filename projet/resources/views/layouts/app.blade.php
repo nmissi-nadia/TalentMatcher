@@ -52,7 +52,7 @@
                                 <a href="{{ url('/candidat/dashboard') }}" class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->is('candidat/dashboard') ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }}">
                                     Tableau de bord
                                 </a>
-                                <a href="{{ url('/candidat/jobs') }}" class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->is('candidat/jobs*') ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }}">
+                                <a href="{{ url('/candidat/offres') }}" class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->is('candidat/offres*') ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }}">
                                     Offres d'emploi
                                 </a>
                                 <a href="{{ url('/candidat/applications') }}" class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->is('candidat/applications*') ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }}">
@@ -62,7 +62,7 @@
                                 <a href="{{ url('/recruteur/dashboard') }}" class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->is('recruteur/dashboard') ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }}">
                                     Tableau de bord
                                 </a>
-                                <a href="{{ url('/recruteur/jobs') }}" class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->is('recruteur/jobs*') ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }}">
+                                <a href="{{ url('/recruteur/offres') }}" class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->is('recruteur/offres*') ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }}">
                                     Mes offres
                                 </a>
                                 <a href="{{ url('/recruteur/candidates') }}" class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->is('recruteur/candidates*') ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }}">
@@ -79,7 +79,7 @@
                             <a href="{{ url('/') }}" class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->is('/') ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }}">
                                 Accueil
                             </a>
-                            <a href="{{ url('/jobs') }}" class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->is('jobs*') ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }}">
+                            <a href="{{ url('/offres') }}" class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->is('offres*') ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }}">
                                 Offres d'emploi
                             </a>
                             <a href="{{ url('/about') }}" class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->is('about') ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }}">
@@ -153,7 +153,7 @@
                         <a href="{{ url('/candidat/dashboard') }}" class="block pl-3 pr-4 py-2 border-l-4 {{ request()->is('candidat/dashboard') ? 'border-blue-500 text-blue-700 bg-blue-50' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800' }}">
                             Tableau de bord
                         </a>
-                        <a href="{{ url('/candidat/jobs') }}" class="block pl-3 pr-4 py-2 border-l-4 {{ request()->is('candidat/jobs*') ? 'border-blue-500 text-blue-700 bg-blue-50' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800' }}">
+                        <a href="{{ url('/candidat/offres') }}" class="block pl-3 pr-4 py-2 border-l-4 {{ request()->is('candidat/offres*') ? 'border-blue-500 text-blue-700 bg-blue-50' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800' }}">
                             Offres d'emploi
                         </a>
                         <a href="{{ url('/candidat/applications') }}" class="block pl-3 pr-4 py-2 border-l-4 {{ request()->is('candidat/applications*') ? 'border-blue-500 text-blue-700 bg-blue-50' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800' }}">
@@ -163,7 +163,7 @@
                         <a href="{{ url('/recruteur/dashboard') }}" class="block pl-3 pr-4 py-2 border-l-4 {{ request()->is('recruteur/dashboard') ? 'border-blue-500 text-blue-700 bg-blue-50' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800' }}">
                             Tableau de bord
                         </a>
-                        <a href="{{ url('/recruteur/jobs') }}" class="block pl-3 pr-4 py-2 border-l-4 {{ request()->is('recruteur/jobs*') ? 'border-blue-500 text-blue-700 bg-blue-50' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800' }}">
+                        <a href="{{ url('/recruteur/offres') }}" class="block pl-3 pr-4 py-2 border-l-4 {{ request()->is('recruteur/offres*') ? 'border-blue-500 text-blue-700 bg-blue-50' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800' }}">
                             Mes offres
                         </a>
                         <a href="{{ url('/recruteur/candidates') }}" class="block pl-3 pr-4 py-2 border-l-4 {{ request()->is('recruteur/candidates*') ? 'border-blue-500 text-blue-700 bg-blue-50' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800' }}">
@@ -186,7 +186,7 @@
                     <a href="{{ url('/') }}" class="block pl-3 pr-4 py-2 border-l-4 {{ request()->is('/') ? 'border-blue-500 text-blue-700 bg-blue-50' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800' }}">
                         Accueil
                     </a>
-                    <a href="{{ url('/jobs') }}" class="block pl-3 pr-4 py-2 border-l-4 {{ request()->is('jobs*') ? 'border-blue-500 text-blue-700 bg-blue-50' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800' }}">
+                    <a href="{{ url('/offres') }}" class="block pl-3 pr-4 py-2 border-l-4 {{ request()->is('offres*') ? 'border-blue-500 text-blue-700 bg-blue-50' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800' }}">
                         Offres d'emploi
                     </a>
                     <a href="{{ url('/about') }}" class="block pl-3 pr-4 py-2 border-l-4 {{ request()->is('about') ? 'border-blue-500 text-blue-700 bg-blue-50' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800' }}">
@@ -228,7 +228,7 @@
                     <h3 class="text-md font-semibold mb-4">Liens rapides</h3>
                     <ul class="space-y-2 text-sm">
                         <li><a href="{{ url('/') }}" class="text-gray-600 hover:text-blue-600">Accueil</a></li>
-                        <li><a href="{{ url('/jobs') }}" class="text-gray-600 hover:text-blue-600">Offres d'emploi</a></li>
+                        <li><a href="{{ url('/offres') }}" class="text-gray-600 hover:text-blue-600">Offres d'emploi</a></li>
                         <li><a href="{{ url('/about') }}" class="text-gray-600 hover:text-blue-600">À propos</a></li>
                         <li><a href="{{ url('/contact') }}" class="text-gray-600 hover:text-blue-600">Contact</a></li>
                     </ul>

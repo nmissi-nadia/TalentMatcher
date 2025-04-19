@@ -6,7 +6,7 @@
 <div class="bg-white shadow">
     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
         <h1 class="text-3xl font-bold text-gray-900">Gestion des offres d'emploi</h1>
-        <a href="{{ url('/recruteur/jobs/create') }}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+        <a href="{{ url('/recruteur/offres/create') }}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
             <i class="fas fa-plus mr-2"></i>
             Publier une offre
         </a>
@@ -61,10 +61,10 @@
         </div>
     </div>
     
-    <!-- Job Listings -->
+    <!-- offre Listings -->
     <div class="px-4 sm:px-0">
         <div class="bg-white shadow overflow-hidden sm:rounded-lg">
-            <ul id="jobs-container" class="divide-y divide-gray-200">
+            <ul id="offres-container" class="divide-y divide-gray-200">
                 <li class="p-6 text-center text-gray-500">
                     <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-4"></div>
                     Chargement des offres d'emploi...
@@ -97,7 +97,7 @@
         </div>
     </div>
     
-    <!-- Empty State for No Jobs -->
+    <!-- Empty State for No offres -->
     <div id="empty-state" class="px-4 py-12 sm:px-0 hidden">
         <div class="text-center">
             <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -106,7 +106,7 @@
             <h3 class="mt-2 text-sm font-medium text-gray-900">Aucune offre d'emploi</h3>
             <p class="mt-1 text-sm text-gray-500">Commencez par publier votre première offre d'emploi.</p>
             <div class="mt-6">
-                <a href="{{ url('/recruteur/jobs/create') }}" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                <a href="{{ url('/recruteur/offres/create') }}" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                     <i class="fas fa-plus mr-2"></i>
                     Publier une offre
                 </a>
@@ -115,7 +115,7 @@
     </div>
 </div>
 
-<!-- Confirmation Modal for Deleting Job -->
+<!-- Confirmation Modal for Deleting offre -->
 <div id="delete-modal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
     <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div id="modal-backdrop" class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
@@ -156,45 +156,45 @@
     document.addEventListener('DOMContentLoaded', async function() {
         try {
             // Initialize variables
-            let jobsData = [];
+            let offresData = [];
             let currentPage = 1;
             let itemsPerPage = 10;
-            let totalJobs = 0;
-            let currentJobIdToDelete = null;
+            let totaloffres = 0;
+            let currentoffreIdToDelete = null;
             
             // Initialize filters
             const searchInput = document.getElementById('search');
             const statusFilter = document.getElementById('status-filter');
             const sortBy = document.getElementById('sort-by');
             
-            // Load jobs from API
-            await loadJobs();
+            // Load offres from API
+            await loadoffres();
             
             // Set up event listeners
             document.getElementById('apply-filters').addEventListener('click', applyFilters);
             document.getElementById('reset-filters').addEventListener('click', resetFilters);
             document.getElementById('cancel-delete').addEventListener('click', hideDeleteModal);
             document.getElementById('modal-backdrop').addEventListener('click', hideDeleteModal);
-            document.getElementById('confirm-delete').addEventListener('click', confirmDeleteJob);
+            document.getElementById('confirm-delete').addEventListener('click', confirmDeleteoffre);
             
             // Handle pagination events
             document.getElementById('prev-page-mobile').addEventListener('click', () => {
                 if (currentPage > 1) {
                     currentPage--;
-                    renderJobs();
+                    renderoffres();
                 }
             });
             
             document.getElementById('next-page-mobile').addEventListener('click', () => {
-                const totalPages = Math.ceil(totalJobs / itemsPerPage);
+                const totalPages = Math.ceil(totaloffres / itemsPerPage);
                 if (currentPage < totalPages) {
                     currentPage++;
-                    renderJobs();
+                    renderoffres();
                 }
             });
             
-            // Function to load jobs from API
-            async function loadJobs() {
+            // Function to load offres from API
+            async function loadoffres() {
                 try {
                     // Check if API client is available
                     if (!window.apiClient || !window.annonces) {
@@ -203,20 +203,20 @@
                         return;
                     }
                     
-                    // Get all jobs for the current recruiter
+                    // Get all offres for the current recruiter
                     const user = await window.auth.getCurrentUser();
                     if (!user) {
                         window.location.href = '/login';
                         return;
                     }
                     
-                    jobsData = await window.annonces.getAll();
-                    totalJobs = jobsData.length;
+                    offresData = await window.annonces.getAll();
+                    totaloffres = offresData.length;
                     
-                    // Render jobs
-                    renderJobs();
+                    // Render offres
+                    renderoffres();
                 } catch (error) {
-                    console.error('Error loading jobs:', error);
+                    console.error('Error loading offres:', error);
                     showFallbackData();
                     window.showNotification('Erreur lors du chargement des offres', 'error');
                 }
@@ -225,7 +225,7 @@
             // Function to apply filters
             function applyFilters() {
                 currentPage = 1; // Reset to first page on filter change
-                renderJobs();
+                renderoffres();
             }
             
             // Function to reset filters
@@ -234,25 +234,25 @@
                 statusFilter.value = 'all';
                 sortBy.value = 'created_at_desc';
                 currentPage = 1;
-                renderJobs();
+                renderoffres();
             }
             
-            // Function to filter and sort jobs
-            function getFilteredAndSortedJobs() {
+            // Function to filter and sort offres
+            function getFilteredAndSortedoffres() {
                 // Apply search filter
-                let filtered = jobsData;
+                let filtered = offresData;
                 const searchTerm = searchInput.value.toLowerCase().trim();
                 if (searchTerm) {
-                    filtered = filtered.filter(job => 
-                        job.titre.toLowerCase().includes(searchTerm) || 
-                        job.description.toLowerCase().includes(searchTerm)
+                    filtered = filtered.filter(offre => 
+                        offre.titre.toLowerCase().includes(searchTerm) || 
+                        offre.description.toLowerCase().includes(searchTerm)
                     );
                 }
                 
                 // Apply status filter
                 const status = statusFilter.value;
                 if (status !== 'all') {
-                    filtered = filtered.filter(job => job.statut === status);
+                    filtered = filtered.filter(offre => offre.statut === status);
                 }
                 
                 // Apply sorting
@@ -275,32 +275,32 @@
                 return filtered;
             }
             
-            // Function to render jobs with pagination
-            function renderJobs() {
-                const filteredJobs = getFilteredAndSortedJobs();
-                totalJobs = filteredJobs.length;
+            // Function to render offres with pagination
+            function renderoffres() {
+                const filteredoffres = getFilteredAndSortedoffres();
+                totaloffres = filteredoffres.length;
                 
                 // Update empty state
                 const emptyState = document.getElementById('empty-state');
-                if (totalJobs === 0) {
+                if (totaloffres === 0) {
                     emptyState.classList.remove('hidden');
                 } else {
                     emptyState.classList.add('hidden');
                 }
                 
                 // Calculate pagination
-                const totalPages = Math.ceil(totalJobs / itemsPerPage);
+                const totalPages = Math.ceil(totaloffres / itemsPerPage);
                 const startIndex = (currentPage - 1) * itemsPerPage;
-                const endIndex = Math.min(startIndex + itemsPerPage, totalJobs);
-                const paginatedJobs = filteredJobs.slice(startIndex, endIndex);
+                const endIndex = Math.min(startIndex + itemsPerPage, totaloffres);
+                const paginatedoffres = filteredoffres.slice(startIndex, endIndex);
                 
                 // Update pagination info
                 const paginationInfo = document.getElementById('pagination-info');
-                if (totalJobs > 0) {
+                if (totaloffres > 0) {
                     paginationInfo.innerHTML = `
                         Affichage de <span class="font-medium">${startIndex + 1}</span> à 
                         <span class="font-medium">${endIndex}</span> sur 
-                        <span class="font-medium">${totalJobs}</span> résultats
+                        <span class="font-medium">${totaloffres}</span> résultats
                     `;
                 } else {
                     paginationInfo.innerHTML = 'Aucun résultat';
@@ -315,21 +315,21 @@
                 prevPageMobile.disabled = currentPage === 1;
                 nextPageMobile.disabled = currentPage === totalPages;
                 
-                // Render job list
-                const jobsContainer = document.getElementById('jobs-container');
-                jobsContainer.innerHTML = '';
+                // Render offre list
+                const offresContainer = document.getElementById('offres-container');
+                offresContainer.innerHTML = '';
                 
-                if (paginatedJobs.length === 0) {
+                if (paginatedoffres.length === 0) {
                     const emptyLi = document.createElement('li');
                     emptyLi.className = 'p-6 text-center text-gray-500';
                     emptyLi.innerHTML = 'Aucune offre ne correspond aux critères de recherche.';
-                    jobsContainer.appendChild(emptyLi);
+                    offresContainer.appendChild(emptyLi);
                     return;
                 }
                 
-                paginatedJobs.forEach(job => {
+                paginatedoffres.forEach(offre => {
                     // Format dates
-                    const createdDate = new Date(job.created_at);
+                    const createdDate = new Date(offre.created_at);
                     const formattedDate = createdDate.toLocaleDateString('fr-FR', {
                         day: 'numeric',
                         month: 'short',
@@ -338,7 +338,7 @@
                     
                     // Determine status badge style
                     let statusBadge = '';
-                    switch(job.statut) {
+                    switch(offre.statut) {
                         case 'ouverte':
                             statusBadge = '<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>';
                             break;
@@ -356,40 +356,40 @@
                     }
                     
                     // Calculate applications count
-                    const applicationsCount = job.applications_count || 
-                        (job.applications ? job.applications.length : '0');
+                    const applicationsCount = offre.applications_count || 
+                        (offre.applications ? offre.applications.length : '0');
                     
                     // Generate tags HTML if available
                     let tagsHtml = '';
-                    if (job.tags && job.tags.length > 0) {
+                    if (offre.tags && offre.tags.length > 0) {
                         tagsHtml = `
                             <div class="mt-2 flex flex-wrap gap-2">
-                                ${job.tags.slice(0, 3).map(tag => 
+                                ${offre.tags.slice(0, 3).map(tag => 
                                     `<span class="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full">${tag.nom}</span>`
                                 ).join('')}
-                                ${job.tags.length > 3 ? 
-                                    `<span class="px-2 py-1 text-xs bg-gray-100 text-gray-800 rounded-full">+${job.tags.length - 3} plus</span>` : 
+                                ${offre.tags.length > 3 ? 
+                                    `<span class="px-2 py-1 text-xs bg-gray-100 text-gray-800 rounded-full">+${offre.tags.length - 3} plus</span>` : 
                                     ''}
                             </div>
                         `;
                     }
                     
-                    // Create job card
-                    const jobItem = document.createElement('li');
-                    jobItem.className = 'p-6 hover:bg-gray-50 transition-colors duration-200';
-                    jobItem.innerHTML = `
+                    // Create offre card
+                    const offreItem = document.createElement('li');
+                    offreItem.className = 'p-6 hover:bg-gray-50 transition-colors duration-200';
+                    offreItem.innerHTML = `
                         <div class="flex flex-col md:flex-row md:items-center md:justify-between">
                             <div class="flex-1">
                                 <div class="flex items-center">
                                     <h4 class="text-lg font-medium text-gray-900">
-                                        <a href="/recruteur/jobs/${job.id}" class="hover:text-blue-600">${job.titre}</a>
+                                        <a href="/recruteur/offres/${offre.id}" class="hover:text-blue-600">${offre.titre}</a>
                                     </h4>
                                     <div class="ml-2">
                                         ${statusBadge}
                                     </div>
                                 </div>
                                 <p class="mt-1 text-sm text-gray-500">Publié le ${formattedDate}</p>
-                                <p class="mt-1 text-sm text-gray-600 line-clamp-2">${job.description}</p>
+                                <p class="mt-1 text-sm text-gray-600 line-clamp-2">${offre.description}</p>
                                 ${tagsHtml}
                             </div>
                             <div class="mt-4 md:mt-0 flex flex-col items-end">
@@ -397,15 +397,15 @@
                                     <i class="fas fa-user-friends mr-1"></i> ${applicationsCount} candidature(s)
                                 </span>
                                 <div class="mt-3 flex">
-                                    <a href="/recruteur/candidates?job=${job.id}" class="inline-flex items-center px-3 py-1 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50">
+                                    <a href="/recruteur/candidates?offre=${offre.id}" class="inline-flex items-center px-3 py-1 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50">
                                         <i class="fas fa-users mr-2"></i>
                                         Candidats
                                     </a>
-                                    <a href="/recruteur/jobs/${job.id}/edit" class="ml-3 inline-flex items-center px-3 py-1 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50">
+                                    <a href="/recruteur/offres/${offre.id}/edit" class="ml-3 inline-flex items-center px-3 py-1 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50">
                                         <i class="fas fa-edit mr-2"></i>
                                         Modifier
                                     </a>
-                                    <button type="button" data-job-id="${job.id}" class="delete-job-btn ml-3 inline-flex items-center px-3 py-1 border border-gray-300 text-sm leading-5 font-medium rounded-md text-red-700 bg-white hover:text-red-500 focus:outline-none focus:border-red-300 focus:shadow-outline-red active:text-red-800 active:bg-gray-50">
+                                    <button type="button" data-offre-id="${offre.id}" class="delete-offre-btn ml-3 inline-flex items-center px-3 py-1 border border-gray-300 text-sm leading-5 font-medium rounded-md text-red-700 bg-white hover:text-red-500 focus:outline-none focus:border-red-300 focus:shadow-outline-red active:text-red-800 active:bg-gray-50">
                                         <i class="fas fa-trash-alt mr-2"></i>
                                         Supprimer
                                     </button>
@@ -414,14 +414,14 @@
                         </div>
                     `;
                     
-                    jobsContainer.appendChild(jobItem);
+                    offresContainer.appendChild(offreItem);
                 });
                 
                 // Add event listeners to delete buttons
-                document.querySelectorAll('.delete-job-btn').forEach(button => {
+                document.querySelectorAll('.delete-offre-btn').forEach(button => {
                     button.addEventListener('click', function() {
-                        const jobId = this.getAttribute('data-job-id');
-                        showDeleteModal(jobId);
+                        const offreId = this.getAttribute('data-offre-id');
+                        showDeleteModal(offreId);
                     });
                 });
             }
@@ -444,7 +444,7 @@
                     prevButton.addEventListener('click', (e) => {
                         e.preventDefault();
                         currentPage--;
-                        renderJobs();
+                        renderoffres();
                     });
                 }
                 paginationContainer.appendChild(prevButton);
@@ -509,7 +509,7 @@
                     nextButton.addEventListener('click', (e) => {
                         e.preventDefault();
                         currentPage++;
-                        renderJobs();
+                        renderoffres();
                     });
                 }
                 paginationContainer.appendChild(nextButton);
@@ -525,7 +525,7 @@
                         pageButton.addEventListener('click', (e) => {
                             e.preventDefault();
                             currentPage = pageNumber;
-                            renderJobs();
+                            renderoffres();
                         });
                     }
                     
@@ -534,8 +534,8 @@
             }
             
             // Function to show delete confirmation modal
-            function showDeleteModal(jobId) {
-                currentJobIdToDelete = jobId;
+            function showDeleteModal(offreId) {
+                currentoffreIdToDelete = offreId;
                 const modal = document.getElementById('delete-modal');
                 modal.classList.remove('hidden');
                 document.body.classList.add('overflow-hidden');
@@ -546,12 +546,12 @@
                 const modal = document.getElementById('delete-modal');
                 modal.classList.add('hidden');
                 document.body.classList.remove('overflow-hidden');
-                currentJobIdToDelete = null;
+                currentoffreIdToDelete = null;
             }
             
-            // Function to confirm job deletion
-            async function confirmDeleteJob() {
-                if (!currentJobIdToDelete) return;
+            // Function to confirm offre deletion
+            async function confirmDeleteoffre() {
+                if (!currentoffreIdToDelete) return;
                 
                 try {
                     // Check if API client is available
@@ -562,26 +562,26 @@
                         return;
                     }
                     
-                    // Delete job from API
-                    await window.annonces.delete(currentJobIdToDelete);
+                    // Delete offre from API
+                    await window.annonces.delete(currentoffreIdToDelete);
                     
-                    // Remove job from local data
-                    jobsData = jobsData.filter(job => job.id != currentJobIdToDelete);
-                    totalJobs--;
+                    // Remove offre from local data
+                    offresData = offresData.filter(offre => offre.id != currentoffreIdToDelete);
+                    totaloffres--;
                     
                     // Recalculate current page if needed
-                    const totalPages = Math.ceil(totalJobs / itemsPerPage);
+                    const totalPages = Math.ceil(totaloffres / itemsPerPage);
                     if (currentPage > totalPages && totalPages > 0) {
                         currentPage = totalPages;
                     }
                     
-                    // Re-render jobs
-                    renderJobs();
+                    // Re-render offres
+                    renderoffres();
                     
                     // Show success notification
                     window.showNotification('Offre supprimée avec succès', 'success');
                 } catch (error) {
-                    console.error('Error deleting job:', error);
+                    console.error('Error deleting offre:', error);
                     window.showNotification('Erreur lors de la suppression de l\'offre', 'error');
                 } finally {
                     hideDeleteModal();
@@ -590,16 +590,16 @@
             
             // Function to show fallback data when API fails
             function showFallbackData() {
-                // Generate sample jobs
-                jobsData = generateSampleJobs();
-                totalJobs = jobsData.length;
+                // Generate sample offres
+                offresData = generateSampleoffres();
+                totaloffres = offresData.length;
                 
-                // Render jobs
-                renderJobs();
+                // Render offres
+                renderoffres();
             }
             
-            // Function to generate sample jobs for fallback
-            function generateSampleJobs() {
+            // Function to generate sample offres for fallback
+            function generateSampleoffres() {
                 const now = new Date();
                 
                 return [

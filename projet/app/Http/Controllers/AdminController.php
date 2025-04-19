@@ -27,7 +27,7 @@ class AdminController extends Controller
         $deletedUsers = User::onlyTrashed()->get();
         
         // Récupérer les offres les plus consultées
-        $topJobs = Annonce::where('statut', 'ouverte')
+        $topoffres = Annonce::where('statut', 'ouverte')
             ->with(['recruteur', 'tags'])
             ->orderByDesc('created_at')
             ->limit(5)
@@ -60,7 +60,7 @@ class AdminController extends Controller
             'totalCandidatures' => $totalCandidatures,
             'totalTags' => $totalTags,
             'deletedUsers' => $deletedUsers,
-            'topJobs' => $topJobs,
+            'topoffres' => $topoffres,
             'progression' => $progression
         ]);
     }

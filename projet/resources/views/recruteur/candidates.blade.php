@@ -25,10 +25,10 @@
                         </div>
                     </div>
                     <div>
-                        <label for="job-filter" class="block text-sm font-medium text-gray-700">Offre d'emploi</label>
-                        <select id="job-filter" name="job-filter" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+                        <label for="offre-filter" class="block text-sm font-medium text-gray-700">Offre d'emploi</label>
+                        <select id="offre-filter" name="offre-filter" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
                             <option value="all">Toutes les offres</option>
-                            <!-- Job options will be added by JavaScript -->
+                            <!-- offre options will be added by JavaScript -->
                         </select>
                     </div>
                     <div>
@@ -148,7 +148,7 @@
             <h3 class="mt-2 text-sm font-medium text-gray-900">Aucune candidature</h3>
             <p class="mt-1 text-sm text-gray-500">Vous n'avez reçu aucune candidature pour le moment.</p>
             <div class="mt-6">
-                <a href="{{ url('/recruteur/jobs') }}" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                <a href="{{ url('/recruteur/offres') }}" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                     <i class="fas fa-arrow-left mr-2"></i>
                     Retour aux offres
                 </a>
@@ -217,7 +217,7 @@
         try {
             // Initialize variables
             let applicationsData = [];
-            let jobsData = [];
+            let offresData = [];
             let currentPage = 1;
             let itemsPerPage = 10;
             let totalApplications = 0;
@@ -225,7 +225,7 @@
             
             // Initialize filters
             const searchInput = document.getElementById('search');
-            const jobFilter = document.getElementById('job-filter');
+            const offreFilter = document.getElementById('offre-filter');
             const statusFilter = document.getElementById('status-filter');
             const dateFilter = document.getElementById('date-filter');
             const dateStartInput = document.getElementById('date-start');
@@ -267,7 +267,7 @@
             // Load data
             await loadData();
             
-            // Function to load applications and jobs data
+            // Function to load applications and offres data
             async function loadData() {
                 try {
                     // Check if API client is available
@@ -284,18 +284,18 @@
                         return;
                     }
                     
-                    // Load jobs and applications in parallel
-                    const [jobs, applications] = await Promise.all([
+                    // Load offres and applications in parallel
+                    const [offres, applications] = await Promise.all([
                         window.annonces.getAll(),
                         window.candidatures.getAll()
                     ]);
                     
-                    jobsData = jobs;
+                    offresData = offres;
                     applicationsData = applications;
                     totalApplications = applications.length;
                     
-                    // Populate job filter options
-                    populateJobFilter();
+                    // Populate offre filter options
+                    populateoffreFilter();
                     
                     // Render applications with pagination
                     renderApplications();
@@ -306,19 +306,19 @@
                 }
             }
             
-            // Function to populate job filter dropdown
-            function populateJobFilter() {
-                // Clear existing options except "All jobs"
-                const allJobsOption = jobFilter.querySelector('option[value="all"]');
-                jobFilter.innerHTML = '';
-                jobFilter.appendChild(allJobsOption);
+            // Function to populate offre filter dropdown
+            function populateoffreFilter() {
+                // Clear existing options except "All offres"
+                const alloffresOption = offreFilter.querySelector('option[value="all"]');
+                offreFilter.innerHTML = '';
+                offreFilter.appendChild(alloffresOption);
                 
-                // Add job options
-                jobsData.forEach(job => {
+                // Add offre options
+                offresData.forEach(offre => {
                     const option = document.createElement('option');
-                    option.value = job.id;
-                    option.textContent = job.titre;
-                    jobFilter.appendChild(option);
+                    option.value = offre.id;
+                    option.textContent = offre.titre;
+                    offreFilter.appendChild(option);
                 });
             }
             
@@ -331,7 +331,7 @@
             // Function to reset filters
             function resetFilters() {
                 searchInput.value = '';
-                jobFilter.value = 'all';
+                offreFilter.value = 'all';
                 statusFilter.value = 'all';
                 dateFilter.value = 'all';
                 dateStartInput.value = '';
@@ -355,10 +355,10 @@
                     });
                 }
                 
-                // Apply job filter
-                const jobId = jobFilter.value;
-                if (jobId !== 'all') {
-                    filtered = filtered.filter(app => app.annonce_id == jobId);
+                // Apply offre filter
+                const offreId = offreFilter.value;
+                if (offreId !== 'all') {
+                    filtered = filtered.filter(app => app.annonce_id == offreId);
                 }
                 
                 // Apply status filter
@@ -477,8 +477,8 @@
                 }
                 
                 paginatedApplications.forEach(application => {
-                    // Find job information
-                    const job = jobsData.find(j => j.id == application.annonce_id) || { titre: 'Poste inconnu' };
+                    // Find offre information
+                    const offre = offresData.find(j => j.id == application.annonce_id) || { titre: 'Poste inconnu' };
                     
                     // Format date
                     const applicationDate = new Date(application.created_at);
@@ -526,7 +526,7 @@
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-900">${job.titre}</div>
+                            <div class="text-sm text-gray-900">${offre.titre}</div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-500">${formattedDate}</div>
@@ -760,19 +760,19 @@
             // Function to show fallback data when API fails
             function showFallbackData() {
                 // Generate sample data
-                jobsData = generateSampleJobs();
+                offresData = generateSampleoffres();
                 applicationsData = generateSampleApplications();
                 totalApplications = applicationsData.length;
                 
-                // Populate job filter
-                populateJobFilter();
+                // Populate offre filter
+                populateoffreFilter();
                 
                 // Render applications
                 renderApplications();
             }
             
-            // Function to generate sample jobs for demo purposes
-            function generateSampleJobs() {
+            // Function to generate sample offres for demo purposes
+            function generateSampleoffres() {
                 return [
                     { id: 1, titre: 'Développeur Full Stack' },
                     { id: 2, titre: 'UX Designer' },

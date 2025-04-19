@@ -13,7 +13,7 @@
     <!-- Stats Overview -->
     <div class="px-4 py-4 sm:px-0">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <!-- Total Jobs -->
+            <!-- Total offres -->
             <div class="bg-white overflow-hidden shadow rounded-lg">
                 <div class="px-4 py-5 sm:p-6">
                     <div class="flex items-center">
@@ -30,7 +30,7 @@
                 </div>
             </div>
 
-            <!-- Active Jobs -->
+            <!-- Active offres -->
             <div class="bg-white overflow-hidden shadow rounded-lg">
                 <div class="px-4 py-5 sm:p-6">
                     <div class="flex items-center">
@@ -128,7 +128,7 @@
                 </div>
             </div>
 
-            <!-- Job Statistics -->
+            <!-- offre Statistics -->
             <div class="bg-white overflow-hidden shadow rounded-lg">
                 <div class="px-4 py-5 sm:p-6">
                     <h2 class="text-lg font-medium text-gray-900">Statistiques des offres</h2>

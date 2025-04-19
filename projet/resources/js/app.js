@@ -252,48 +252,48 @@ const auth = {
 };
 
 /**
- * Annonces (Job Announcements) module for managing job announcements
+ * Annonces (offre Announcements) module for managing offre announcements
  */
 const annonces = {
     /**
-     * Get all job announcements
-     * @returns {Promise} The job announcements data
+     * Get all offre announcements
+     * @returns {Promise} The offre announcements data
      */
     async getAll() {
         return apiClient.get('/annonces');
     },
 
     /**
-     * Get a specific job announcement
-     * @param {number} id - The job announcement ID
-     * @returns {Promise} The job announcement data
+     * Get a specific offre announcement
+     * @param {number} id - The offre announcement ID
+     * @returns {Promise} The offre announcement data
      */
     async get(id) {
         return apiClient.get(`/annonces/${id}`);
     },
 
     /**
-     * Create a new job announcement
-     * @param {Object} data - The job announcement data
-     * @returns {Promise} The created job announcement
+     * Create a new offre announcement
+     * @param {Object} data - The offre announcement data
+     * @returns {Promise} The created offre announcement
      */
     async create(data) {
         return apiClient.post('/annonces', data);
     },
 
     /**
-     * Update a job announcement
-     * @param {number} id - The job announcement ID
-     * @param {Object} data - The updated job announcement data
-     * @returns {Promise} The updated job announcement
+     * Update a offre announcement
+     * @param {number} id - The offre announcement ID
+     * @param {Object} data - The updated offre announcement data
+     * @returns {Promise} The updated offre announcement
      */
     async update(id, data) {
         return apiClient.put(`/annonces/${id}`, data);
     },
 
     /**
-     * Delete a job announcement
-     * @param {number} id - The job announcement ID
+     * Delete a offre announcement
+     * @param {number} id - The offre announcement ID
      * @returns {Promise} The response data
      */
     async delete(id) {
@@ -301,7 +301,7 @@ const annonces = {
     },
 
     /**
-     * Get job announcements statistics
+     * Get offre announcements statistics
      * @returns {Promise} The statistics data
      */
     async getStats() {
@@ -310,48 +310,48 @@ const annonces = {
 };
 
 /**
- * Candidatures (Job Applications) module for managing job applications
+ * Candidatures (offre Applications) module for managing offre applications
  */
 const candidatures = {
     /**
-     * Get all job applications
-     * @returns {Promise} The job applications data
+     * Get all offre applications
+     * @returns {Promise} The offre applications data
      */
     async getAll() {
         return apiClient.get('/candidatures');
     },
 
     /**
-     * Get a specific job application
-     * @param {number} id - The job application ID
-     * @returns {Promise} The job application data
+     * Get a specific offre application
+     * @param {number} id - The offre application ID
+     * @returns {Promise} The offre application data
      */
     async get(id) {
         return apiClient.get(`/candidatures/${id}`);
     },
 
     /**
-     * Apply for a job
-     * @param {number} annonceId - The job announcement ID
-     * @returns {Promise} The created job application
+     * Apply for a offre
+     * @param {number} annonceId - The offre announcement ID
+     * @returns {Promise} The created offre application
      */
     async create(annonceId) {
         return apiClient.post('/candidatures', { id_annonce: annonceId });
     },
 
     /**
-     * Update a job application status
-     * @param {number} id - The job application ID
+     * Update a offre application status
+     * @param {number} id - The offre application ID
      * @param {string} status - The new status
-     * @returns {Promise} The updated job application
+     * @returns {Promise} The updated offre application
      */
     async updateStatus(id, status) {
         return apiClient.put(`/candidatures/${id}/status`, { statut: status });
     },
 
     /**
-     * Withdraw a job application
-     * @param {number} id - The job application ID
+     * Withdraw a offre application
+     * @param {number} id - The offre application ID
      * @returns {Promise} The response data
      */
     async withdraw(id) {
@@ -359,7 +359,7 @@ const candidatures = {
     },
 
     /**
-     * Get job applications statistics
+     * Get offre applications statistics
      * @returns {Promise} The statistics data
      */
     async getStats() {

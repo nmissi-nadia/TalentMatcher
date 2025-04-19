@@ -32,9 +32,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Public Job Listings
-Route::get('/jobs', [AnnonceController::class, 'index'])->name('jobs.index');
-Route::get('/jobs/{id}', [AnnonceController::class, 'show'])->name('jobs.show');
+// Public offre Listings
+Route::get('/offres', [AnnonceController::class, 'index'])->name('offres.index');
+Route::get('/offres/{id}', [AnnonceController::class, 'show'])->name('offres.show');
 
 // Candidate Routes (Protected by Auth Middleware)
 Route::middleware(['auth', 'check.role:candidat'])->prefix('candidat')->name('candidat.')->group(function () {
@@ -69,7 +69,7 @@ Route::middleware(['auth', 'check.role:admin'])->prefix('admin')->name('admin.')
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
   
     // teste
-    Route::delete('/offre/{id}', [AdminController::class, 'deleteJob'])->name('admin.deleteJob');
+    Route::delete('/offre/{id}', [AdminController::class, 'deleteoffre'])->name('admin.deleteoffre');
         Route::get('/utilisateurs', [AdminController::class, 'utilisateurs'])->name('utilisateurs');
         Route::get('/candidatures', [AdminController::class, 'candidatures'])->name('candidatures');
         Route::get('/moderation', [AdminController::class, 'moderation'])->name('moderation');
@@ -87,7 +87,7 @@ Route::middleware(['auth', 'check.role:admin'])->prefix('admin')->name('admin.')
         Route::delete('/annonce/{id}', [AnnonceController::class, 'delete'])->name('annonce.delete');
 });
 
-// API Routes for Job Applications
+// API Routes for offre Applications
 Route::middleware(['auth'])->prefix('api')->name('api.')->group(function () {
     Route::post('/candidatures', [CandidatureController::class, 'store'])->name('candidatures.store');
     Route::get('/candidatures/{id}', [CandidatureController::class, 'show'])->name('candidatures.show');

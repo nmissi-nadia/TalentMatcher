@@ -88,19 +88,19 @@
                         <h3 class="text-lg leading-6 font-medium text-gray-900">
                             Résultats
                         </h3>
-                        <p class="mt-1 text-sm text-gray-500" id="jobs-count">
+                        <p class="mt-1 text-sm text-gray-500" id="offres-count">
                             Chargement des offres...
                         </p>
                     </div>
                     <div class="ml-4 flex-shrink-0">
-                        <span id="job-pagination-info" class="text-sm text-gray-500">
+                        <span id="offre-pagination-info" class="text-sm text-gray-500">
                             Page 1
                         </span>
                     </div>
                 </div>
             </div>
             
-            <div id="jobs-container" class="divide-y divide-gray-200">
+            <div id="offres-container" class="divide-y divide-gray-200">
                 <div class="p-6 text-center text-gray-500">
                     <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-4"></div>
                     Chargement des offres d'emploi...
@@ -142,9 +142,9 @@
     </div>
 </div>
 
-<!-- Job Card Template (hidden) -->
-<template id="job-card-template">
-    <div class="job-card p-6 hover:bg-gray-50 transition-colors duration-150">
+<!-- offre Card Template (hidden) -->
+<template id="offre-card-template">
+    <div class="offre-card p-6 hover:bg-gray-50 transition-colors duration-150">
         <div class="flex flex-col md:flex-row md:items-start">
             <div class="flex-1">
                 <div class="flex items-start">
@@ -153,26 +153,26 @@
                     </div>
                     <div class="ml-4">
                         <h3 class="text-lg font-semibold">
-                            <a href="#" class="job-title text-blue-600 hover:text-blue-800">Titre du poste</a>
+                            <a href="#" class="offre-title text-blue-600 hover:text-blue-800">Titre du poste</a>
                         </h3>
                         <div class="mt-1 flex items-center text-sm text-gray-500">
                             <i class="fas fa-building mr-1.5"></i>
-                            <span class="job-company">Nom de l'entreprise</span>
+                            <span class="offre-company">Nom de l'entreprise</span>
                         </div>
                     </div>
                 </div>
                 
-                <div class="mt-4 job-description text-sm text-gray-700 line-clamp-2"></div>
+                <div class="mt-4 offre-description text-sm text-gray-700 line-clamp-2"></div>
                 
-                <div class="mt-4 flex flex-wrap gap-2 job-tags"></div>
+                <div class="mt-4 flex flex-wrap gap-2 offre-tags"></div>
             </div>
             
             <div class="mt-4 md:mt-0 md:ml-6 flex flex-col items-end justify-between">
                 <div class="text-right">
-                    <span class="job-status px-2 py-1 text-xs rounded-full"></span>
+                    <span class="offre-status px-2 py-1 text-xs rounded-full"></span>
                 </div>
-                <div class="mt-4 text-sm text-gray-500 job-date">Date de publication</div>
-                <a href="#" class="job-link mt-4 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                <div class="mt-4 text-sm text-gray-500 offre-date">Date de publication</div>
+                <a href="#" class="offre-link mt-4 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                     Voir l'offre
                 </a>
             </div>
@@ -185,8 +185,8 @@
 <script>
     document.addEventListener('DOMContentLoaded', async function() {
         // State variables
-        let allJobs = [];
-        let filteredJobs = [];
+        let alloffres = [];
+        let filteredoffres = [];
         let allTags = [];
         let currentPage = 1;
         const itemsPerPage = 10;
@@ -199,8 +199,8 @@
         const sortFilter = document.getElementById('sort-filter');
         const resetFiltersBtn = document.getElementById('reset-filters-btn');
         const applyFiltersBtn = document.getElementById('apply-filters-btn');
-        const jobsContainer = document.getElementById('jobs-container');
-        const jobsCount = document.getElementById('jobs-count');
+        const offresContainer = document.getElementById('offres-container');
+        const offresCount = document.getElementById('offres-count');
         const prevPageBtn = document.getElementById('prev-page');
         const nextPageBtn = document.getElementById('next-page');
         const prevPageMobileBtn = document.getElementById('prev-page-mobile');
@@ -208,12 +208,12 @@
         const paginationContainer = document.getElementById('pagination-container');
         const resultRange = document.getElementById('result-range');
         const totalResults = document.getElementById('total-results');
-        const jobPaginationInfo = document.getElementById('job-pagination-info');
+        const offrePaginationInfo = document.getElementById('offre-pagination-info');
                 
         try {
-            // Fetch jobs and tags
+            // Fetch offres and tags
             await Promise.all([
-                fetchJobs(),
+                fetchoffres(),
                 fetchTags()
             ]);
             
@@ -223,30 +223,30 @@
             // Initially apply current filters
             applyFilters();
         } catch (error) {
-            console.error('Error initializing job search:', error);
+            console.error('Error initializing offre search:', error);
             showError('Une erreur est survenue lors du chargement des offres d\'emploi.');
         }
         
-        // Fetch all jobs from API
-        async function fetchJobs() {
+        // Fetch all offres from API
+        async function fetchoffres() {
             try {
                 // Use API client if available
                 if (window.annonces) {
-                    allJobs = await window.annonces.getAll();
+                    alloffres = await window.annonces.getAll();
                 } else {
                     // Fallback to fetch API
                     const response = await fetch('/api/annonces');
-                    if (!response.ok) throw new Error('Failed to fetch jobs');
-                    allJobs = await response.json();
+                    if (!response.ok) throw new Error('Failed to fetch offres');
+                    alloffres = await response.json();
                 }
                 
                 // Initial filtering
-                filteredJobs = [...allJobs];
+                filteredoffres = [...alloffres];
             } catch (error) {
-                console.error('Error fetching jobs:', error);
+                console.error('Error fetching offres:', error);
                 // Fallback with sample data
-                allJobs = generateSampleJobs();
-                filteredJobs = [...allJobs];
+                alloffres = generateSampleoffres();
+                filteredoffres = [...alloffres];
             }
         }
         
@@ -332,16 +332,16 @@
             prevPageBtn.addEventListener('click', function() {
                 if (currentPage > 1) {
                     currentPage--;
-                    renderJobs();
+                    renderoffres();
                     updatePagination();
                 }
             });
             
             nextPageBtn.addEventListener('click', function() {
-                const totalPages = Math.ceil(filteredJobs.length / itemsPerPage);
+                const totalPages = Math.ceil(filteredoffres.length / itemsPerPage);
                 if (currentPage < totalPages) {
                     currentPage++;
-                    renderJobs();
+                    renderoffres();
                     updatePagination();
                 }
             });
@@ -350,16 +350,16 @@
             prevPageMobileBtn.addEventListener('click', function() {
                 if (currentPage > 1) {
                     currentPage--;
-                    renderJobs();
+                    renderoffres();
                     updatePagination();
                 }
             });
             
             nextPageMobileBtn.addEventListener('click', function() {
-                const totalPages = Math.ceil(filteredJobs.length / itemsPerPage);
+                const totalPages = Math.ceil(filteredoffres.length / itemsPerPage);
                 if (currentPage < totalPages) {
                     currentPage++;
-                    renderJobs();
+                    renderoffres();
                     updatePagination();
                 }
             });
@@ -373,19 +373,19 @@
             const status = statusFilter.value;
             const sortBy = sortFilter.value;
             
-            // Filter jobs
-            filteredJobs = allJobs.filter(job => {
+            // Filter offres
+            filteredoffres = alloffres.filter(offre => {
                 // Search term (title, company, description)
-                const titleMatch = job.titre?.toLowerCase().includes(searchTerm);
-                const companyMatch = job.recruteur?.name?.toLowerCase().includes(searchTerm);
-                const descriptionMatch = job.description?.toLowerCase().includes(searchTerm);
+                const titleMatch = offre.titre?.toLowerCase().includes(searchTerm);
+                const companyMatch = offre.recruteur?.name?.toLowerCase().includes(searchTerm);
+                const descriptionMatch = offre.description?.toLowerCase().includes(searchTerm);
                 
                 if (searchTerm && !(titleMatch || companyMatch || descriptionMatch)) {
                     return false;
                 }
                 
                 // Sector (simulated - would need backend support)
-                if (sector && job.secteur !== sector) {
+                if (sector && offre.secteur !== sector) {
                     // If secteur property doesn't exist, assume it's the Informatique sector for this demo
                     if (sector !== 'informatique') {
                         return false;
@@ -394,59 +394,59 @@
                 
                 // Tag filter
                 if (tagId) {
-                    const hasTag = job.tags && job.tags.some(tag => tag.id === tagId);
+                    const hasTag = offre.tags && offre.tags.some(tag => tag.id === tagId);
                     if (!hasTag) return false;
                 }
                 
                 // Status filter
-                if (status && job.statut !== status) {
+                if (status && offre.statut !== status) {
                     return false;
                 }
                 
                 return true;
             });
             
-            // Sort jobs
-            sortJobs(sortBy);
+            // Sort offres
+            sortoffres(sortBy);
             
             // Reset to first page
             currentPage = 1;
             
             // Render results
-            renderJobs();
+            renderoffres();
             updatePagination();
         }
         
-        // Sort jobs based on selected criteria
-        function sortJobs(sortBy) {
+        // Sort offres based on selected criteria
+        function sortoffres(sortBy) {
             switch (sortBy) {
                 case 'date-desc':
-                    filteredJobs.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                    filteredoffres.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
                     break;
                 case 'date-asc':
-                    filteredJobs.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+                    filteredoffres.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
                     break;
                 case 'title-asc':
-                    filteredJobs.sort((a, b) => a.titre.localeCompare(b.titre));
+                    filteredoffres.sort((a, b) => a.titre.localeCompare(b.titre));
                     break;
                 case 'title-desc':
-                    filteredJobs.sort((a, b) => b.titre.localeCompare(a.titre));
+                    filteredoffres.sort((a, b) => b.titre.localeCompare(a.titre));
                     break;
                 default:
                     break;
             }
         }
         
-        // Render job listings with pagination
-        function renderJobs() {
+        // Render offre listings with pagination
+        function renderoffres() {
             // Clear container
-            jobsContainer.innerHTML = '';
+            offresContainer.innerHTML = '';
             
             // Update count
-            jobsCount.textContent = `${filteredJobs.length} offre(s) trouvée(s)`;
+            offresCount.textContent = `${filteredoffres.length} offre(s) trouvée(s)`;
             
-            if (filteredJobs.length === 0) {
-                jobsContainer.innerHTML = `
+            if (filteredoffres.length === 0) {
+                offresContainer.innerHTML = `
                     <div class="p-6 text-center text-gray-500">
                         Aucune offre ne correspond à vos critères. Veuillez modifier vos filtres.
                     </div>
@@ -456,45 +456,45 @@
             
             // Calculate pagination
             const startIndex = (currentPage - 1) * itemsPerPage;
-            const endIndex = Math.min(startIndex + itemsPerPage, filteredJobs.length);
-            const currentJobs = filteredJobs.slice(startIndex, endIndex);
+            const endIndex = Math.min(startIndex + itemsPerPage, filteredoffres.length);
+            const currentoffres = filteredoffres.slice(startIndex, endIndex);
             
             // Update display range
             resultRange.textContent = `${startIndex + 1} à ${endIndex}`;
-            totalResults.textContent = filteredJobs.length;
-            jobPaginationInfo.textContent = `Page ${currentPage} sur ${Math.ceil(filteredJobs.length / itemsPerPage)}`;
+            totalResults.textContent = filteredoffres.length;
+            offrePaginationInfo.textContent = `Page ${currentPage} sur ${Math.ceil(filteredoffres.length / itemsPerPage)}`;
             
             // Get template
-            const template = document.getElementById('job-card-template');
+            const template = document.getElementById('offre-card-template');
             
-            // Create job cards
-            currentJobs.forEach(job => {
+            // Create offre cards
+            currentoffres.forEach(offre => {
                 const card = document.importNode(template.content, true);
                 
                 // Fill in data
-                const titleLink = card.querySelector('.job-title');
-                titleLink.textContent = job.titre;
-                titleLink.href = `/candidat/jobs/${job.id}`;
+                const titleLink = card.querySelector('.offre-title');
+                titleLink.textContent = offre.titre;
+                titleLink.href = `/candidat/offres/${offre.id}`;
                 
-                card.querySelector('.job-company').textContent = job.recruteur?.name || 'Entreprise';
-                card.querySelector('.job-description').textContent = job.description;
+                card.querySelector('.offre-company').textContent = offre.recruteur?.name || 'Entreprise';
+                card.querySelector('.offre-description').textContent = offre.description;
                 
                 // Format date
-                const postedDate = new Date(job.created_at);
+                const postedDate = new Date(offre.created_at);
                 const formattedDate = postedDate.toLocaleDateString('fr-FR', {
                     day: 'numeric',
                     month: 'short',
                     year: 'numeric'
                 });
-                card.querySelector('.job-date').textContent = `Publié le ${formattedDate}`;
+                card.querySelector('.offre-date').textContent = `Publié le ${formattedDate}`;
                 
-                // Job link
-                const jobLink = card.querySelector('.job-link');
-                jobLink.href = `/candidat/jobs/${job.id}`;
+                // offre link
+                const offreLink = card.querySelector('.offre-link');
+                offreLink.href = `/candidat/offres/${offre.id}`;
                 
                 // Status badge
-                const statusBadge = card.querySelector('.job-status');
-                if (job.statut === 'ouverte') {
+                const statusBadge = card.querySelector('.offre-status');
+                if (offre.statut === 'ouverte') {
                     statusBadge.classList.add('bg-green-100', 'text-green-800');
                     statusBadge.textContent = 'Ouverte';
                 } else {
@@ -503,9 +503,9 @@
                 }
                 
                 // Tags
-                const tagsContainer = card.querySelector('.job-tags');
-                if (job.tags && job.tags.length) {
-                    job.tags.forEach(tag => {
+                const tagsContainer = card.querySelector('.offre-tags');
+                if (offre.tags && offre.tags.length) {
+                    offre.tags.forEach(tag => {
                         const tagSpan = document.createElement('span');
                         tagSpan.className = 'px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full';
                         tagSpan.textContent = tag.nom;
@@ -514,7 +514,7 @@
                 }
                 
                 // Add to container
-                jobsContainer.appendChild(card);
+                offresContainer.appendChild(card);
             });
             
             // Scroll to top
@@ -523,7 +523,7 @@
         
         // Update pagination controls
         function updatePagination() {
-            const totalPages = Math.ceil(filteredJobs.length / itemsPerPage);
+            const totalPages = Math.ceil(filteredoffres.length / itemsPerPage);
             
             // Update button states
             prevPageBtn.disabled = currentPage <= 1;
@@ -556,7 +556,7 @@
                 
                 button.addEventListener('click', function() {
                     currentPage = i;
-                    renderJobs();
+                    renderoffres();
                     updatePagination();
                 });
                 
@@ -567,7 +567,7 @@
         
         // Show error message
         function showError(message) {
-            jobsContainer.innerHTML = `
+            offresContainer.innerHTML = `
                 <div class="p-6 text-center text-red-500">
                     <i class="fas fa-exclamation-circle text-3xl mb-4"></i>
                     <p>${message}</p>
@@ -578,7 +578,7 @@
             `;
             
             document.getElementById('retry-button').addEventListener('click', async function() {
-                jobsContainer.innerHTML = `
+                offresContainer.innerHTML = `
                     <div class="p-6 text-center text-gray-500">
                         <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-4"></div>
                         Chargement des offres d'emploi...
@@ -586,7 +586,7 @@
                 `;
                 
                 try {
-                    await fetchJobs();
+                    await fetchoffres();
                     await fetchTags();
                     applyFilters();
                 } catch (error) {
@@ -596,8 +596,8 @@
             });
         }
         
-        // Generate sample jobs data for fallback
-        function generateSampleJobs() {
+        // Generate sample offres data for fallback
+        function generateSampleoffres() {
             const titles = [
                 'Développeur Full Stack', 
                 'Designer UX/UI', 
@@ -651,13 +651,13 @@
                 { id: 6, nom: 'SQL' }
             ];
             
-            // Generate 30 sample jobs
+            // Generate 30 sample offres
             return Array.from({ length: 30 }, (_, i) => {
                 const date = new Date();
                 date.setDate(date.getDate() - Math.floor(Math.random() * 30));
                 
                 // Select 2-3 random tags
-                const jobTags = [];
+                const offreTags = [];
                 const numTags = Math.floor(Math.random() * 2) + 2;
                 const tagIndices = new Set();
                 
@@ -666,7 +666,7 @@
                 }
                 
                 tagIndices.forEach(index => {
-                    jobTags.push(tags[index]);
+                    offreTags.push(tags[index]);
                 });
                 
                 return {
@@ -680,7 +680,7 @@
                         id: i + 1,
                         name: companies[i % companies.length]
                     },
-                    tags: jobTags
+                    tags: offreTags
                 };
             });
         }

@@ -30,7 +30,7 @@
                 </div>
             </div>
 
-            <!-- Active Jobs -->
+            <!-- Active offres -->
             <div class="bg-white overflow-hidden shadow rounded-lg">
                 <div class="px-4 py-5 sm:p-6">
                     <div class="flex items-center">
@@ -40,7 +40,7 @@
                         <div class="ml-5 w-0 flex-1">
                             <dl>
                                 <dt class="text-sm font-medium text-gray-500 truncate">Offres actives</dt>
-                                <dd class="text-lg font-semibold text-gray-900">{{ $activeJobs }}</dd>
+                                <dd class="text-lg font-semibold text-gray-900">{{ $activeoffres }}</dd>
                             </dl>
                         </div>
                     </div>

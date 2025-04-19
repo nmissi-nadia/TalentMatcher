@@ -135,7 +135,7 @@
                     </div>
                 </div>
                 
-                <!-- Jobs Table -->
+                <!-- offres Table -->
                 <div class="bg-white rounded-lg shadow-sm overflow-hidden mb-6">
                     <div class="flex justify-between items-center px-6 py-4 border-b border-gray-200">
                         <h2 class="font-medium">Liste des offres</h2>

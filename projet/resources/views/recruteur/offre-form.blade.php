@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', isset($job) ? 'Modifier une offre - TalentMatcher' : 'Créer une offre - TalentMatcher')
+@section('title', isset($offre) ? 'Modifier une offre - TalentMatcher' : 'Créer une offre - TalentMatcher')
 
 @section('content')
 <div class="bg-white shadow">
     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         <h1 class="text-3xl font-bold text-gray-900">
-            {{ isset($job) ? 'Modifier l\'offre d\'emploi' : 'Publier une nouvelle offre d\'emploi' }}
+            {{ isset($offre) ? 'Modifier l\'offre d\'emploi' : 'Publier une nouvelle offre d\'emploi' }}
         </h1>
     </div>
 </div>
@@ -14,18 +14,18 @@
 <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
     <div class="px-4 py-6 sm:px-0">
         <div class="bg-white shadow overflow-hidden sm:rounded-lg">
-            <form id="job-form" class="space-y-6 px-4 py-5 sm:p-6">
+            <form id="offre-form" class="space-y-6 px-4 py-5 sm:p-6">
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-6">
-                    <!-- Hidden job ID for edit mode -->
-                    <input type="hidden" id="job-id" value="{{ isset($job) ? $job->id : '' }}">
+                    <!-- Hidden offre ID for edit mode -->
+                    <input type="hidden" id="offre-id" value="{{ isset($offre) ? $offre->id : '' }}">
                     
-                    <!-- Job Title -->
+                    <!-- offre Title -->
                     <div class="sm:col-span-6">
-                        <label for="job-title" class="block text-sm font-medium text-gray-700">
+                        <label for="offre-title" class="block text-sm font-medium text-gray-700">
                             Titre du poste <span class="text-red-500">*</span>
                         </label>
                         <div class="mt-1">
-                            <input type="text" id="job-title" name="titre" required
+                            <input type="text" id="offre-title" name="titre" required
                                 class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
                                 placeholder="ex: Développeur Full Stack JavaScript">
                         </div>
@@ -34,25 +34,25 @@
                         </p>
                     </div>
 
-                    <!-- Job Location -->
+                    <!-- offre Location -->
                     <div class="sm:col-span-3">
-                        <label for="job-location" class="block text-sm font-medium text-gray-700">
+                        <label for="offre-location" class="block text-sm font-medium text-gray-700">
                             Lieu <span class="text-red-500">*</span>
                         </label>
                         <div class="mt-1">
-                            <input type="text" id="job-location" name="lieu" required
+                            <input type="text" id="offre-location" name="lieu" required
                                 class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
                                 placeholder="ex: Paris, France">
                         </div>
                     </div>
 
-                    <!-- Job Type -->
+                    <!-- offre Type -->
                     <div class="sm:col-span-3">
-                        <label for="job-type" class="block text-sm font-medium text-gray-700">
+                        <label for="offre-type" class="block text-sm font-medium text-gray-700">
                             Type de contrat <span class="text-red-500">*</span>
                         </label>
                         <div class="mt-1">
-                            <select id="job-type" name="type_contrat" required
+                            <select id="offre-type" name="type_contrat" required
                                 class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md">
                                 <option value="">Sélectionner un type</option>
                                 <option value="CDI">CDI</option>
@@ -66,34 +66,34 @@
 
                     <!-- Salary Range -->
                     <div class="sm:col-span-3">
-                        <label for="job-salary-min" class="block text-sm font-medium text-gray-700">
+                        <label for="offre-salary-min" class="block text-sm font-medium text-gray-700">
                             Salaire minimum
                         </label>
                         <div class="mt-1">
-                            <input type="number" id="job-salary-min" name="salaire_min"
+                            <input type="number" id="offre-salary-min" name="salaire_min"
                                 class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
                                 placeholder="ex: 35000">
                         </div>
                     </div>
 
                     <div class="sm:col-span-3">
-                        <label for="job-salary-max" class="block text-sm font-medium text-gray-700">
+                        <label for="offre-salary-max" class="block text-sm font-medium text-gray-700">
                             Salaire maximum
                         </label>
                         <div class="mt-1">
-                            <input type="number" id="job-salary-max" name="salaire_max"
+                            <input type="number" id="offre-salary-max" name="salaire_max"
                                 class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
                                 placeholder="ex: 45000">
                         </div>
                     </div>
 
-                    <!-- Job Description -->
+                    <!-- offre Description -->
                     <div class="sm:col-span-6">
-                        <label for="job-description" class="block text-sm font-medium text-gray-700">
+                        <label for="offre-description" class="block text-sm font-medium text-gray-700">
                             Description du poste <span class="text-red-500">*</span>
                         </label>
                         <div class="mt-1">
-                            <textarea id="job-description" name="description" rows="5" required
+                            <textarea id="offre-description" name="description" rows="5" required
                                 class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
                                 placeholder="Décrivez les responsabilités et le contexte du poste..."></textarea>
                         </div>
@@ -102,13 +102,13 @@
                         </p>
                     </div>
 
-                    <!-- Job Requirements -->
+                    <!-- offre Requirements -->
                     <div class="sm:col-span-6">
-                        <label for="job-requirements" class="block text-sm font-medium text-gray-700">
+                        <label for="offre-requirements" class="block text-sm font-medium text-gray-700">
                             Prérequis <span class="text-red-500">*</span>
                         </label>
                         <div class="mt-1">
-                            <textarea id="job-requirements" name="prerequis" rows="5" required
+                            <textarea id="offre-requirements" name="prerequis" rows="5" required
                                 class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
                                 placeholder="Listez les compétences et qualifications requises..."></textarea>
                         </div>
@@ -119,7 +119,7 @@
 
                     <!-- Tags / Skills -->
                     <div class="sm:col-span-6">
-                        <label for="job-tags" class="block text-sm font-medium text-gray-700">
+                        <label for="offre-tags" class="block text-sm font-medium text-gray-700">
                             Compétences et mots-clés <span class="text-red-500">*</span>
                         </label>
                         <div class="mt-1">
@@ -135,13 +135,13 @@
                         </p>
                     </div>
                     
-                    <!-- Job Status -->
+                    <!-- offre Status -->
                     <div class="sm:col-span-3">
-                        <label for="job-status" class="block text-sm font-medium text-gray-700">
+                        <label for="offre-status" class="block text-sm font-medium text-gray-700">
                             Statut de l'offre <span class="text-red-500">*</span>
                         </label>
                         <div class="mt-1">
-                            <select id="job-status" name="statut" required
+                            <select id="offre-status" name="statut" required
                                 class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md">
                                 <option value="brouillon">Brouillon</option>
                                 <option value="ouverte">Publier immédiatement</option>
@@ -154,11 +154,11 @@
 
                     <!-- Submission Deadline -->
                     <div class="sm:col-span-3">
-                        <label for="job-deadline" class="block text-sm font-medium text-gray-700">
+                        <label for="offre-deadline" class="block text-sm font-medium text-gray-700">
                             Date limite de candidature
                         </label>
                         <div class="mt-1">
-                            <input type="date" id="job-deadline" name="date_limite"
+                            <input type="date" id="offre-deadline" name="date_limite"
                                 class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md">
                         </div>
                         <p class="mt-1 text-sm text-gray-500">
@@ -170,14 +170,14 @@
                 <!-- Form actions -->
                 <div class="pt-5 border-t border-gray-200">
                     <div class="flex justify-end">
-                        <a href="{{ isset($job) ? url('/recruteur/jobs/' . $job->id) : url('/recruteur/jobs') }}" class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        <a href="{{ isset($offre) ? url('/recruteur/offres/' . $offre->id) : url('/recruteur/offres') }}" class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                             Annuler
                         </a>
                         <button type="button" id="submit-draft" class="ml-3 inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                             Enregistrer comme brouillon
                         </button>
-                        <button type="submit" id="submit-job" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                            {{ isset($job) ? 'Mettre à jour l\'offre' : 'Publier l\'offre' }}
+                        <button type="submit" id="submit-offre" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            {{ isset($offre) ? 'Mettre à jour l\'offre' : 'Publier l\'offre' }}
                         </button>
                     </div>
                 </div>
@@ -223,24 +223,24 @@
             let availableTags = [];
             
             // Cache DOM elements
-            const form = document.getElementById('job-form');
-            const titleInput = document.getElementById('job-title');
-            const descriptionInput = document.getElementById('job-description');
-            const requirementsInput = document.getElementById('job-requirements');
+            const form = document.getElementById('offre-form');
+            const titleInput = document.getElementById('offre-title');
+            const descriptionInput = document.getElementById('offre-description');
+            const requirementsInput = document.getElementById('offre-requirements');
             const tagInput = document.getElementById('tag-input');
             const tagsContainer = document.getElementById('tags-container');
             const selectedTagsContainer = document.getElementById('selected-tags');
-            const statusSelect = document.getElementById('job-status');
-            const submitButton = document.getElementById('submit-job');
+            const statusSelect = document.getElementById('offre-status');
+            const submitButton = document.getElementById('submit-offre');
             const saveDraftButton = document.getElementById('submit-draft');
-            const jobIdInput = document.getElementById('job-id');
+            const offreIdInput = document.getElementById('offre-id');
             
             // Load existing tags from API
             await loadAvailableTags();
             
-            // If we're in edit mode, load the job data
-            if (jobIdInput.value) {
-                await loadJobData(jobIdInput.value);
+            // If we're in edit mode, load the offre data
+            if (offreIdInput.value) {
+                await loadoffreData(offreIdInput.value);
             }
             
             // Set up event listeners
@@ -288,8 +288,8 @@
                 ];
             }
             
-            // Function to load job data for editing
-            async function loadJobData(jobId) {
+            // Function to load offre data for editing
+            async function loadoffreData(offreId) {
                 try {
                     // Check if API client is available
                     if (!window.apiClient || !window.annonces) {
@@ -297,35 +297,35 @@
                         return;
                     }
                     
-                    // Get job data from API
-                    const job = await window.annonces.getById(jobId);
+                    // Get offre data from API
+                    const offre = await window.annonces.getById(offreId);
                     
-                    // Fill form with job data
-                    titleInput.value = job.titre || '';
-                    document.getElementById('job-location').value = job.lieu || '';
-                    document.getElementById('job-type').value = job.type_contrat || '';
-                    document.getElementById('job-salary-min').value = job.salaire_min || '';
-                    document.getElementById('job-salary-max').value = job.salaire_max || '';
-                    descriptionInput.value = job.description || '';
-                    requirementsInput.value = job.prerequis || '';
-                    statusSelect.value = job.statut || 'brouillon';
+                    // Fill form with offre data
+                    titleInput.value = offre.titre || '';
+                    document.getElementById('offre-location').value = offre.lieu || '';
+                    document.getElementById('offre-type').value = offre.type_contrat || '';
+                    document.getElementById('offre-salary-min').value = offre.salaire_min || '';
+                    document.getElementById('offre-salary-max').value = offre.salaire_max || '';
+                    descriptionInput.value = offre.description || '';
+                    requirementsInput.value = offre.prerequis || '';
+                    statusSelect.value = offre.statut || 'brouillon';
                     
                     // Set deadline if exists
-                    if (job.date_limite) {
+                    if (offre.date_limite) {
                         // Format date for input (YYYY-MM-DD)
-                        const deadlineDate = new Date(job.date_limite);
+                        const deadlineDate = new Date(offre.date_limite);
                         const formattedDate = deadlineDate.toISOString().split('T')[0];
-                        document.getElementById('job-deadline').value = formattedDate;
+                        document.getElementById('offre-deadline').value = formattedDate;
                     }
                     
                     // Add tags if they exist
-                    if (job.tags && job.tags.length > 0) {
-                        job.tags.forEach(tag => {
+                    if (offre.tags && offre.tags.length > 0) {
+                        offre.tags.forEach(tag => {
                             addTag(tag.nom, tag.id);
                         });
                     }
                 } catch (error) {
-                    console.error('Error loading job data:', error);
+                    console.error('Error loading offre data:', error);
                     window.showNotification('Erreur lors du chargement des données de l\'offre', 'error');
                 }
             }
@@ -348,7 +348,7 @@
                                 addTag(existingTag.nom, existingTag.id);
                             }
                         } else {
-                            // Create new tag (will be saved with job)
+                            // Create new tag (will be saved with offre)
                             const newTagId = 'new_' + Date.now(); // Temporary ID
                             addTag(tagName, newTagId);
                         }
@@ -389,7 +389,7 @@
                 selectedTagsContainer.appendChild(tagElement);
             }
             
-            // Function to save job as draft
+            // Function to save offre as draft
             function saveAsDraft() {
                 // Set status to draft
                 statusSelect.value = 'brouillon';
@@ -416,17 +416,17 @@
                         return;
                     }
                     
-                    // Prepare job data
-                    const jobData = {
+                    // Prepare offre data
+                    const offreData = {
                         titre: titleInput.value.trim(),
-                        lieu: document.getElementById('job-location').value.trim(),
-                        type_contrat: document.getElementById('job-type').value,
-                        salaire_min: document.getElementById('job-salary-min').value,
-                        salaire_max: document.getElementById('job-salary-max').value,
+                        lieu: document.getElementById('offre-location').value.trim(),
+                        type_contrat: document.getElementById('offre-type').value,
+                        salaire_min: document.getElementById('offre-salary-min').value,
+                        salaire_max: document.getElementById('offre-salary-max').value,
                         description: descriptionInput.value.trim(),
                         prerequis: requirementsInput.value.trim(),
                         statut: statusSelect.value,
-                        date_limite: document.getElementById('job-deadline').value || null,
+                        date_limite: document.getElementById('offre-deadline').value || null,
                         tags: tags.map(tag => {
                             // If it's a new tag (temporary ID starting with "new_")
                             if (String(tag.id).startsWith('new_')) {
@@ -445,29 +445,29 @@
                     
                     // Submit to API (create or update)
                     let response;
-                    if (jobIdInput.value) {
-                        // Update existing job
-                        response = await window.annonces.update(jobIdInput.value, jobData);
+                    if (offreIdInput.value) {
+                        // Update existing offre
+                        response = await window.annonces.update(offreIdInput.value, offreData);
                     } else {
-                        // Create new job
-                        response = await window.annonces.create(jobData);
+                        // Create new offre
+                        response = await window.annonces.create(offreData);
                     }
                     
                     // Show success notification
-                    const actionType = isDraft ? 'enregistrée comme brouillon' : (jobIdInput.value ? 'mise à jour' : 'publiée');
+                    const actionType = isDraft ? 'enregistrée comme brouillon' : (offreIdInput.value ? 'mise à jour' : 'publiée');
                     window.showNotification(`Offre ${actionType} avec succès`, 'success');
                     
                     // Redirect after brief delay
                     setTimeout(() => {
-                        window.location.href = '/recruteur/jobs';
+                        window.location.href = '/recruteur/offres';
                     }, 1500);
                 } catch (error) {
-                    console.error('Error submitting job:', error);
+                    console.error('Error submitting offre:', error);
                     
                     // Re-enable submit button
                     submitButton.disabled = false;
                     saveDraftButton.disabled = false;
-                    submitButton.innerHTML = jobIdInput.value ? 'Mettre à jour l\'offre' : 'Publier l\'offre';
+                    submitButton.innerHTML = offreIdInput.value ? 'Mettre à jour l\'offre' : 'Publier l\'offre';
                     
                     // Show error notification
                     showErrorNotification('Erreur lors de l\'enregistrement', 'Une erreur est survenue lors de l\'enregistrement de l\'offre.');
@@ -486,12 +486,12 @@
                 // Simulate API delay
                 setTimeout(() => {
                     // Show success notification
-                    const actionType = statusSelect.value === 'brouillon' ? 'enregistrée comme brouillon' : (jobIdInput.value ? 'mise à jour' : 'publiée');
+                    const actionType = statusSelect.value === 'brouillon' ? 'enregistrée comme brouillon' : (offreIdInput.value ? 'mise à jour' : 'publiée');
                     window.showNotification(`Offre ${actionType} avec succès`, 'success');
                     
                     // Redirect after brief delay
                     setTimeout(() => {
-                        window.location.href = '/recruteur/jobs';
+                        window.location.href = '/recruteur/offres';
                     }, 1500);
                 }, 1000);
             }
@@ -510,7 +510,7 @@
                     titleInput.classList.remove('border-red-500');
                 }
                 
-                const locationInput = document.getElementById('job-location');
+                const locationInput = document.getElementById('offre-location');
                 if (!locationInput.value.trim()) {
                     locationInput.classList.add('border-red-500');
                     isValid = false;
@@ -519,7 +519,7 @@
                     locationInput.classList.remove('border-red-500');
                 }
                 
-                const typeInput = document.getElementById('job-type');
+                const typeInput = document.getElementById('offre-type');
                 if (!typeInput.value) {
                     typeInput.classList.add('border-red-500');
                     isValid = false;

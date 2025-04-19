@@ -18,7 +18,7 @@
         </div>
     </div>
 
-    <!-- Job Details Section -->
+    <!-- offre Details Section -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
         <!-- Main Content -->
         <main class="lg:col-span-2">
@@ -49,23 +49,23 @@
                 </div>
             </div>
 
-            <!-- Similar Jobs -->
+            <!-- Similar offres -->
             <div class="mt-6">
                 <h3 class="font-bold text-xl mb-4">Offres similaires</h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <!-- Job Card -->
+                    <!-- offre Card -->
                     <div class="bg-white p-4 rounded-lg shadow">
                         <h4 class="font-bold">Développeur Frontend Senior</h4>
                         <p class="text-gray-600 text-sm">WebTech Solutions • Paris, France</p>
                         <p class="text-blue-600 font-bold mt-2">45-60k€</p>
                     </div>
-                    <!-- Job Card -->
+                    <!-- offre Card -->
                     <div class="bg-white p-4 rounded-lg shadow">
                         <h4 class="font-bold">Développeur Backend Senior</h4>
                         <p class="text-gray-600 text-sm">DataTech • Lyon, France</p>
                         <p class="text-blue-600 font-bold mt-2">40-55k€</p>
                     </div>
-                    <!-- Job Card -->
+                    <!-- offre Card -->
                     <div class="bg-white p-4 rounded-lg shadow">
                         <h4 class="font-bold">Lead Developer</h4>
                         <p class="text-gray-600 text-sm">InnovTech • Bordeaux, France</p>
@@ -110,7 +110,7 @@
     <footer class="mt-12 bg-gray-100 py-6">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div>
-                <h4 class="font-bold">JobBoard</h4>
+                <h4 class="font-bold">offreBoard</h4>
                 <p class="text-gray-600">Trouvez votre prochain emploi dans la tech</p>
             </div>
             <div>

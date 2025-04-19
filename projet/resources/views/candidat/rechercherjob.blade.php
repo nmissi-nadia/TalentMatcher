@@ -63,7 +63,7 @@
             </div>
         </aside>
 
-        <!-- Job Listings -->
+        <!-- offre Listings -->
         <main class="w-full md:w-3/4 md:ml-4">
             <div class="flex justify-between items-center">
                 <h2 class="text-lg font-bold">203 offres trouvées</h2>
@@ -75,7 +75,7 @@
             </div>
 
             <div class="mt-4 space-y-4">
-                <!-- Job Card -->
+                <!-- offre Card -->
                 <div class="flex items-center bg-white p-4 rounded-lg shadow">
                     <img src="/path/to/image.jpg" alt="Company Logo" class="w-12 h-12 rounded-full">
                     <div class="ml-4 flex-1">
@@ -92,7 +92,7 @@
                     <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Voir les détails</button>
                 </div>
 
-                <!-- Another Job Card -->
+                <!-- Another offre Card -->
                 <div class="flex items-center bg-white p-4 rounded-lg shadow">
                     <img src="/path/to/image2.jpg" alt="Company Logo" class="w-12 h-12 rounded-full">
                     <div class="ml-4 flex-1">

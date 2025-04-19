@@ -89,7 +89,7 @@
                         <i class="fas fa-users text-blue-600 text-4xl"></i>
                     </div>
 
-                    <!-- Active Jobs -->
+                    <!-- Active offres -->
                     <div class="bg-white rounded-lg p-6 flex items-center justify-between shadow-sm">
                         <div>
                             <h3 class="text-2xl font-bold">{{ $activeAnnonces }}</h3>
@@ -138,7 +138,7 @@
                     </div>
                 </div>
 
-                <!-- Most Viewed Jobs -->
+                <!-- Most Viewed offres -->
                 <div class="bg-white rounded-lg shadow-sm mb-6">
                     <div class="p-6">
                         <h2 class="text-lg font-bold mb-4">Offres les plus consultées</h2>
@@ -155,31 +155,31 @@
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
-                                    @foreach($topJobs as $job)
+                                    @foreach($topoffres as $offre)
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm font-medium text-gray-900">{{ $job->titre }}</div>
+                                            <div class="text-sm font-medium text-gray-900">{{ $offre->titre }}</div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900">{{ $job->recruteur->name ?? 'Non spécifié' }}</div>
+                                            <div class="text-sm text-gray-900">{{ $offre->recruteur->name ?? 'Non spécifié' }}</div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900">{{ $job->views_count }}</div>
+                                            <div class="text-sm text-gray-900">{{ $offre->views_count }}</div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $job->statut === 'ouverte' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
-                                                {{ ucfirst($job->statut) }}
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $offre->statut === 'ouverte' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                                {{ ucfirst($offre->statut) }}
                                             </span>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <form action="{{ route('admin.deleteJob', $job->id) }}" method="POST" class="inline">
+                                            <form action="{{ route('admin.deleteoffre', $offre->id) }}" method="POST" class="inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette offre ?')">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </form>
-                                            <a href="{{ route('admin.annonce', $job->id) }}" class="ml-2 text-blue-600 hover:text-blue-900">
+                                            <a href="{{ route('admin.annonce', $offre->id) }}" class="ml-2 text-blue-600 hover:text-blue-900">
                                                 <i class="fas fa-eye"></i>
                                             </a>
                                         </td>

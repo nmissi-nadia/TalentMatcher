@@ -45,7 +45,7 @@
             Vous n'avez pas encore postulé à des offres d'emploi. Consultez nos offres disponibles pour trouver votre prochain emploi.
         </p>
         <div class="mt-6">
-            <a href="{{ url('/candidat/jobs') }}" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+            <a href="{{ url('/candidat/offres') }}" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                 <i class="fas fa-search mr-2"></i>
                 Découvrir les offres
             </a>
@@ -212,7 +212,7 @@
                         </h3>
                         <div class="mt-2">
                             <p class="text-sm text-gray-500">
-                                Êtes-vous sûr de vouloir retirer votre candidature pour le poste de <span id="withdraw-job-title" class="font-medium">...</span> chez <span id="withdraw-company-name" class="font-medium">...</span> ?
+                                Êtes-vous sûr de vouloir retirer votre candidature pour le poste de <span id="withdraw-offre-title" class="font-medium">...</span> chez <span id="withdraw-company-name" class="font-medium">...</span> ?
                             </p>
                             <p class="text-sm text-gray-500 mt-2">
                                 Cette action est irréversible et vous devrez postuler à nouveau si vous changez d'avis.
@@ -267,7 +267,7 @@
         // Withdraw modal elements
         const withdrawModal = document.getElementById('withdraw-modal');
         const withdrawModalBackdrop = document.getElementById('withdraw-modal-backdrop');
-        const withdrawJobTitle = document.getElementById('withdraw-job-title');
+        const withdrawoffreTitle = document.getElementById('withdraw-offre-title');
         const withdrawCompanyName = document.getElementById('withdraw-company-name');
         const confirmWithdrawBtn = document.getElementById('confirm-withdraw-button');
         const cancelWithdrawBtn = document.getElementById('cancel-withdraw-button');
@@ -442,11 +442,11 @@
             
             // Filter applications
             filteredApplications = applications.filter(app => {
-                // Search term (job title, company)
-                const jobTitle = app.annonce?.titre?.toLowerCase() || '';
+                // Search term (offre title, company)
+                const offreTitle = app.annonce?.titre?.toLowerCase() || '';
                 const company = app.annonce?.recruteur?.name?.toLowerCase() || '';
                 
-                if (searchTerm && !(jobTitle.includes(searchTerm) || company.includes(searchTerm))) {
+                if (searchTerm && !(offreTitle.includes(searchTerm) || company.includes(searchTerm))) {
                     return false;
                 }
                 
@@ -564,8 +564,8 @@
             currentApplications.forEach(application => {
                 const row = document.createElement('tr');
                 
-                // Get job and company info
-                const jobTitle = application.annonce?.titre || 'Poste inconnu';
+                // Get offre and company info
+                const offreTitle = application.annonce?.titre || 'Poste inconnu';
                 const company = application.annonce?.recruteur?.name || 'Entreprise inconnue';
                 
                 // Format dates
@@ -604,7 +604,7 @@
                 
                 // Actions based on status
                 let actionsHtml = `
-                    <a href="/candidat/jobs/${application.annonce?.id}" class="text-blue-600 hover:text-blue-900 mr-3">
+                    <a href="/candidat/offres/${application.annonce?.id}" class="text-blue-600 hover:text-blue-900 mr-3">
                         <i class="fas fa-eye"></i>
                     </a>
                 `;
@@ -613,7 +613,7 @@
                 if (application.statut === 'en_attente') {
                     actionsHtml += `
                         <button data-id="${application.id}" 
-                                data-job="${jobTitle}" 
+                                data-offre="${offreTitle}" 
                                 data-company="${company}" 
                                 class="text-red-600 hover:text-red-900 withdraw-btn">
                             <i class="fas fa-times"></i>
@@ -623,7 +623,7 @@
                 
                 row.innerHTML = `
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm font-medium text-gray-900">${jobTitle}</div>
+                        <div class="text-sm font-medium text-gray-900">${offreTitle}</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="text-sm text-gray-900">${company}</div>
@@ -649,10 +649,10 @@
             document.querySelectorAll('.withdraw-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const applicationId = this.getAttribute('data-id');
-                    const jobTitle = this.getAttribute('data-job');
+                    const offreTitle = this.getAttribute('data-offre');
                     const company = this.getAttribute('data-company');
                     
-                    showWithdrawModal(applicationId, jobTitle, company);
+                    showWithdrawModal(applicationId, offreTitle, company);
                 });
             });
         }
@@ -702,9 +702,9 @@
         }
         
         // Show withdraw modal
-        function showWithdrawModal(applicationId, jobTitle, company) {
+        function showWithdrawModal(applicationId, offreTitle, company) {
             currentWithdrawId = applicationId;
-            withdrawJobTitle.textContent = jobTitle;
+            withdrawoffreTitle.textContent = offreTitle;
             withdrawCompanyName.textContent = company;
             withdrawModal.classList.remove('hidden');
         }
@@ -805,7 +805,7 @@
         
         // Generate sample applications for demo
         function generateSampleApplications() {
-            const jobTitles = [
+            const offreTitles = [
                 'Développeur Full Stack',
                 'UX Designer',
                 'Chef de Projet Digital',
@@ -847,7 +847,7 @@
                     updated_at: updatedDate.toISOString(),
                     annonce: {
                         id: i + 100,
-                        titre: jobTitles[i],
+                        titre: offreTitles[i],
                         recruteur: {
                             name: companies[i]
                         }
