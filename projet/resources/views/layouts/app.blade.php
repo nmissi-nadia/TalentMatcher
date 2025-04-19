@@ -55,7 +55,7 @@
                                 <a href="{{ url('/candidat/offres') }}" class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->is('candidat/offres*') ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }}">
                                     Offres d'emploi
                                 </a>
-                                <a href="{{ url('/candidat/applications') }}" class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->is('candidat/applications*') ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }}">
+                                <a href="{{ url('/candidat/candidatures') }}" class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->is('candidat/candidatures*') ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }}">
                                     Mes candidatures
                                 </a>
                             @elseif(auth()->user()->role === 'recruteur')
@@ -156,7 +156,7 @@
                         <a href="{{ url('/candidat/offres') }}" class="block pl-3 pr-4 py-2 border-l-4 {{ request()->is('candidat/offres*') ? 'border-blue-500 text-blue-700 bg-blue-50' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800' }}">
                             Offres d'emploi
                         </a>
-                        <a href="{{ url('/candidat/applications') }}" class="block pl-3 pr-4 py-2 border-l-4 {{ request()->is('candidat/applications*') ? 'border-blue-500 text-blue-700 bg-blue-50' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800' }}">
+                        <a href="{{ url('/candidat/candidatures') }}" class="block pl-3 pr-4 py-2 border-l-4 {{ request()->is('candidat/candidatures*') ? 'border-blue-500 text-blue-700 bg-blue-50' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800' }}">
                             Mes candidatures
                         </a>
                     @elseif(auth()->user()->role === 'recruteur')

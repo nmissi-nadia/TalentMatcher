@@ -82,6 +82,12 @@ class CandidatController extends Controller
 
         return view('candidat.search', compact('annonces'));
     }
+    // les offres existes
+    public function offres()
+    {
+        $annonces = Annonce::all();
+        return view('candidat.offres', compact('annonces'));
+    }
 
     // Postuler à une offre
     public function apply(Request $request, $id)
@@ -114,11 +120,11 @@ class CandidatController extends Controller
     public function candidatures()
     {
         $user = Auth::user();
-        $candidatures = Candidature::where('user_id', $user->id)
+        $candidatures = Candidature::where('candidat_id', $user->id)
             ->with('annonce')
             ->paginate(10);
 
-        return view('candidat.candidatures', compact('candidatures'));
+        return view('candidat.applications', compact('candidatures'));
     }
 
     // Supprimer une candidature
