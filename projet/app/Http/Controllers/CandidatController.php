@@ -14,8 +14,10 @@ class CandidatController extends Controller
     // dashboard d candidat
     public function dashboard()
     {
+        $user = Auth::user();
+        $activeJobs = Annonce::where('statut', 'active')->count();
         $candidatures = Candidature::where('candidat_id', Auth::id())->get();
-        return view('candidat.dashboard', compact('candidatures'));
+        return view('candidat.dashboard', compact('candidatures', 'activeJobs'));
     }
     // Afficher le profil du candidat
     public function showProfile()
