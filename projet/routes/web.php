@@ -53,6 +53,7 @@ Route::middleware(['auth', 'check.role:candidat'])->prefix('candidat')->name('ca
 // Recruiter Routes (Protected by Auth Middleware)
 Route::middleware(['auth', 'check.role:recruteur'])->prefix('recruteur')->name('recruteur.')->group(function () {
     Route::get('/dashboard', [RecruteurController::class, 'dashboard'])->name('dashboard');
+    Route::get('/offres', [RecruteurController::class, 'annonces'])->name('offres');
     Route::get('/annonces/create', [RecruteurController::class, 'createAnnonce'])->name('annonces.create');
     Route::post('/annonces/store', [RecruteurController::class, 'storeAnnonce'])->name('annonces.store');
     Route::get('/annonces/{id}/manage', [RecruteurController::class, 'manageCandidatures'])->name('annonces.manage');

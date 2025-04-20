@@ -51,13 +51,20 @@ class RecruteurController extends Controller
 
         return view('recruteur.dashboard', compact('annonces', 'stats', 'recentCandidatures'));
     }
+    // page des offres
+    public function annonces()
+    {
+        $annonces = Annonce::where('recruteur_id', Auth::id())->get();
+        return view('recruteur.offres', compact('annonces'));
+    }
 
     // Créer une nouvelle offre
     public function createAnnonce()
     {
         $tags = Tag::all();
-        return view('recruteur.create_annonce', compact('tags'));
+        return view('recruteur.offre-form', compact('tags'));
     }
+
 
     // Sauvegarder une nouvelle offre
     public function storeAnnonce(Request $request)
