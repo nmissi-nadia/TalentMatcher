@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('titre');
             $table->text('description');
             $table->foreignId('recruteur_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('categorie_id')->nullable()->constrained()->onDelete('set null');
             $table->enum('statut', ['ouverte', 'fermée'])->default('ouverte');
             $table->timestamps();
         });

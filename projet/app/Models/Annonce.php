@@ -43,4 +43,8 @@ class Annonce extends Model
     {
         return $this->hasMany(EtapeValidationFinale::class);
     }
+    public function categorie()
+    {
+        return $this->belongsTo(Categorie::class);
+    }
 }
