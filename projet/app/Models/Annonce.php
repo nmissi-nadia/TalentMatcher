@@ -10,9 +10,16 @@ class Annonce extends Model
     use HasFactory;
     protected $fillable = [
         'titre',
-        'description',  
-        'statut',
-        'recruteur_id'
+        'description',
+        'location',
+        'competences',
+        'salaire',
+        'categorie_id',
+        'recruteur_id',
+        'statut'
+    ];
+    protected $casts = [
+        'salaire' => 'decimal:2'
     ];
     
     public function recruteur()

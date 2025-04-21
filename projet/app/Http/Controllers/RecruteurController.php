@@ -70,38 +70,57 @@ class RecruteurController extends Controller
 
     // Sauvegarder une nouvelle offre
     public function storeAnnonce(Request $request)
-    {
-        $request->validate([
-            'titre' => 'required|string|max:255',
-            'categorie_id' => 'required|exists:categories,id',
-            'location' => 'required|string',
-            'description' => 'required|string',
-            'competences' => 'required|string',
-            'salaire' => 'required|numeric',
-            'tags' => 'required|array',
-            'tags.*' => 'exists:tags,id',
-            'statut' => 'required|in:ouverte,fermée'
-        ]);
+        {
+            try {
+                $validated = $request->validate([
+                    'titre' => 'required|string|max:255',
+                    'categorie_id' => 'required|exists:categories,id',
+                    'location' => 'required|string',
+                    'description' => 'required|string',
+                    'competences' => 'required|string',
+                    'salaire' => 'required|numeric',
+                    'tags' => 'required|array',
+                    'tags.*' => 'exists:tags,id',
+                    'statut' => 'required|in:ouverte,fermée'
+                ]);
 
-        try {
-            $data = $request->validated();
-            $data['recruteur_id'] = Auth::id(); // Utiliser recruteur_id au lieu de user_id
+                $data = array_merge($validated, [
+                    'recruteur_id' => Auth::id()
+                ]);
 
-            $annonce = Annonce::create($data);
+                // Créons l'annonce étape par étape
+                $annonce = new Annonce();
+                $annonce->titre = $data['titre'];
+                $annonce->description = $data['description'];
+                $annonce->location = $data['location'];
+                $annonce->competences = $data['competences'];
+                $annonce->salaire = $data['salaire'];
+                $annonce->categorie_id = $data['categorie_id'];
+                $annonce->recruteur_id = $data['recruteur_id'];
+                $annonce->statut = $data['statut'];
+                
+                // Sauvegardons l'annonce
+                $annonce->save();
 
-            // Associer les tags
-            if ($request->has('tags')) {
-                $annonce->tags()->sync($request->tags);
+                // Associer les tags
+                if ($request->has('tags')) {
+                    $annonce->tags()->sync($request->tags);
+                }
+
+                return redirect()->route('recruteur.dashboard')
+                    ->with('success', 'Offre créée avec succès');
+
+            } catch (\Illuminate\Validation\ValidationException $e) {
+                return redirect()->back()
+                    ->withInput()
+                    ->withErrors($e->errors())
+                    ->with('error', 'Veuillez corriger les erreurs dans le formulaire');
+            } catch (\Exception $e) {
+                return redirect()->back()
+                    ->withInput()
+                    ->with('error', 'Erreur lors de la création de l\'offre: ' . $e->getMessage());
             }
-
-            return redirect()->route('recruteur.dashboard')
-                ->with('success', 'Offre créée avec succès');
-        } catch (\Exception $e) {
-            return redirect()->back()
-                ->withInput()
-                ->with('error', 'Erreur lors de la création de l\'offre');
         }
-    }
 
     // Gérer les candidatures
     public function manageCandidatures($annonceId)
@@ -188,15 +207,5 @@ class RecruteurController extends Controller
         return view('recruteur.manage_tags', compact('tags'));
     }
 
-    // Créer un nouveau tag
-    public function createTag(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|unique:tags,name'
-        ]);
-
-        Tag::create($request->all());
-
-        return redirect()->back()->with('success', 'Tag créé avec succès');
-    }
+   
 }
