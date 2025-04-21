@@ -25,6 +25,8 @@ class AdminController extends Controller
         $totalCandidatures = Candidature::count();
         $totalTags = Tag::count();
         $deletedUsers = User::onlyTrashed()->get();
+        $candidats = User::where('role', 'candidat')->whereNull('deleted_at')->get();
+        $candidatures = Candidature::with('candidat')->get();
         
         // Récupérer les offres les plus consultées
         $topoffres = Annonce::where('statut', 'ouverte')
@@ -49,6 +51,10 @@ class AdminController extends Controller
                 'new' => $newCandidates,
                 'total' => User::where('role', 'candidat')->whereNull('deleted_at')->count(),
                 'percentage' => ($newCandidates + User::where('role', 'candidat')->whereNull('deleted_at')->count()) > 0 ? round(($newCandidates / (User::where('role', 'candidat')->whereNull('deleted_at')->count())) * 100) : 0
+            ],
+            'candidatures' => [
+                'total' => $totalCandidatures,
+                'percentage' => ($totalCandidatures + $totalCandidatures) > 0 ? round(($totalCandidatures / ($totalCandidatures + $totalCandidatures)) * 100) : 0
             ]
         ];
 

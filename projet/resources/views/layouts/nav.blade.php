@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TalentMatcher - @yield('title')</title>
     <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
-    <link rel="stylesheet" href="[https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">)
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --primary-color: #ea530c;
@@ -17,13 +18,16 @@
         <!-- Sidebar -->
         <aside class="w-64 bg-white border-r border-gray-200">
             <div class="p-4 flex items-center">
-                <h1 class="text-xl font-bold text-gray-800">TalentMatcher</h1>
+                <!-- Logo -->
+                <a href="{{ route(auth()->user()->role . '.dashboard') }}" class="block">
+                    <img src="{{ asset('storage/images/talentmatcherlog.png') }}" alt="Logo" class="w-44 h-14">
+                </a>
             </div>
             <nav class="mt-8">
                 <ul>
                     <!-- Dashboard -->
                     <li class="mb-2">
-                        <a href="{{ route('dashboard') }}" 
+                    <a href="{{ route(auth()->user()->role . '.dashboard') }}" 
                            class="block px-4 py-2 text-gray-700 hover:bg-gray-100 @if(request()->routeIs('dashboard')) bg-gray-100 @endif">
                             <i class="fas fa-home mr-3"></i>
                             Dashboard
@@ -83,7 +87,7 @@
                     <!-- Admin Links -->
                     @if(auth()->user()->role === 'admin')
                         <li class="mb-2">
-                            <a href="{{ route('admin.users') }}" 
+                            <a href="{{ route('admin.utilisateurs') }}" 
                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
                                 <i class="fas fa-users-cog mr-3"></i>
                                 Gestion Utilisateurs

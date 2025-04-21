@@ -38,7 +38,7 @@ Route::get('/offres/{id}', [AnnonceController::class, 'show'])->name('offres.sho
 
 // Candidate Routes (Protected by Auth Middleware)
 Route::middleware(['auth', 'check.role:candidat'])->prefix('candidat')->name('candidat.')->group(function () {
-    Route::get('/dashboard', [CandidatController::class, 'dashboard'])->name('candidat.dashboard');
+    Route::get('/dashboard', [CandidatController::class, 'dashboard'])->name('dashboard');
     Route::get('/profile', [CandidatController::class, 'showProfile'])->name('profile');
     Route::post('/profile/update', [CandidatController::class, 'updateProfile'])->name('profile.update');
     // affichage des offres existe
@@ -63,6 +63,7 @@ Route::middleware(['auth', 'check.role:recruteur'])->prefix('recruteur')->name('
     Route::post('/candidatures/{id}/status', [RecruteurController::class, 'updateCandidatureStatus'])->name('candidatures.status');
     Route::get('/candidatures/{id}/etapes', [RecruteurController::class, 'manageEtapes'])->name('candidatures.etapes');
     Route::post('/etapes/{id}/update', [RecruteurController::class, 'updateEtape'])->name('etapes.update');
+    // partie concernat les tags
     Route::get('/stats', [RecruteurController::class, 'stats'])->name('stats');
     Route::get('/tags', [RecruteurController::class, 'manageTags'])->name('tags');
     Route::post('/tags/create', [RecruteurController::class, 'createTag'])->name('tags.create');
@@ -76,6 +77,7 @@ Route::middleware(['auth', 'check.role:admin'])->prefix('admin')->name('admin.')
   
     // teste
     Route::delete('/offre/{id}', [AdminController::class, 'deleteoffre'])->name('admin.deleteoffre');
+        
         Route::get('/utilisateurs', [AdminController::class, 'utilisateurs'])->name('utilisateurs');
         Route::get('/candidatures', [AdminController::class, 'candidatures'])->name('candidatures');
         Route::get('/moderation', [AdminController::class, 'moderation'])->name('moderation');
@@ -91,6 +93,14 @@ Route::middleware(['auth', 'check.role:admin'])->prefix('admin')->name('admin.')
         Route::get('/annonce/{id}', [AnnonceController::class, 'show'])->name('annonce.show');
         Route::get('/annonce/{id}/edit', [AnnonceController::class, 'edit'])->name('annonce.edit');
         Route::delete('/annonce/{id}', [AnnonceController::class, 'delete'])->name('annonce.delete');
+        // partie concernat les tags
+        Route::get('/tags', [TagController::class, 'index'])->name('tags');
+        Route::post('/tags/create', [TagController::class, 'create'])->name('tags.create');
+        Route::delete('/tags/{id}', [TagController::class, 'delete'])->name('tags.delete');
+        // partie concernant les categories
+        Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
+        Route::post('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
+        Route::delete('/categories/{id}', [CategoryController::class, 'delete'])->name('categories.delete');
 });
 
 // API Routes for offre Applications
