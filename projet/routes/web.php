@@ -7,6 +7,7 @@ use App\Http\Controllers\RecruteurController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AnnonceController;
 use App\Http\Controllers\CandidatureController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,7 +84,15 @@ Route::middleware(['auth', 'check.role:admin'])->prefix('admin')->name('admin.')
         Route::get('/moderation', [AdminController::class, 'moderation'])->name('moderation');
         Route::get('/annonces', [AdminController::class, 'annonces'])->name('annonces');
         Route::get('/annonce/{id}', [AdminController::class, 'showAnnonce'])->name('annonce');
-        Route::get('/utilisateurs-supprimes', [AdminController::class, 'utilisateursSupprimes'])->name('utilisateursSupprimes');
+        // partie concernat par les utilisateurs
+        Route::get('/utilisateurs', [AdminController::class, 'utilisateurs'])->name('utilisateurs');
+        Route::get('/utilisateurs/{id}', [AdminController::class, 'show'])->name('user.show');
+        // update utilisateur
+        Route::put('/utilisateurs/{id}', [AdminController::class, 'update'])->name('user.update');
+        // edit utilisateur
+        Route::get('/utilisateurs/{id}/edit', [AdminController::class, 'edit'])->name('user.edit');
+        // delete utilisateur
+        Route::delete('/utilisateurs/{id}', [AdminController::class, 'delete'])->name('user.delete');
         Route::post('/utilisateurs/restore/{id}', [AdminController::class, 'restaurerUtilisateur'])->name('admin.users.restore');
         Route::delete('/utilisateurs/force-delete/{id}', [AdminController::class, 'supprimerDefinitivement'])->name('admin.users.force-delete');
         Route::get('/annonces', [AdminController::class, 'annonces'])->name('annonces');
