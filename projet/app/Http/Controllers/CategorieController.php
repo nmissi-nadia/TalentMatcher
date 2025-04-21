@@ -19,7 +19,7 @@ class CategorieController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -27,7 +27,13 @@ class CategorieController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:categories,name'
+        ]);
+
+        Categorie::create($request->all());
+
+        return redirect()->back()->with('success', 'Categorie créé avec succès');
     }
 
     /**
@@ -35,7 +41,8 @@ class CategorieController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $categorie = Categorie::findOrFail($id);
+        return view('categorie.show', compact('categorie'));
     }
 
     /**
@@ -43,7 +50,8 @@ class CategorieController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $categorie = Categorie::findOrFail($id);
+        return view('categorie.edit', compact('categorie'));
     }
 
     /**
@@ -51,7 +59,9 @@ class CategorieController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $categorie = Categorie::findOrFail($id);
+        $categorie->update($request->all());
+        return redirect()->back()->with('success', 'Categorie mise à jour avec succès');
     }
 
     /**
@@ -59,6 +69,8 @@ class CategorieController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $categorie = Categorie::findOrFail($id);
+        $categorie->delete();
+        return redirect()->back()->with('success', 'Categorie supprimée avec succès');
     }
 }
