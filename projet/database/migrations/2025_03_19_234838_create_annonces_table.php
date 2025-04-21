@@ -17,6 +17,9 @@ return new class extends Migration
             $table->text('description');
             $table->foreignId('recruteur_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('categorie_id')->nullable()->constrained()->onDelete('set null');
+            $table->string('location');
+            $table->string('competences');
+            $table->decimal('salaire', 10, 2);
             $table->enum('statut', ['ouverte', 'fermée'])->default('ouverte');
             $table->timestamps();
         });

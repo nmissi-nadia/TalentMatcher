@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Annonce;
 use App\Models\Candidature;
 use App\Models\Tag;
+use App\Models\Categorie;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -62,7 +63,8 @@ class RecruteurController extends Controller
     public function createAnnonce()
     {
         $tags = Tag::all();
-        return view('recruteur.offre-form', compact('tags'));
+        $categories = Categorie::all();
+        return view('recruteur.offre-form', compact('tags', 'categories'));
     }
 
 
@@ -70,30 +72,35 @@ class RecruteurController extends Controller
     public function storeAnnonce(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'category' => 'required|string',
+            'titre' => 'required|string|max:255',
+            'categorie_id' => 'required|exists:categories,id',
             'location' => 'required|string',
             'description' => 'required|string',
-            'requirements' => 'required|string',
-            'salary' => 'required|numeric',
-            'tags' => 'required|array'
+            'competences' => 'required|string',
+            'salaire' => 'required|numeric',
+            'tags' => 'required|array',
+            'tags.*' => 'exists:tags,id',
+            'statut' => 'required|in:ouverte,fermée'
         ]);
 
-        $annonce = new Annonce([
-            'title' => $request->title,
-            'category' => $request->category,
-            'location' => $request->location,
-            'description' => $request->description,
-            'requirements' => $request->requirements,
-            'salary' => $request->salary,
-            'status' => 'active'
-        ]);
+        try {
+            $data = $request->validated();
+            $data['recruteur_id'] = Auth::id(); // Utiliser recruteur_id au lieu de user_id
 
-        $user = Auth::user();
-        $user->annonces()->save($annonce);
-        $annonce->tags()->sync($request->tags);
+            $annonce = Annonce::create($data);
 
-        return redirect()->route('recruteur.dashboard')->with('success', 'Offre créée avec succès');
+            // Associer les tags
+            if ($request->has('tags')) {
+                $annonce->tags()->sync($request->tags);
+            }
+
+            return redirect()->route('recruteur.dashboard')
+                ->with('success', 'Offre créée avec succès');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Erreur lors de la création de l\'offre');
+        }
     }
 
     // Gérer les candidatures

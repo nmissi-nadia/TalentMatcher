@@ -56,6 +56,8 @@ Route::middleware(['auth', 'check.role:recruteur'])->prefix('recruteur')->name('
     Route::get('/offres', [RecruteurController::class, 'annonces'])->name('offres');
     Route::get('/annonces/create', [RecruteurController::class, 'createAnnonce'])->name('annonces.create');
     Route::post('/annonces/store', [RecruteurController::class, 'storeAnnonce'])->name('annonces.store');
+    Route::get('/annonces/{id}/edit', [RecruteurController::class, 'editAnnonce'])->name('annonces.edit');
+    Route::put('/annonces/{id}/update', [RecruteurController::class, 'updateAnnonce'])->name('annonces.update');
     Route::get('/annonces/{id}/manage', [RecruteurController::class, 'manageCandidatures'])->name('annonces.manage');
     Route::post('/candidatures/{id}/status', [RecruteurController::class, 'updateCandidatureStatus'])->name('candidatures.status');
     Route::get('/candidatures/{id}/etapes', [RecruteurController::class, 'manageEtapes'])->name('candidatures.etapes');
