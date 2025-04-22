@@ -10,9 +10,9 @@
 <body class="bg-gray-50">
     <div class="flex h-screen">
         <!-- Bannière gauche -->
-        <div class="hidden md:flex md:w-1/2 bg-blue-600 text-white p-8 flex-col">
+        <div class="hidden md:flex md:w-1/2 bg-[#4f46e5] text-white p-8 flex-col">
             <div class="mb-8">
-                <h1 class="text-3xl font-bold mb-4">Trouvez un emploi ou des talents de qualité</h1>
+                <h1 class="text-3xl text-[#ea580c] font-bold mb-4">Trouvez un emploi ou des talents de qualité</h1>
                 <p class="text-lg">Que vous soyez candidat ou recruteur, connectez-vous facilement à la plateforme.</p>
             </div>
             <div class="flex-grow">
@@ -58,7 +58,7 @@
                             </a>
                         </div>
 
-                        <button type="submit" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition duration-200">
+                        <button type="submit" class="w-full py-3 bg-[#ea580c] hover:bg-blue-700 text-white rounded-md transition duration-200">
                             Se connecter
                         </button>
                     </form>
@@ -97,7 +97,7 @@
                             <input id="password_confirmation" type="password" name="password_confirmation" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                         </div>
 
-                        <button type="submit" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition duration-200">
+                        <button type="submit" class="w-full py-3 bg-[#ea580c] hover:bg-blue-700 text-white rounded-md transition duration-200">
                             S'inscrire
                         </button>
                     </form>

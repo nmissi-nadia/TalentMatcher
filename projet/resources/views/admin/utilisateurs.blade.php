@@ -198,18 +198,40 @@
         
         tabAll.addEventListener('click', function() {
             activateTab(tabAll, [tabRecruiters, tabCandidates]);
-            // Ici vous pourriez ajouter du code pour filtrer les données
+            filterUsers('all');
         });
         
         tabRecruiters.addEventListener('click', function() {
             activateTab(tabRecruiters, [tabAll, tabCandidates]);
-            // Ici vous pourriez ajouter du code pour filtrer les données
+            filterUsers('recruteur');
         });
         
         tabCandidates.addEventListener('click', function() {
             activateTab(tabCandidates, [tabAll, tabRecruiters]);
-            // Ici vous pourriez ajouter du code pour filtrer les données
+            filterUsers('candidat');
         });
+        // Fonction de filtrage
+function filterUsers(role) {
+    // Récupérer tous les éléments de la table
+    const rows = document.querySelectorAll('tbody tr');
+    
+    // Afficher/masquer les lignes selon le rôle
+    rows.forEach(row => {
+        const userRole = row.querySelector('.user-role').textContent.toLowerCase();
+        if (role === 'all' || userRole === role) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+    
+    // Mettre à jour le texte de pagination
+    const paginationText = document.querySelector('.text-sm.text-gray-500');
+    if (paginationText) {
+        const visibleRows = document.querySelectorAll('tbody tr:not([style*="display: none"])');
+        paginationText.textContent = `Affichage de ${visibleRows.length} utilisateurs`;
+    }
+}
     });
 </script>
 @endpush

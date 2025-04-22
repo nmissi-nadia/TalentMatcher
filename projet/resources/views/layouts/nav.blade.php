@@ -122,13 +122,13 @@
                 </div>
                 
                 <div class="flex items-center space-x-4">
-                    <div class="relative">
-                        <a href="{{ route('logout') }}" 
-                           class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-[#ea530c] hover:bg-[#d44a0b] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#ea530c]">
-                            <i class="fas fa-sign-out-alt mr-2"></i>
-                            Déconnexion
-                        </a>
-                    </div>
+                <form action="{{ route('logout') }}" method="POST" class="inline">
+    @csrf
+    <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-[#ea530c] hover:bg-[#d44a0b] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#ea530c]">
+        <i class="fas fa-sign-out-alt mr-2"></i>
+        Déconnexion
+    </button>
+</form>
                 </div>
             </header>
 
