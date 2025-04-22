@@ -69,7 +69,7 @@
                             </a>
                         </li>
                         <li class="mb-2">
-                            <a href="{{ route('candidat.profil') }}" 
+                            <a href="{{ route('candidat.profile') }}" 
                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
                                 <i class="fas fa-user mr-3"></i>
                                 Mon Profil

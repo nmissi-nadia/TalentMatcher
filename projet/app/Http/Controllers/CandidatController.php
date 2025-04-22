@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Candidature;
 use App\Models\Annonce;
 use App\Models\Tag;
+use App\Models\Categorie;
 use Illuminate\Support\Facades\Auth;
 
 class CandidatController extends Controller
@@ -23,8 +24,8 @@ class CandidatController extends Controller
     public function showProfile()
     {
         $user = Auth::user();
-        $candidatures = Candidature::where('user_id', $user->id)->get();
-        return view('candidat.profile', compact('user', 'candidatures'));
+        $candidatures = Candidature::where('candidat_id', $user->id)->get();
+        return view('candidat.profil', compact('user', 'candidatures'));
     }
 
     // Mettre à jour le profil
@@ -85,8 +86,13 @@ class CandidatController extends Controller
     // les offres existes
     public function offres()
     {
-        $annonces = Annonce::all();
-        return view('candidat.offres', compact('annonces'));
+            $offres = Annonce::with(['recruteur', 'tags', 'categorie'])
+            ->paginate(10);
+            
+        $categories = Categorie::all();
+        $tags = Tag::all();
+        
+        return view('candidat.offres', compact('offres', 'categories', 'tags'));
     }
 
     // Postuler à une offre

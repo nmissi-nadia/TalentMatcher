@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.nav')
 
 @section('title', 'Tableau de Bord Candidat - TalentMatcher')
 
