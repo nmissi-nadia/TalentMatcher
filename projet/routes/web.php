@@ -8,6 +8,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AnnonceController;
 use App\Http\Controllers\CandidatureController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\CategorieController;
 
 /*
 |--------------------------------------------------------------------------
@@ -107,9 +109,9 @@ Route::middleware(['auth', 'check.role:admin'])->prefix('admin')->name('admin.')
         Route::post('/tags/create', [TagController::class, 'create'])->name('tags.create');
         Route::delete('/tags/{id}', [TagController::class, 'delete'])->name('tags.delete');
         // partie concernant les categories
-        Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
-        Route::post('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
-        Route::delete('/categories/{id}', [CategoryController::class, 'delete'])->name('categories.delete');
+        Route::get('/categories', [CategorieController::class, 'index'])->name('categories');
+        Route::post('/categories/create', [CategorieController::class, 'create'])->name('categories.create');
+        Route::delete('/categories/{id}', [CategorieController::class, 'delete'])->name('categories.delete');
 });
 
 // API Routes for offre Applications

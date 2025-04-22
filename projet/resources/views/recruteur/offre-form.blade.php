@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.nav')
 
 @section('title', isset($offre) ? 'Modifier une offre - TalentMatcher' : 'Créer une offre - TalentMatcher')
 

@@ -43,7 +43,7 @@ class CandidatController extends Controller
         $user->update($request->except('cv_file'));
 
         if ($request->hasFile('cv_file')) {
-            $path = $request->file('cv_file')->store('cv', 'public');
+            $path = $request->file('cv_file')->store('cvs', 'public');
             $user->cv_path = $path;
             $user->save();
         }
