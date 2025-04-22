@@ -1,19 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.nav')
 
 @section('content')
 <div class="container mx-auto px-4 py-6">
-    <!-- Header -->
-    <div class="flex justify-between items-center">
-        <h1 class="text-2xl font-bold">TalentMatcher</h1>
-        <nav class="hidden md:flex space-x-4">
-            <a href="#" class="text-blue-600 hover:underline">Offres</a>
-            <a href="#" class="text-blue-600 hover:underline">Entreprises</a>
-            <a href="#" class="text-blue-600 hover:underline">Blog</a>
-        </nav>
-        <button class="md:hidden p-2 rounded hover:bg-gray-200">
-            <i class="fas fa-bars"></i>
-        </button>
-    </div>
+   
 
     <!-- Profile Section -->
     <div class="bg-white rounded-lg shadow mt-6 p-6">
@@ -97,38 +86,6 @@
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="mt-12 bg-gray-100 py-6">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div>
-                <h4 class="font-bold">TalentMatcher</h4>
-                <p class="text-gray-600">Trouvez votre prochain emploi dans la tech</p>
-            </div>
-            <div>
-                <h4 class="font-bold">Pour les candidats</h4>
-                <ul class="text-gray-600">
-                    <li><a href="#" class="hover:underline">Parcourir les offres</a></li>
-                    <li><a href="#" class="hover:underline">Entreprises</a></li>
-                    <li><a href="#" class="hover:underline">Blog</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="font-bold">Pour les entreprises</h4>
-                <ul class="text-gray-600">
-                    <li><a href="#" class="hover:underline">Publier une offre</a></li>
-                    <li><a href="#" class="hover:underline">Solutions RH</a></li>
-                    <li><a href="#" class="hover:underline">Tarifs</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="font-bold">Suivez-nous</h4>
-                <div class="flex space-x-4 text-gray-600 mt-2">
-                    <a href="#" class="hover:text-blue-600"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" class="hover:text-blue-600"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="hover:text-blue-600"><i class="fab fa-facebook"></i></a>
-                </div>
-            </div>
-        </div>
-    </footer>
+   
 </div>
 @endsection
