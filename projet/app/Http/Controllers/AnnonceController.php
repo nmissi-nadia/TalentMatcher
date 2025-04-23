@@ -25,8 +25,8 @@ class AnnonceController extends Controller
     public function show($id)
     {
         try {
-            $annonce = $this->service->get($id);
-            return view('candidat.offre-detail', compact('annonce'));
+            $offre = $this->service->get($id);
+            return view('candidat.offre-detail', compact('offre'));
         } catch (\Exception $e) {
             return redirect()->route('candidat.offres')->with('error', $e->getMessage());
         }

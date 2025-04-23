@@ -1,143 +1,140 @@
-@extends('layouts.app')
+@extends('layouts.nav')
+
+@section('title', $offre->titre . ' - TalentMatcher')
 
 @section('content')
-<div class="container mx-auto px-4 py-6">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
     <!-- Header -->
-    <div class="flex justify-between items-center">
-        <h1 class="text-2xl font-bold">TalentMatcher</h1>
-        <nav class="flex space-x-4">
-            <a href="#" class="text-blue-600 hover:underline">Offres</a>
-            <a href="#" class="text-blue-600 hover:underline">Entreprises</a>
-            <a href="#" class="text-blue-600 hover:underline">Blog</a>
-        </nav>
+    <div class="flex justify-between items-center mb-6">
+        <div>
+            <a href="{{ route('candidat.offres') }}" class="text-blue-600 hover:text-blue-800 flex items-center">
+                <i class="fas fa-arrow-left mr-2"></i>
+                Retour aux offres
+            </a>
+        </div>
         <div class="flex items-center space-x-4">
-            <button class="p-2 rounded-full hover:bg-gray-200">
-                <i class="fas fa-bell"></i>
-            </button>
-            <img src="/path/to/profile-image.jpg" alt="Profile" class="w-8 h-8 rounded-full">
+            @if(Auth::check())
+                @if(!$offre->candidatures()->where('candidat_id', Auth::id())->exists() && $offre->statut === 'ouverte')
+                    <button onclick="document.location='{{ route('candidat.apply', $offre->id) }}'" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        Postuler
+                    </button>
+                @endif
+            @endif
         </div>
     </div>
 
     <!-- offre Details Section -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
-        <!-- Main Content -->
-        <main class="lg:col-span-2">
-            <div class="bg-white p-6 rounded-lg shadow">
-                <h2 class="text-2xl font-bold">Développeur Full Stack Senior</h2>
-                <p class="text-gray-600 mt-2">TechCorp • Paris, France • Temps plein</p>
-
-                <div class="mt-4">
-                    <h3 class="font-bold text-lg">Description du poste</h3>
-                    <p class="mt-2 text-gray-700">
-                        Nous recherchons un développeur Full Stack expérimenté pour rejoindre notre équipe dynamique...
-                    </p>
-
-                    <h3 class="font-bold text-lg mt-4">Responsabilités principales :</h3>
-                    <ul class="list-disc ml-6 mt-2 text-gray-700">
-                        <li>Développement d'applications web complexes</li>
-                        <li>Collaboration avec les équipes produit et design</li>
-                        <li>Code review et mentoring</li>
-                    </ul>
-
-                    <h3 class="font-bold text-lg mt-4">Compétences requises :</h3>
-                    <div class="flex space-x-2 mt-2">
-                        <span class="bg-blue-100 text-blue-600 px-2 py-1 rounded-full text-sm">React</span>
-                        <span class="bg-blue-100 text-blue-600 px-2 py-1 rounded-full text-sm">Node.js</span>
-                        <span class="bg-blue-100 text-blue-600 px-2 py-1 rounded-full text-sm">TypeScript</span>
-                        <span class="bg-blue-100 text-blue-600 px-2 py-1 rounded-full text-sm">MongoDB</span>
-                    </div>
+    <div class="bg-white shadow rounded-lg">
+        <!-- Header -->
+        <div class="p-6 border-b border-gray-200">
+            <div class="flex items-start">
+                <div class="flex-shrink-0 h-12 w-12 bg-blue-100 text-blue-600 rounded-md flex items-center justify-center">
+                    <i class="fas fa-briefcase text-lg"></i>
                 </div>
-            </div>
-
-            <!-- Similar offres -->
-            <div class="mt-6">
-                <h3 class="font-bold text-xl mb-4">Offres similaires</h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <!-- offre Card -->
-                    <div class="bg-white p-4 rounded-lg shadow">
-                        <h4 class="font-bold">Développeur Frontend Senior</h4>
-                        <p class="text-gray-600 text-sm">WebTech Solutions • Paris, France</p>
-                        <p class="text-blue-600 font-bold mt-2">45-60k€</p>
-                    </div>
-                    <!-- offre Card -->
-                    <div class="bg-white p-4 rounded-lg shadow">
-                        <h4 class="font-bold">Développeur Backend Senior</h4>
-                        <p class="text-gray-600 text-sm">DataTech • Lyon, France</p>
-                        <p class="text-blue-600 font-bold mt-2">40-55k€</p>
-                    </div>
-                    <!-- offre Card -->
-                    <div class="bg-white p-4 rounded-lg shadow">
-                        <h4 class="font-bold">Lead Developer</h4>
-                        <p class="text-gray-600 text-sm">InnovTech • Bordeaux, France</p>
-                        <p class="text-blue-600 font-bold mt-2">50-65k€</p>
-                    </div>
-                </div>
-            </div>
-        </main>
-
-        <!-- Sidebar -->
-        <aside class="bg-white p-6 rounded-lg shadow">
-            <div class="flex items-center">
-                <img src="/path/to/company-logo.jpg" alt="TechCorp Logo" class="w-16 h-16 rounded-full">
                 <div class="ml-4">
-                    <h3 class="font-bold text-lg">TechCorp</h3>
-                    <p class="text-gray-600 text-sm">Technologies & Services</p>
+                    <h1 class="text-2xl font-bold text-gray-900">{{ $offre->titre }}</h1>
+                    <div class="mt-1 flex items-center text-sm text-gray-500">
+                        <i class="fas fa-building mr-1.5"></i>
+                        <span>{{ $offre->recruteur->name }}</span>
+                    </div>
+                    <div class="mt-1 flex items-center text-sm text-gray-500">
+                        <i class="fas fa-map-marker-alt mr-1.5"></i>
+                        <span>{{ $offre->location }}</span>
+                    </div>
+                    <div class="mt-1 flex items-center text-sm text-gray-500">
+                        <i class="fas fa-euro-sign mr-1.5"></i>
+                        <span>{{ number_format($offre->salaire, 2) }} €</span>
+                    </div>
                 </div>
             </div>
-            <p class="text-gray-700 mt-4">
-                Leader dans le développement de solutions innovantes...
-            </p>
-            <a href="#" class="text-blue-600 mt-2 block hover:underline">Voir le profil de l'entreprise</a>
-
-            <button class="bg-blue-600 text-white mt-4 w-full py-2 rounded-lg hover:bg-blue-700">
-                Postuler maintenant
-            </button>
-
-            <div class="mt-4 flex justify-between">
-                <button class="flex items-center space-x-2 text-gray-600 hover:text-blue-600">
-                    <i class="far fa-heart"></i>
-                    <span>Sauvegarder</span>
-                </button>
-                <button class="flex items-center space-x-2 text-gray-600 hover:text-blue-600">
-                    <i class="fas fa-share-alt"></i>
-                    <span>Partager</span>
-                </button>
-            </div>
-        </aside>
-    </div>
-
-    <!-- Footer -->
-    <footer class="mt-12 bg-gray-100 py-6">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div>
-                <h4 class="font-bold">offreBoard</h4>
-                <p class="text-gray-600">Trouvez votre prochain emploi dans la tech</p>
-            </div>
-            <div>
-                <h4 class="font-bold">Pour les candidats</h4>
-                <ul class="text-gray-600">
-                    <li><a href="#" class="hover:underline">Parcourir les offres</a></li>
-                    <li><a href="#" class="hover:underline">Entreprises</a></li>
-                    <li><a href="#" class="hover:underline">Blog</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="font-bold">Pour les entreprises</h4>
-                <ul class="text-gray-600">
-                    <li><a href="#" class="hover:underline">Publier une offre</a></li>
-                    <li><a href="#" class="hover:underline">Solutions RH</a></li>
-                    <li><a href="#" class="hover:underline">Tarifs</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="font-bold">Suivez-nous</h4>
-                <div class="flex space-x-4 text-gray-600 mt-2">
-                    <a href="#" class="hover:text-blue-600"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" class="hover:text-blue-600"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="hover:text-blue-600"><i class="fab fa-facebook"></i></a>
-                </div>
+            
+            <div class="mt-4 flex items-center justify-between">
+                <span class="px-2 py-1 text-xs rounded-full {{ $offre->statut === 'ouverte' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
+                    {{ ucfirst($offre->statut) }}
+                </span>
+                <span class="text-sm text-gray-500">
+                    <i class="fas fa-calendar-alt mr-1"></i>
+                    {{ $offre->created_at->format('d/m/Y') }}
+                </span>
             </div>
         </div>
-    </footer>
+
+        <!-- Description -->
+        <div class="p-6">
+            <h2 class="text-lg font-semibold text-gray-900 mb-4">Description du poste</h2>
+            <div class="prose prose-blue max-w-none">
+                {!! nl2br(e($offre->description)) !!}
+            </div>
+        </div>
+
+        <!-- Tags -->
+        @if($offre->tags->isNotEmpty())
+        <div class="p-6 border-t border-gray-200">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Compétences requises</h3>
+            <div class="flex flex-wrap gap-2">
+                @foreach($offre->tags as $tag)
+                    <span class="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full">
+                        {{ $tag->nom }}
+                    </span>
+                @endforeach
+            </div>
+        </div>
+        @endif
+
+        <!-- Catégorie -->
+        <div class="p-6 border-t border-gray-200">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Domaine d'activité</h3>
+            <div class="flex items-center">
+                <i class="fas fa-tag mr-2 text-blue-500"></i>
+                <span class="text-gray-700">{{ $offre->categorie->nom }}</span>
+            </div>
+        </div>
+
+        <!-- Candidatures -->
+        @if(Auth::check())
+        <div class="p-6 border-t border-gray-200">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Statut de votre candidature</h3>
+            @if($offre->candidatures()->where('candidat_id', Auth::id())->exists())
+                @php
+                    $candidature = $offre->candidatures()->where('candidat_id', Auth::id())->first();
+                @endphp
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-check-circle text-green-500"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm text-gray-700">
+                            Vous avez postulé à cette offre le {{ $candidature->created_at->format('d/m/Y') }}
+                        </p>
+                        <p class="text-sm text-gray-600 mt-1">
+                            Statut : {{ ucfirst($candidature->statut) }}
+                        </p>
+                    </div>
+                </div>
+            @else
+                <p class="text-sm text-gray-600">
+                    Vous n'avez pas encore postulé à cette offre
+                </p>
+            @endif
+        </div>
+        @endif
+    </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Ajouter un effet de survol sur les boutons
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.02)';
+            });
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+    });
+</script>
 @endsection
