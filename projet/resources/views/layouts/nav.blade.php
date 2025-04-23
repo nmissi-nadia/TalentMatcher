@@ -44,14 +44,14 @@
                             </a>
                         </li>
                         <li class="mb-2">
-                            <a href="{{ route('annonces.create') }}" 
+                            <a href="{{ route('recruteur.annonces.create') }}" 
                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
                                 <i class="fas fa-plus-circle mr-3"></i>
                                 Nouvelle Offre
                             </a>
                         </li>
                         <li class="mb-2">
-                            <a href="{{ route('candidatures.index') }}" 
+                            <a href="{{ route('recruteur.candidatures.index') }}" 
                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
                                 <i class="fas fa-users mr-3"></i>
                                 Candidatures

@@ -101,36 +101,107 @@
             </div>
             
             <div id="offres-container" class="divide-y divide-gray-200">
-                <div class="p-6 text-center text-gray-500">
-                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-4"></div>
-                    Chargement des offres d'emploi...
-                </div>
+                @if($offres->isEmpty())
+                    <div class="p-6 text-center text-gray-500">
+                        Aucune offre d'emploi n'est actuellement disponible.
+                    </div>
+                @else
+                    @foreach($offres as $offre)
+                        <div class="offre-card p-6 hover:bg-gray-50 transition-colors duration-150">
+                            <div class="flex flex-col md:flex-row md:items-start">
+                                <div class="flex-1">
+                                    <div class="flex items-start">
+                                        <div class="flex-shrink-0 h-12 w-12 bg-blue-100 text-blue-600 rounded-md flex items-center justify-center">
+                                            <i class="fas fa-briefcase text-lg"></i>
+                                        </div>
+                                        <div class="ml-4">
+                                            <h3 class="text-lg font-semibold">
+                                                <a href="{{ route('candidat.offre.detail', $offre->id) }}" class="text-blue-600 hover:text-blue-800">{{ $offre->titre }}</a>
+                                            </h3>
+                                            <div class="mt-1 flex items-center text-sm text-gray-500">
+                                                <i class="fas fa-building mr-1.5"></i>
+                                                <span>{{ $offre->recruteur->name }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mt-4 offre-description text-sm text-gray-700 line-clamp-2">
+                                        {{ Str::limit($offre->description, 150) }}
+                                    </div>
+                                    
+                                    <div class="mt-4 flex flex-wrap gap-2 offre-tags">
+                                        @if($offre->tags)
+                                            @foreach($offre->tags as $tag)
+                                                <span class="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full">
+                                                    {{ $tag->nom }}
+                                                </span>
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-4 md:mt-0 md:ml-6 flex flex-col items-end justify-between">
+                                    <div class="text-right">
+                                        <span class="offre-status px-2 py-1 text-xs rounded-full {{ $offre->statut === 'ouverte' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
+                                            {{ ucfirst($offre->statut) }}
+                                        </span>
+                                    </div>
+                                    <div class="mt-4 text-sm text-gray-500">
+                                        <i class="fas fa-map-marker-alt mr-1"></i>
+                                        {{ $offre->location }}
+                                    </div>
+                                    <div class="mt-2 text-sm text-gray-500">
+                                        <i class="fas fa-euro-sign mr-1"></i>
+                                        {{ number_format($offre->salaire, 2) }} €
+                                    </div>
+                                    <div class="mt-2 text-sm text-gray-500">
+                                        <i class="fas fa-calendar-alt mr-1"></i>
+                                        {{ $offre->created_at->format('d/m/Y') }}
+                                    </div>
+                                    <a href="{{ route('candidat.offre.detail', $offre->id) }}" class="offre-link mt-4 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                        Voir l'offre
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
             </div>
-            
+
             <!-- Pagination -->
+            @if($offres->hasPages())
             <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
                 <div class="flex-1 flex justify-between sm:hidden">
-                    <button id="prev-page-mobile" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <button onclick="document.location='{{ $offres->previousPageUrl() }}'" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 {{ !$offres->onFirstPage() ? 'disabled:opacity-50 disabled:cursor-not-allowed' : '' }}">
                         Précédent
                     </button>
-                    <button id="next-page-mobile" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <button onclick="document.location='{{ $offres->nextPageUrl() }}'" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 {{ !$offres->hasMorePages() ? 'disabled:opacity-50 disabled:cursor-not-allowed' : '' }}">
                         Suivant
                     </button>
                 </div>
                 <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                     <div>
-                        <p class="text-sm text-gray-700" id="pagination-info">
-                            Affichage des résultats <span id="result-range">1 à 10</span> sur <span id="total-results">X</span>
+                        <p class="text-sm text-gray-700">
+                            Affichage des offres
+                            <span class="font-medium">{{ $offres->firstItem() }}</span>
+                            à
+                            <span class="font-medium">{{ $offres->lastItem() }}</span>
+                            sur
+                            <span class="font-medium">{{ $offres->total() }}</span>
                         </p>
                     </div>
                     <div>
-                        <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination" id="pagination-container">
-                            <button id="prev-page" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                        <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                            <button onclick="document.location='{{ $offres->previousPageUrl() }}'" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 {{ !$offres->onFirstPage() ? 'disabled:opacity-50 disabled:cursor-not-allowed' : '' }}">
                                 <span class="sr-only">Précédent</span>
                                 <i class="fas fa-chevron-left"></i>
                             </button>
-                            <!-- Pagination buttons will be added dynamically -->
-                            <button id="next-page" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                            @for($i = 1; $i <= $offres->lastPage(); $i++)
+                                <button onclick="document.location='{{ $offres->url($i) }}'" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium {{ $i == $offres->currentPage() ? 'text-blue-600' : 'text-gray-700 hover:bg-gray-50' }}">
+                                    {{ $i }}
+                                </button>
+                            @endfor
+                            <button onclick="document.location='{{ $offres->nextPageUrl() }}'" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 {{ !$offres->hasMorePages() ? 'disabled:opacity-50 disabled:cursor-not-allowed' : '' }}">
                                 <span class="sr-only">Suivant</span>
                                 <i class="fas fa-chevron-right"></i>
                             </button>
@@ -138,6 +209,7 @@
                     </div>
                 </div>
             </div>
+            @endif
         </div>
     </div>
 </div>

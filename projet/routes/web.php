@@ -46,6 +46,8 @@ Route::middleware(['auth', 'check.role:candidat'])->prefix('candidat')->name('ca
     Route::post('/profile/update', [CandidatController::class, 'updateProfile'])->name('profile.update');
     // affichage des offres existe
     Route::get('/offres', [CandidatController::class, 'offres'])->name('offres');
+    // detail d une annonce
+    Route::get('/offres/{id}', [AnnonceController::class, 'show'])->name('offre.detail');
     Route::get('/search', [CandidatController::class, 'search'])->name('search');
     Route::post('/apply/{id}', [CandidatController::class, 'apply'])->name('apply');
     Route::get('/candidatures', [CandidatController::class, 'candidatures'])->name('candidatures');
@@ -63,6 +65,8 @@ Route::middleware(['auth', 'check.role:recruteur'])->prefix('recruteur')->name('
     Route::put('/annonces/{id}/update', [AnnonceController::class, 'update'])->name('annonces.update');
     Route::get('/annonces/{id}/manage', [RecruteurController::class, 'manageCandidatures'])->name('annonces.manage');
     Route::delete('/annonces/{id}/delete', [AnnonceController::class, 'destroy'])->name('annonces.delete');
+    // page d'affichage des candidatures
+    Route::get('/candidatures', [RecruteurController::class, 'candidatures'])->name('candidatures.index');
     Route::post('/candidatures/{id}/status', [RecruteurController::class, 'updateCandidatureStatus'])->name('candidatures.status');
     Route::get('/candidatures/{id}/etapes', [RecruteurController::class, 'manageEtapes'])->name('candidatures.etapes');
     Route::post('/etapes/{id}/update', [RecruteurController::class, 'updateEtape'])->name('etapes.update');

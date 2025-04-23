@@ -36,6 +36,7 @@ class AnnonceController extends Controller
     {
         return view('recruteur.offre-form');
     }
+    
 
     public function store(Request $request)
     {

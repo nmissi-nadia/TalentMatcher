@@ -123,7 +123,7 @@ class RecruteurController extends Controller
         }
 
     // Gérer les candidatures
-    public function manageCandidatures($annonceId)
+    public function Candidatures($annonceId)
     {
         $annonce = Annonce::findOrFail($annonceId);
         $this->authorize('view', $annonce);
@@ -132,7 +132,7 @@ class RecruteurController extends Controller
             ->with('user')
             ->paginate(10);
 
-        return view('recruteur.manage_candidatures', compact('annonce', 'candidatures'));
+        return view('recruteur.candidates', compact('candidatures'));
     }
 
     // Mettre à jour le statut d'une candidature
