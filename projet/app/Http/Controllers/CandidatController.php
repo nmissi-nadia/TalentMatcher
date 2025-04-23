@@ -98,28 +98,46 @@ class CandidatController extends Controller
     // Postuler à une offre
     public function apply(Request $request, $id)
     {
-        $annonce = Annonce::findOrFail($id);
+        $offre = Annonce::with('candidatures')->findOrFail($id);
         $user = Auth::user();
 
         // Vérifier si le candidat a déjà postulé
-        $existingCandidature = Candidature::where('user_id', $user->id)
-            ->where('annonce_id', $id)
-            ->first();
-
-        if ($existingCandidature) {
+        if ($offre->candidatures()->where('candidat_id', $user->id)->exists()) {
             return redirect()->back()->with('error', 'Vous avez déjà postulé à cette offre');
         }
 
-        $candidature = new Candidature([
-            'user_id' => $user->id,
-            'annonce_id' => $id,
-            'status' => 'en_attente',
-            'message' => $request->message ?? null
+        // Vérifier si l'offre est ouverte
+        if ($offre->statut !== 'ouverte') {
+            return redirect()->back()->with('error', 'Cette offre n\'est plus ouverte aux candidatures');
+        }
+
+        // Validation des données
+        $validated = $request->validate([
+            'message' => 'nullable|string|max:500',
+            'cv' => 'required|file|mimes:pdf,doc,docx|max:5120', // 5MB max
         ]);
+
+        // Créer la candidature
+        $candidature = new Candidature([
+            'candidat_id' => $user->id,
+            'annonce_id' => $id,
+            'statut' => 'en_attente',
+            'message' => $validated['message'] ?? null,
+        ]);
+
+        // Sauvegarder le CV
+        if ($request->hasFile('cv')) {
+            $cvPath = $request->file('cv')->store('cvs', 'public');
+            $candidature->cv = $cvPath;
+        }
 
         $candidature->save();
 
-        return redirect()->route('candidat.candidatures')->with('success', 'Candidature envoyée avec succès');
+        // Envoyer une notification au recruteur
+        $offre->recruteur->notify(new NouvelleCandidature($candidature));
+
+        return redirect()->route('candidat.candidatures')
+            ->with('success', 'Candidature envoyée avec succès');
     }
 
     // Afficher toutes les candidatures
