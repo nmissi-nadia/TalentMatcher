@@ -41,7 +41,7 @@ class RecruteurController extends Controller
                 })
 
         ];
-        // Récupérer les candidatures récentes
+     
         $recentCandidatures = Candidature::whereHas('annonce', function($query) use ($user) {
             $query->where('recruteur_id', $user->id);
         })
@@ -68,7 +68,6 @@ class RecruteurController extends Controller
     }
 
 
-    // Sauvegarder une nouvelle offre
     public function storeAnnonce(Request $request)
         {
             try {
@@ -125,14 +124,14 @@ class RecruteurController extends Controller
     // Gérer les candidatures,Afficahge des candidatures en groupant par Annonce
     public function Candidatures()
     {
-        // Get all announcements created by the authenticated recruiter
+       
         $annonces = Annonce::where('recruteur_id', Auth::id())
             ->with(['candidatures' => function ($query) {
                 $query->with(['candidat', 'annonce'])->latest();
             }])
             ->get();
 
-        // Get all candidatures for these announcements
+        
         $candidatures = Candidature::whereIn('annonce_id', $annonces->pluck('id'))
             ->with(['candidat', 'annonce'])
             ->latest()
@@ -141,7 +140,6 @@ class RecruteurController extends Controller
         return view('recruteur.candidates', compact('candidatures', 'annonces'));
     }
 
-    // Mettre à jour le statut d'une candidature
     public function updateCandidatureStatus(Request $request, $candidatureId)
     {
         $candidature = Candidature::findOrFail($candidatureId);
@@ -157,7 +155,6 @@ class RecruteurController extends Controller
         return redirect()->back()->with('success', 'Statut mis à jour avec succès');
     }
 
-    // Gérer les étapes de recrutement
     public function manageEtapes($candidatureId)
     {
         $candidature = Candidature::findOrFail($candidatureId);
@@ -166,7 +163,6 @@ class RecruteurController extends Controller
         return view('recruteur.manage_etapes', compact('candidature'));
     }
 
-    // Mettre à jour une étape
     public function updateEtape(Request $request, $etapeId)
     {
         $etape = $request->etape_type;
@@ -180,7 +176,6 @@ class RecruteurController extends Controller
         return redirect()->back()->with('success', 'Étape mise à jour avec succès');
     }
 
-    // Statistiques de recrutement
     public function stats()
     {
         $user = Auth::user();
@@ -206,7 +201,6 @@ class RecruteurController extends Controller
         return view('recruteur.stats', compact('stats'));
     }
 
-    // Gérer les tags
     public function manageTags()
     {
         $tags = Tag::all();

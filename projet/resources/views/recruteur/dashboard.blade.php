@@ -5,10 +5,8 @@
 @section('content')
 
 <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-    <!-- Stats Overview -->
     <div class="px-4 py-4 sm:px-0">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <!-- Total offres -->
             <div class="bg-white overflow-hidden shadow rounded-lg">
                 <div class="px-4 py-5 sm:p-6">
                     <div class="flex items-center">
@@ -25,7 +23,6 @@
                 </div>
             </div>
 
-            <!-- Active offres -->
             <div class="bg-white overflow-hidden shadow rounded-lg">
                 <div class="px-4 py-5 sm:p-6">
                     <div class="flex items-center">
@@ -42,7 +39,6 @@
                 </div>
             </div>
 
-            <!-- Total Applications -->
             <div class="bg-white overflow-hidden shadow rounded-lg">
                 <div class="px-4 py-5 sm:p-6">
                     <div class="flex items-center">
@@ -59,7 +55,6 @@
                 </div>
             </div>
 
-            <!-- Pending Applications -->
             <div class="bg-white overflow-hidden shadow rounded-lg">
                 <div class="px-4 py-5 sm:p-6">
                     <div class="flex items-center">
@@ -78,10 +73,8 @@
         </div>
     </div>
 
-    <!-- Main Content -->
     <div class="px-4 py-4 sm:px-0">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- Recent Applications -->
             <div class="bg-white overflow-hidden shadow rounded-lg">
                 <div class="px-4 py-5 sm:p-6">
                     <h2 class="text-lg font-medium text-gray-900">Candidatures récentes</h2>
@@ -123,13 +116,11 @@
                 </div>
             </div>
 
-            <!-- offre Statistics -->
             <div class="bg-white overflow-hidden shadow rounded-lg">
                 <div class="px-4 py-5 sm:p-6">
                     <h2 class="text-lg font-medium text-gray-900">Statistiques des offres</h2>
                     <div class="mt-4">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <!-- Category Distribution -->
                             <div class="bg-gray-50 p-4 rounded-lg">
                                 <h3 class="text-sm font-medium text-gray-900">Catégories</h3>
                                 <div class="mt-2">
@@ -137,7 +128,6 @@
                                 </div>
                             </div>
 
-                            <!-- Status Distribution -->
                             <div class="bg-gray-50 p-4 rounded-lg">
                                 <h3 class="text-sm font-medium text-gray-900">Statut des candidatures</h3>
                                 <div class="mt-2">
