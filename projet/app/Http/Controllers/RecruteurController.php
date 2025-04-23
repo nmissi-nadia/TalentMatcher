@@ -122,16 +122,22 @@ class RecruteurController extends Controller
             }
         }
 
-    // Gérer les candidatures
-    public function Candidatures($annonceId)
+    // Gérer les candidatures,Afficahge des candidatures en groupant par Annonce
+    public function Candidatures()
     {
-        $annonce = Annonce::findOrFail($annonceId);
-        $this->authorize('view', $annonce);
+        // Get all announcements created by the authenticated recruiter
+        $annonces = Annonce::where('recruteur_id', Auth::id())
+            ->with(['candidatures' => function ($query) {
+                $query->with(['candidat', 'annonce'])->latest();
+            }])
+            ->get();
 
-        $candidatures = $annonce->candidatures()
-            ->with('user')
+        // Get all candidatures for these announcements
+        $candidatures = Candidature::whereIn('annonce_id', $annonces->pluck('id'))
+            ->with(['candidat', 'annonce'])
+            ->latest()
             ->paginate(10);
-
+            
         return view('recruteur.candidates', compact('candidatures'));
     }
 

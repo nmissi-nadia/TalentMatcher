@@ -3,11 +3,6 @@
 @section('title', 'Tableau de Bord Recruteur - TalentMatcher')
 
 @section('content')
-<div class="bg-white shadow">
-    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-        <h1 class="text-3xl font-bold text-gray-900">Tableau de bord</h1>
-    </div>
-</div>
 
 <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
     <!-- Stats Overview -->
@@ -105,7 +100,7 @@
                                                     </div>
                                                     <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
                                                         <div>
-                                                            <p class="text-sm text-gray-500">{{ $candidature->user->name }}</p>
+                                                            <p class="text-sm text-gray-500">{{ $candidature->annonce->recruteur->name }}</p>
                                                             <p class="text-sm text-gray-500">{{ $candidature->annonce->title }}</p>
                                                             <p class="text-sm text-gray-500">{{ $candidature->created_at->format('d/m/Y') }}</p>
                                                         </div>
@@ -146,10 +141,10 @@
                             <div class="bg-gray-50 p-4 rounded-lg">
                                 <h3 class="text-sm font-medium text-gray-900">Statut des candidatures</h3>
                                 <div class="mt-2">
-                                    @foreach($stats['statut_candidatures'] as $status)
+                                    @foreach($stats['statut_candidatures'] as $status => $count)
                                         <div class="flex items-center justify-between py-1">
-                                            <span class="text-sm text-gray-500">{{ $status->status }}</span>
-                                            <span class="text-sm text-gray-900">{{ $status->count }}</span>
+                                            <span class="text-sm text-gray-500">{{ ucfirst($status) }}</span>
+                                            <span class="text-sm text-gray-900">{{ $count }}</span>
                                         </div>
                                     @endforeach
                                 </div>
