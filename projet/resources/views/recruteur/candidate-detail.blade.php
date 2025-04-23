@@ -1,6 +1,6 @@
 @extends('layouts.nav')
 
-@section('title', 'Détail de la Candidature - TalentMatcher')
+@section('title', 'Détail de la Candidature')
 
 @section('content')
 <div class="bg-white shadow">

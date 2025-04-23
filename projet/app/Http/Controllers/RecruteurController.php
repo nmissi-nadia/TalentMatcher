@@ -138,7 +138,7 @@ class RecruteurController extends Controller
             ->latest()
             ->paginate(10);
             
-        return view('recruteur.candidates', compact('candidatures'));
+        return view('recruteur.candidates', compact('candidatures', 'annonces'));
     }
 
     // Mettre à jour le statut d'une candidature
