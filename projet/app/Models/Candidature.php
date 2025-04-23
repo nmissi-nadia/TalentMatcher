@@ -9,8 +9,10 @@ class Candidature extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id_annonce',
-        'id_candidat',
+        'annonce_id',
+        'candidat_id',
+        'lettre_motivation',
+        'cv',
         'statut'
     ];
     public function annonce()

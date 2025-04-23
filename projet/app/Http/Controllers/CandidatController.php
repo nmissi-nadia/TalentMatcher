@@ -98,11 +98,16 @@ class CandidatController extends Controller
     // Postuler à une offre
     public function apply(Request $request, $id)
     {
+        // Récupérer l'offre
         $offre = Annonce::with('candidatures')->findOrFail($id);
-        $user = Auth::user();
+        
+        // Vérifier si le candidat est connecté
+        if (!Auth::check()) {
+            return redirect()->back()->with('error', 'Veuillez vous connecter pour postuler');
+        }
 
         // Vérifier si le candidat a déjà postulé
-        if ($offre->candidatures()->where('candidat_id', $user->id)->exists()) {
+        if ($offre->candidatures()->where('candidat_id', Auth::id())->exists()) {
             return redirect()->back()->with('error', 'Vous avez déjà postulé à cette offre');
         }
 
@@ -119,10 +124,11 @@ class CandidatController extends Controller
 
         // Créer la candidature
         $candidature = new Candidature([
-            'candidat_id' => $user->id,
-            'annonce_id' => $id,
-            'statut' => 'en_attente',
-            'message' => $validated['message'] ?? null,
+            'annonce_id' => $offre->id,
+            'candidat_id' => Auth::id(),
+            'lettre_motivation' => $validated['message'] ?? null,
+            'statut' => 'en attente',
+
         ]);
 
         // Sauvegarder le CV
@@ -134,7 +140,7 @@ class CandidatController extends Controller
         $candidature->save();
 
         // Envoyer une notification au recruteur
-        $offre->recruteur->notify(new NouvelleCandidature($candidature));
+        // $offre->recruteur->notify(new NouvelleCandidature($candidature));
 
         return redirect()->route('candidat.candidatures')
             ->with('success', 'Candidature envoyée avec succès');
