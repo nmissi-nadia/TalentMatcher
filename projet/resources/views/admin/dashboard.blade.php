@@ -3,6 +3,7 @@
 @section('title', 'Tableau de bord administrateur')
 
 @section('content')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Dashboard Content -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- Statistiques des utilisateurs -->
@@ -44,72 +45,84 @@
         <!-- Distribution des utilisateurs -->
         <div class="bg-white rounded-lg shadow p-6">
             <h3 class="text-lg font-semibold text-gray-800 mb-4">Distribution des utilisateurs</h3>
-            <canvas id="userDistributionChart" class="w-full h-64"></canvas>
+            <canvas id="usersChart" class="w-full h-64"></canvas>
         </div>
 
-        <!-- Statistiques des secteurs -->
+        <!-- Statistiques des catégories -->
         <div class="bg-white rounded-lg shadow p-6">
-            <h3 class="text-lg font-semibold text-gray-800 mb-4">Statistiques des secteurs</h3>
-            <canvas id="activeSectorsChart" class="w-full h-64"></canvas>
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">Statistiques des catégories</h3>
+            <canvas id="categoriesChart" class="w-full h-64"></canvas>
         </div>
     </div>
 
-    <!-- Script pour les graphiques -->
-    @push('scripts')
     <script>
-        // Configuration des graphiques
-        const userDistributionChart = new Chart(document.getElementById('userDistributionChart'), {
-            type: 'pie',
-            data: {
-                labels: ['Utilisateurs actifs', 'Utilisateurs supprimés'],
-                datasets: [{
-                    data: [{{ $progression['users']['total'] }}, {{ $progression['users']['deleted'] }}],
-                    backgroundColor: ['#3b82f6', '#ef4444']
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                let label = context.label || '';
-                                if (label) {
-                                    label += ': ';
-                                }
-                                if (context.parsed !== null) {
-                                    label += context.parsed + ' (' + Math.round((context.parsed / ({{ $progression['users']['total'] }} + {{ $progression['users']['deleted'] }}) * 100)) + '%)';
-                                }
-                                return label;
-                            }
+        document.addEventListener("DOMContentLoaded", function () {
+            // Données transmises depuis le contrôleur Laravel
+            // $userStats est un tableau associatif avec les rôles comme clés et les comptes comme valeurs 
+            const userStatsLabels = @json(array_keys( $progression['users']['stats'] ));
+            const userStatsData = @json(array_values($progression['users']['stats'] ));
+            const categoryStatsLabels = @json(array_keys($progression['categories']['stats']));
+            const categoryStatsData = @json(array_Values($progression['categories']['stats']));
+            
+            // Graphique des utilisateurs par rôle
+            const ctxUsers = document.getElementById('usersChart').getContext('2d');
+            new Chart(ctxUsers, {
+                type: 'bar',
+                data: {
+                    labels: userStatsLabels,
+                    datasets: [{
+                        label: 'Nombre d\'utilisateurs',
+                        data: userStatsData,
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 206, 86, 1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
                         }
                     }
                 }
-            }
-        });
+            });
 
-        const activeSectorsChart = new Chart(document.getElementById('activeSectorsChart'), {
-            type: 'bar',
-            data: {
-                labels: ['Offres actives', 'Offres inactives'],
-                datasets: [{
-                    label: 'Nombre d\'offres',
-                    data: [{{ $progression['annonces']['active'] }}, {{ $progression['annonces']['total'] - $progression['annonces']['active'] }}],
-                    backgroundColor: ['#3b82f6', '#ef4444']
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+            // Graphique des annonces par catégorie
+            const ctxCategories = document.getElementById('categoriesChart').getContext('2d');
+            new Chart(ctxCategories, {
+                type: 'bar', 
+                data: {
+                    labels: categoryStatsLabels, 
+                    datasets: [{
+                        label: 'Nombre d\'annonces',
+                        data: categoryStatsData, 
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                        ],
+                        borderColor: [
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true
                 }
-            }
+            });
         });
     </script>
-    @endpush
+
 @endsection

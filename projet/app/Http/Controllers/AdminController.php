@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Models\Annonce;
 use App\Models\Candidature;
 use App\Models\Tag;
-
+use App\Models\Categorie;
 use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
@@ -34,12 +34,19 @@ class AdminController extends Controller
             ->orderByDesc('created_at')
             ->limit(5)
             ->get();
-        
+        $userStats = User::select('role', \DB::raw('COUNT(*) as count'))
+            ->groupBy('role')
+            ->get()
+            ->pluck('count', 'role')
+            ->toArray();
+            $categoryStats = Categorie::withCount('annonces')->get()->pluck('annonces_count', 'nom')->toArray();
         // Calculer les pourcentages de progression
         $progression = [
             'users' => [
                 'total' => $totalUsers,
                 'deleted' => $deletedUser,
+                'candidats' => $newCandidates,
+                'stats' => $userStats,
                 'percentage' => ($totalUsers + $deletedUser) > 0 ? round(($totalUsers / ($totalUsers + $deletedUser)) * 100) : 0
             ],
             'annonces' => [
@@ -55,6 +62,9 @@ class AdminController extends Controller
             'candidatures' => [
                 'total' => $totalCandidatures,
                 'percentage' => ($totalCandidatures + $totalCandidatures) > 0 ? round(($totalCandidatures / ($totalCandidatures + $totalCandidatures)) * 100) : 0
+            ],
+            'categories' => [
+                'stats' => $categoryStats
             ]
         ];
 
@@ -67,7 +77,9 @@ class AdminController extends Controller
             'totalTags' => $totalTags,
             'deletedUsers' => $deletedUsers,
             'topoffres' => $topoffres,
-            'progression' => $progression
+            'progression' => $progression,
+            'userStats' => $userStats,
+            'categoryStats' => $categoryStats
         ]);
     }
     public function utilisateurs()
