@@ -4,6 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Annonce;
+use App\Models\User;
+use App\Models\EtapeEntretienOral;
+use App\Models\EtapeTestTechnique;
+use App\Models\EtapeValidationFinale;
 
 class Candidature extends Model
 {
@@ -24,15 +29,15 @@ class Candidature extends Model
         return $this->belongsTo(User::class);
     }
    
-    public function etapesEntretien()
+    public function entretienOral()
     {
         return $this->hasMany(EtapeEntretienOral::class);
     }
-    public function etapesTestTechnique()
+    public function testTechnique()
     {
         return $this->hasMany(EtapeTestTechnique::class);
     }
-    public function etapesValidationFinale()
+    public function validation()
     {
         return $this->hasMany(EtapeValidationFinale::class);
     }
