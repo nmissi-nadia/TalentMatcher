@@ -45,6 +45,16 @@ class CandidatureController extends Controller
                 $validated['cv'] = $request->file('cv')->store('cvs','public');
             }
             $candidature = $this->service->create($validated);
+            // create etapeTestTechnique & EtapeEntretienOral & EtapeValidationFinale
+            $etapeTestTechnique = new EtapeTestTechnique();
+            $etapeTestTechnique->candidature_id = $candidature->id;
+            $etapeTestTechnique->save();
+            $etapeEntretienOral = new EtapeEntretienOral();
+            $etapeEntretienOral->candidature_id = $candidature->id;
+            $etapeEntretienOral->save();
+            $etapeValidationFinale = new EtapeValidationFinale();
+            $etapeValidationFinale->candidature_id = $candidature->id;
+            $etapeValidationFinale->save();
             return redirect()->route('candidat.candidatures')->with('success', 'Candidature envoyée avec succès');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage())->withInput();
@@ -69,7 +79,8 @@ class CandidatureController extends Controller
         // try {
             $candidature = $this->service->get($id);
            
-            $etatpeEntretienOral= EtapeEntretienOral::where('candidature_id', $id)->get();
+            $etatpeEntretienOral= EtapeEntretienOral::where('candidature_id', $id)->first();
+       
             $etatpeTestTechnique= EtapeTestTechnique::where('candidature_id', $id)->first();
             $Validation = EtapeValidationFinale::where('candidature_id', $id)->first();
             return view('candidat.candidature_detail', compact('candidature','etatpeEntretienOral','etatpeTestTechnique','Validation'));
@@ -161,18 +172,43 @@ class CandidatureController extends Controller
         return view('candidat.applications', compact('candidatures'));
     }
     // update status of candidature
-    public function updateCandidatureStatus(Request $request, $candidatureId)
-    {
-        $candidature = Candidature::findOrFail($candidatureId);
-        $this->authorize('update', $candidature);
+    public function updateCandidatureStatus(Request $request, $id)
+{
+    $candidature = Candidature::findOrFail($id);
+    $this->authorize('update', $candidature);
 
-        $request->validate([
-            'statut' => 'required|in:en_attente,pre_selection,entretien,test_technique,validation_finale,accepte,refuse'
-        ]);
+    $request->validate([
+        'statut' => 'required|in:en attente,acceptée,refusée'
+    ]);
 
-        $candidature->status = $request->statut;
-        $candidature->save();
+    $currentStatus = $candidature->statut;
+    $newStatus = $request->statut;
+    $candidature->statut = $newStatus;
+    $candidature->save();
 
-        return redirect()->back()->with('success', 'Statut mis à jour avec succès');
+    switch ($newStatus) {
+        case 'acceptée':
+            if (!$candidature->etape_entretien_oral) {
+                $etapeEntretienOral = new EtapeEntretienOral();
+                $etapeEntretienOral->candidature_id = $candidature->id;
+                $etapeEntretienOral->save();
+            }
+            break;
+
+        case 'refusée':
+            if (!$candidature->etape_validation_finale) {
+                $etapeValidationFinale = new EtapeValidationFinale();
+                $etapeValidationFinale->candidature_id = $candidature->id;
+                $etapeValidationFinale->statut = 'refusée';
+                $etapeValidationFinale->save();
+            }
+            break;
+
+        
+            
+            break;
     }
+
+    return redirect()->back()->with('success', 'Statut mis à jour avec succès');
+}
 }

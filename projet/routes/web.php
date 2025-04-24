@@ -52,7 +52,7 @@ Route::middleware(['auth', 'check.role:candidat'])->prefix('candidat')->name('ca
     Route::post('/apply/{id}', [CandidatController::class, 'apply'])->name('apply');
     Route::get('/candidatures', [CandidatController::class, 'candidatures'])->name('candidatures');
     Route::get('/candidatures/{id}', [CandidatureController::class, 'show'])->name('candidature.detail');
-    Route::delete('/candidatures/{id}', [CandidatController::class, 'deleteCandidature'])->name('candidatures.delete');
+    Route::delete('/candidatures/{id}', [CandidatureController::class, 'destroy'])->name('candidatures.delete');
     Route::get('/recommended', [CandidatController::class, 'recommended'])->name('recommended');
 });
 
@@ -69,7 +69,8 @@ Route::middleware(['auth', 'check.role:recruteur'])->prefix('recruteur')->name('
     // page d'affichage des candidatures
     Route::get('/candidatures', [RecruteurController::class, 'candidatures'])->name('candidatures.index');
     Route::get('/candidatures/{id}', [CandidatureController::class, 'showrec'])->name('candidature.show');
-    Route::post('/candidatures/{id}/status', [CandidatureController::class, 'updateCandidatureStatus'])->name('candidature.status');
+    // ajouter l'au
+    Route::put('/candidatures/{id}/status', [CandidatureController::class, 'updateCandidatureStatus'])->name('candidature.status');
     Route::get('/candidatures/{id}/etapes', [RecruteurController::class, 'manageEtapes'])->name('candidatures.etapes');
     Route::post('/etapes/{id}/update', [RecruteurController::class, 'updateEtape'])->name('etapes.update');
     // partie concernat les tags

@@ -21,6 +21,16 @@
                         {{ ucfirst($candidature->statut) }}
                     </p>
                 </div>
+                <!-- section ila bgha candiat i retirer sa candidature -->
+                
+                    <div>
+                        <p class="font-semibold">Action :</p>
+                        <form action="{{ route('candidat.candidatures.delete', $candidature->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-600 hover:text-red-800">Retirer la candidature</button>
+                        </form>
+                    </div>
             </div>
         </div>
 

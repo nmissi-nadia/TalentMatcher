@@ -11,14 +11,27 @@
         :root {
             --primary-color: #ea530c;
         }
+        .candidat {
+            background-image: url('{{ asset('storage/images/backcand.jpg') }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        /* Style pour le fond du recruteur */
+        .recruteur {
+            background-image: url('{{ asset('storage/images/backrec.jpg') }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
     </style>
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-100 @if(auth()->check()) {{ auth()->user()->role }} @endif">
     <div class="min-h-screen flex">
-        <!-- Sidebar -->
         <aside class="w-64 bg-white border-r border-gray-200">
             <div class="p-4 flex items-center">
-                <!-- Logo -->
                 <a href="{{ route(auth()->user()->role . '.dashboard') }}" class="block">
                     <img src="{{ asset('storage/images/talentmatcherlog.png') }}" alt="Logo" class="w-44 h-14">
                 </a>

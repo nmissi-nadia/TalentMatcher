@@ -128,7 +128,7 @@
                                         </a>
                                         <form action="{{ route('recruteur.candidature.status', $candidature->id) }}" method="POST" class="inline">
                                             @csrf
-                                            @method('PATCH')
+                                            @method('PUT')
                                             <button type="submit" class="text-yellow-600 hover:text-yellow-900">
                                                 <i class="fas fa-edit"></i>
                                                 Accepter
