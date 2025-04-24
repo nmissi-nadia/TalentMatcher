@@ -10,7 +10,6 @@ class EtapeValidationFinale extends Model
     use HasFactory;
     protected $fillable = [
         'id_candidature',
-        'id_annonce',
         'statut'
     ];
     public function candidature()

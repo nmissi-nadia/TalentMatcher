@@ -51,6 +51,7 @@ Route::middleware(['auth', 'check.role:candidat'])->prefix('candidat')->name('ca
     Route::get('/search', [CandidatController::class, 'search'])->name('search');
     Route::post('/apply/{id}', [CandidatController::class, 'apply'])->name('apply');
     Route::get('/candidatures', [CandidatController::class, 'candidatures'])->name('candidatures');
+    Route::get('/candidatures/{id}', [CandidatureController::class, 'show'])->name('candidature.detail');
     Route::delete('/candidatures/{id}', [CandidatController::class, 'deleteCandidature'])->name('candidatures.delete');
     Route::get('/recommended', [CandidatController::class, 'recommended'])->name('recommended');
 });
