@@ -7,6 +7,9 @@
     <!-- Header -->
     <div class="bg-white shadow rounded-lg">
         <div class="p-6 border-b border-gray-200">
+        @error('test')
+            <div class="text-red-500"> {{ $message }} </div>
+        @enderror
             <p class="mt-1 text-sm text-gray-500">Suivez l'état de vos candidatures et gérez-les facilement.</p>
         </div>
     </div>
@@ -111,6 +114,10 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <div class="flex space-x-2">
+                                        <a href="{{ route('candidat.candidature.detail', $candidature->id) }}" class="text-blue-600 hover:text-blue-900">
+                                                <i class="fas fa-eye"></i>
+                                                Suivre Candidature
+                                            </a>
                                             <a href="{{ route('candidat.offre.detail', $candidature->annonce->id) }}" class="text-blue-600 hover:text-blue-900">
                                                 <i class="fas fa-eye"></i>
                                                 Voir l'offre
@@ -133,6 +140,8 @@
                 </div>
             </div>
         @endif
+
+        
     </div>
 </div>
 

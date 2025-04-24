@@ -41,7 +41,7 @@ class CandidatureController extends Controller
                 $validated['cv'] = $request->file('cv')->store('cvs','public');
             }
             $candidature = $this->service->create($validated);
-            return redirect()->route('candidat.applications')->with('success', 'Candidature envoyée avec succès');
+            return redirect()->route('candidat.candidatures')->with('success', 'Candidature envoyée avec succès');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage())->withInput();
         }
@@ -63,11 +63,13 @@ class CandidatureController extends Controller
     public function show($id)
     {
         try {
-            $candidature = $this->service->get($id);
             
-            return view('candidat.candidature-detail', compact('candidature'));
+            $candidature = $this->service->get($id);
+            // dd($candidature)
+            // return redirect()->route('candidat.candidature.detail', $id);
+            return view('candidat.candidature_detail', compact('candidature'));
         } catch (\Exception $e) {
-            return redirect()->route('candidat.applications')->with('error', $e->getMessage());
+            return redirect()->route('candidat.candidatures')->withErrors('test', 'hhhhhhhhhhhhhh');
         }
     }
 
@@ -77,7 +79,7 @@ class CandidatureController extends Controller
             $candidature = $this->service->get($id);
             return view('candidat.edit-application', compact('candidature'));
         } catch (\Exception $e) {
-            return redirect()->route('candidat.applications')->with('error', $e->getMessage());
+            return redirect()->route('candidat.candidatures')->with('error', $e->getMessage());
         }
     }
 
