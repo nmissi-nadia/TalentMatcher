@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Candidature;
 
 class EtapeValidationFinale extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id_candidature',
+        'candidature_id',
         'commentaire',
         'statut'
     ];
@@ -18,16 +19,5 @@ class EtapeValidationFinale extends Model
         return $this->belongsTo(Candidature::class);
     }
     
-    public function etapesEntretienOral()
-    {
-        return $this->hasMany(EtapeEntretienOral::class);
-    }
-    public function etapesTestTechnique()
-    {
-        return $this->hasMany(EtapeTestTechnique::class);
-    }
-    public function etapesValidationFinale()
-    {
-        return $this->hasMany(EtapeValidationFinale::class);
-    }
+  
 }

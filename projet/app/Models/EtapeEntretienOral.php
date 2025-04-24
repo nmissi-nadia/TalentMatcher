@@ -4,13 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Candidature;
 
 class EtapeEntretienOral extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id_candidature',
-        'id_annonce',
+        'candidature_id',
+        'adresse',
+        'commentaire',
         'statut'
     ];
     public function candidature()

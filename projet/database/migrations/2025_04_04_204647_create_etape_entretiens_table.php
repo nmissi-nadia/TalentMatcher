@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('etape_entretien_orale', function (Blueprint $table) {
             $table->id();
             $table->foreignId('candidature_id')->constrained('candidatures')->onDelete('cascade');
-            $table->string('statut')->default('en_attente'); // en_attente, en_cours, valide
+            $table->string('statut')->default('en attente'); // en_attente, en_cours, valide
             $table->string('adresse')->nullable();
             $table->text('commentaire')->nullable();
             $table->timestamps();

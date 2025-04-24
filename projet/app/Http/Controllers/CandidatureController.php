@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\EtapeEntretienOral;
 use App\Models\EtapeTestTechnique;
-use App\Models\EtapeValidation;
+use App\Models\EtapeValidationFinale;
 
 class CandidatureController extends Controller
 {
@@ -68,10 +68,10 @@ class CandidatureController extends Controller
         try {
             $candidature = $this->service->get($id);
            
-            $etatpeEntretienOral= EtapeEntretienOral::where('candidature_id', $id)->first();
+            $etatpeEntretienOral= EtapeEntretienOral::where('candidature_id', $id)->get();
             dd($etatpeEntretienOral);
             $etatpeTestTechnique= EtapeTestTechnique::where('candidature_id', $id)->first();
-            $Validation = EtapeValidation::where('candidature_id', $id)->first();
+            $Validation = EtapeValidationFinale::where('candidature_id', $id)->first();
             return view('candidat.candidature_detail', compact('candidature', 'etatpeEntretien', 'etatpeTestTechnique', 'Validation'));
         } catch (\Exception $e) {
             return redirect()->route('candidat.candidatures')->with('error', $e->getMessage());
