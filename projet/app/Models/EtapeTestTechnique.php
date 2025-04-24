@@ -17,20 +17,5 @@ class EtapeTestTechnique extends Model
     {
         return $this->belongsTo(Candidature::class);
     }
-    public function annonce()
-    {
-        return $this->belongsTo(Annonce::class);
-    }
-    public function candidat()
-    {
-        return $this->belongsTo(User::class);
-    }
-    public function recruteur()
-    {
-        return $this->belongsTo(User::class);
-    }
-    public function etapes()
-    {
-        return $this->hasMany(Etape::class);
-    }
+    
 }

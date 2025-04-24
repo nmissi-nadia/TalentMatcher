@@ -23,13 +23,10 @@ class Candidature extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function etapes()
-    {
-        return $this->hasMany(Etape::class);
-    }
+   
     public function etapesEntretien()
     {
-        return $this->hasMany(EtapeEntretien::class);
+        return $this->hasMany(EtapeEntretienOral::class);
     }
     public function etapesTestTechnique()
     {

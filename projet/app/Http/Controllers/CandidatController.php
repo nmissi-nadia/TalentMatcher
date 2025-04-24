@@ -153,6 +153,7 @@ class CandidatController extends Controller
         $candidatures = Candidature::where('candidat_id', $user->id)
             ->with('annonce')
             ->paginate(10);
+        
 
         return view('candidat.applications', compact('candidatures'));
     }

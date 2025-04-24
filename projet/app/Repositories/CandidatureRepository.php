@@ -27,7 +27,9 @@ class CandidatureRepository implements CandidatureRepositoryInterface
 
     public function show($id)
     {
-        return Candidature::findOrFail($id);
+        $candidature = Candidature::findOrFail($id);
+        $candidature->load('annonce', 'testTechnique', 'entretienOral', 'validation');
+        return $candidature;
     }
 
     public function destroy($id)

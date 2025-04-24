@@ -64,6 +64,7 @@ class CandidatureController extends Controller
     {
         try {
             $candidature = $this->service->get($id);
+            
             return view('candidat.application-detail', compact('candidature'));
         } catch (\Exception $e) {
             return redirect()->route('candidat.applications')->with('error', $e->getMessage());

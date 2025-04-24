@@ -17,25 +17,10 @@ class EtapeValidationFinale extends Model
     {
         return $this->belongsTo(Candidature::class);
     }
-    public function annonce()
+    
+    public function etapesEntretienOral()
     {
-        return $this->belongsTo(Annonce::class);
-    }
-    public function candidat()
-    {
-        return $this->belongsTo(User::class);
-    }
-    public function recruteur()
-    {
-        return $this->belongsTo(User::class);
-    }
-    public function etapes()
-    {
-        return $this->hasMany(Etape::class);
-    }
-    public function etapesEntretien()
-    {
-        return $this->hasMany(EtapeEntretien::class);
+        return $this->hasMany(EtapeEntretienOral::class);
     }
     public function etapesTestTechnique()
     {
