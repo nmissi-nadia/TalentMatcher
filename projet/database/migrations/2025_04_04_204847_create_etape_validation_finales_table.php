@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('etape_validation_finales', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('candidature_id')->constrained('candidatures')->onDelete('cascade');
+            $table->string('statut')->default('en attente');
+            $table->text('commentaire')->nullable();
             $table->timestamps();
         });
     }

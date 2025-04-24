@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('etape_test_techniques', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_candidature');
-            $table->unsignedBigInteger('id_annonce');
-            $table->string('statut');
+            $table->foreignId('candidature_id')->constrained('candidatures')->onDelete('cascade');
+            $table->string('lien_entretien')->nullable();
+            $table->text('commentaire')->nullable();
+            $table->string('statut')->default('en attente');
             $table->timestamps();
         });
     }

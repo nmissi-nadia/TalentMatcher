@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('etape_entretiens', function (Blueprint $table) {
+        Schema::create('etape_entretien_orale', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_candidature');
-            $table->unsignedBigInteger('id_annonce');
-            $table->string('statut');
+            $table->foreignId('candidature_id')->constrained('candidatures')->onDelete('cascade');
+            $table->string('statut')->default('en_attente'); // en_attente, en_cours, valide
+            $table->string('adresse')->nullable();
+            $table->text('commentaire')->nullable();
             $table->timestamps();
         });
     }
