@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Services\CandidatureService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\EtapeEntretienOral;
+use App\Models\EtapeTestTechnique;
+use App\Models\EtapeValidation;
 
 class CandidatureController extends Controller
 {
@@ -63,13 +66,15 @@ class CandidatureController extends Controller
     public function show($id)
     {
         try {
-            
             $candidature = $this->service->get($id);
-            // dd($candidature)
-            // return redirect()->route('candidat.candidature.detail', $id);
-            return view('candidat.candidature_detail', compact('candidature'));
+           
+            $etatpeEntretienOral= EtapeEntretienOral::where('candidature_id', $id)->first();
+            dd($etatpeEntretienOral);
+            $etatpeTestTechnique= EtapeTestTechnique::where('candidature_id', $id)->first();
+            $Validation = EtapeValidation::where('candidature_id', $id)->first();
+            return view('candidat.candidature_detail', compact('candidature', 'etatpeEntretien', 'etatpeTestTechnique', 'Validation'));
         } catch (\Exception $e) {
-            return redirect()->route('candidat.candidatures')->withErrors('test', 'hhhhhhhhhhhhhh');
+            return redirect()->route('candidat.candidatures')->with('error', $e->getMessage());
         }
     }
 

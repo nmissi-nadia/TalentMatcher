@@ -29,16 +29,18 @@ class Candidature extends Model
         return $this->belongsTo(User::class);
     }
    
-    public function entretienOral()
-    {
-        return $this->hasMany(EtapeEntretienOral::class);
-    }
     public function testTechnique()
     {
-        return $this->hasMany(EtapeTestTechnique::class);
+        return $this->hasOne(EtapeTestTechnique::class, 'candidature_id');
     }
+
+    public function entretienOral()
+    {
+        return $this->hasOne(EtapeEntretienOral::class, 'candidature_id');
+    }
+
     public function validation()
     {
-        return $this->hasMany(EtapeValidationFinale::class);
+        return $this->hasOne(EtapeValidationFinale::class, 'candidature_id');
     }
 }

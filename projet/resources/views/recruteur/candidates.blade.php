@@ -4,11 +4,9 @@
 
 @section('content')
 <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-    <!-- Filters and Search -->
     <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
         <div class="px-4 py-5 sm:p-6">
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-4">
-                <!-- Search -->
                 <div>
                     <label for="search" class="block text-sm font-medium text-gray-700">Rechercher</label>
                     <div class="mt-1 relative rounded-md shadow-sm">
@@ -21,7 +19,6 @@
                     </div>
                 </div>
 
-                <!-- Status Filter -->
                 <div>
                     <label for="status" class="block text-sm font-medium text-gray-700">Statut</label>
                     <select id="status" name="status" 
@@ -33,7 +30,6 @@
                     </select>
                 </div>
 
-                <!-- Job Title Filter -->
                 <div>
                     <label for="job-title" class="block text-sm font-medium text-gray-700">Offre d'emploi</label>
                     <select id="job-title" name="job-title" 
@@ -45,7 +41,6 @@
                     </select>
                 </div>
 
-                <!-- Date Range Filter -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Période</label>
                     <div class="mt-1 flex space-x-2">
@@ -59,7 +54,6 @@
         </div>
     </div>
 
-    <!-- Candidates Table -->
     <div class="bg-white shadow overflow-hidden sm:rounded-lg">
         <div class="px-4 py-5 sm:p-6">
             <div class="flex justify-between items-center mb-4">
@@ -71,7 +65,6 @@
                 </div>
             </div>
 
-            <!-- Table -->
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
@@ -128,17 +121,17 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                     <div class="flex space-x-2">
-                                        <a href="#" 
+                                        <a href="{{ route('recruteur.candidature.show', $candidature->id) }}" 
                                             class="text-blue-600 hover:text-blue-900">
                                             <i class="fas fa-eye"></i>
                                             Voir
                                         </a>
-                                        <form action="#" method="POST" class="inline">
+                                        <form action="{{ route('recruteur.candidature.status', $candidature->id) }}" method="POST" class="inline">
                                             @csrf
-                                            @method('PUT')
+                                            @method('PATCH')
                                             <button type="submit" class="text-yellow-600 hover:text-yellow-900">
                                                 <i class="fas fa-edit"></i>
-                                                Modifier
+                                                Accepter
                                             </button>
                                         </form>
                                     </div>
@@ -155,7 +148,7 @@
                 </table>
             </div>
 
-            <!-- Pagination -->
+            
             <div class="px-4 py-3 bg-gray-50">
                 {{ $candidatures->links() }}
             </div>
@@ -163,7 +156,6 @@
     </div>
 </div>
 
-<!-- Add JavaScript for filtering -->
 @push('scripts')
 <script>
 

@@ -28,10 +28,8 @@ class CandidatureRepository implements CandidatureRepositoryInterface
     public function show($id)
     {
         $candidature = Candidature::findOrFail($id);
-        $candidature->load('annonce', 'testTechnique', 'entretienOral', 'validation');
         return $candidature;
     }
-
     public function destroy($id)
     {
         $candidature = Candidature::findOrFail($id);
