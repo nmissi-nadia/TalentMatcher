@@ -31,16 +31,16 @@ class Candidature extends Model
    
     public function testTechnique()
     {
-        return $this->hasOne(EtapeTestTechnique::class, 'candidature_id');
+        return $this->hasOne(EtapeTestTechnique::class);
     }
 
     public function entretienOral()
     {
-        return $this->hasOne(EtapeEntretienOral::class, 'candidature_id');
+        return $this->hasOne(EtapeEntretienOral::class);
     }
 
     public function validation()
     {
-        return $this->hasOne(EtapeValidationFinale::class, 'candidature_id');
+        return $this->hasOne(EtapeValidationFinale::class);
     }
 }

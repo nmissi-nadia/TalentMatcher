@@ -68,7 +68,8 @@ Route::middleware(['auth', 'check.role:recruteur'])->prefix('recruteur')->name('
     Route::delete('/annonces/{id}/delete', [AnnonceController::class, 'destroy'])->name('annonces.delete');
     // page d'affichage des candidatures
     Route::get('/candidatures', [RecruteurController::class, 'candidatures'])->name('candidatures.index');
-    Route::post('/candidatures/{id}/status', [RecruteurController::class, 'updateCandidatureStatus'])->name('candidatures.status');
+    Route::get('/candidatures/{id}', [CandidatureController::class, 'showrec'])->name('candidature.show');
+    Route::post('/candidatures/{id}/status', [CandidatureController::class, 'updateCandidatureStatus'])->name('candidature.status');
     Route::get('/candidatures/{id}/etapes', [RecruteurController::class, 'manageEtapes'])->name('candidatures.etapes');
     Route::post('/etapes/{id}/update', [RecruteurController::class, 'updateEtape'])->name('etapes.update');
     // partie concernat les tags
