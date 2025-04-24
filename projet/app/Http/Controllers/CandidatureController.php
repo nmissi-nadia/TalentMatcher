@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\EtapeEntretienOral;
 use App\Models\EtapeTestTechnique;
 use App\Models\EtapeValidationFinale;
+use App\Models\Candidature;
 
 class CandidatureController extends Controller
 {
@@ -81,12 +82,12 @@ class CandidatureController extends Controller
         try {
             $candidature = $this->service->get($id);
            
-            $etatpeEntretienOral= EtapeEntretienOral::where('candidature_id', $id)->get();
+            $etatpeEntretienOral= EtapeEntretienOral::where('candidature_id', $id)->first();
             $etatpeTestTechnique= EtapeTestTechnique::where('candidature_id', $id)->first();
             $Validation = EtapeValidationFinale::where('candidature_id', $id)->first();
-            return view('recruteur.candidature_detail', compact('candidature','etatpeEntretienOral','etatpeTestTechnique','Validation'));
+            return view('recruteur.candidate-detail', compact('candidature','etatpeEntretienOral','etatpeTestTechnique','Validation'));
         } catch (\Exception $e) {
-            return redirect()->route('candidat.candidatures')->with('error', $e->getMessage());
+            return redirect()->route('recruteur.candidatures')->with('error', $e->getMessage());
         }
     }
 
@@ -158,5 +159,20 @@ class CandidatureController extends Controller
         $candidatId = auth()->id();
         $candidatures = $this->service->getByCandidat($candidatId);
         return view('candidat.applications', compact('candidatures'));
+    }
+    // update status of candidature
+    public function updateCandidatureStatus(Request $request, $candidatureId)
+    {
+        $candidature = Candidature::findOrFail($candidatureId);
+        $this->authorize('update', $candidature);
+
+        $request->validate([
+            'statut' => 'required|in:en_attente,pre_selection,entretien,test_technique,validation_finale,accepte,refuse'
+        ]);
+
+        $candidature->status = $request->statut;
+        $candidature->save();
+
+        return redirect()->back()->with('success', 'Statut mis à jour avec succès');
     }
 }

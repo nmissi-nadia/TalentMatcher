@@ -140,20 +140,7 @@ class RecruteurController extends Controller
         return view('recruteur.candidates', compact('candidatures', 'annonces'));
     }
 
-    public function updateCandidatureStatus(Request $request, $candidatureId)
-    {
-        $candidature = Candidature::findOrFail($candidatureId);
-        $this->authorize('update', $candidature);
-
-        $request->validate([
-            'status' => 'required|in:en_attente,pre_selection,entretien,test_technique,validation_finale,accepte,refuse'
-        ]);
-
-        $candidature->status = $request->status;
-        $candidature->save();
-
-        return redirect()->back()->with('success', 'Statut mis à jour avec succès');
-    }
+    
 
     public function manageEtapes($candidatureId)
     {
