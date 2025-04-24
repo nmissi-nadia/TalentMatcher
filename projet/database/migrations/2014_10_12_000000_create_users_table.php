@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('role', ['candidat', 'recruteur', 'admin'])->default('candidat');
-            $table->string('biographie');
+            $table->string('biographie')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

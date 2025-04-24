@@ -116,7 +116,7 @@
                                                 Voir l'offre
                                             </a>
                                             @if($candidature->cv)
-                                                <a href="{{ asset('storage/' . $candidature->cv) }}" class="text-green-600 hover:text-green-900" download>
+                                                <a href="{{ asset('storage/cvs' . $candidature->cv) }}" class="text-green-600 hover:text-green-900" download>
                                                     <i class="fas fa-download"></i>
                                                     Télécharger CV
                                                 </a>
