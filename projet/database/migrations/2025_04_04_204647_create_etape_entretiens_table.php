@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('etape_entretiens');
+        Schema::dropIfExists('etape_entretien_orale');
     }
 };

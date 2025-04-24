@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('annonce_id')->constrained('annonces')->onDelete('cascade');
             $table->foreignId('candidat_id')->constrained('users')->onDelete('cascade'); 
-            $table->text('cv'); 
+            $table->string('cv'); 
             $table->text('lettre_motivation')->nullable(); 
             $table->enum('statut', ['en attente', 'acceptée', 'refusée'])->default('en attente'); 
             $table->timestamps();

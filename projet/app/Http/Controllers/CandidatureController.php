@@ -65,17 +65,16 @@ class CandidatureController extends Controller
     }
     public function show($id)
     {
-        try {
+        // try {
             $candidature = $this->service->get($id);
            
-            $etatpeEntretienOral= EtapeEntretienOral::where('candidature_id', $id)->get();
-            dd($etatpeEntretienOral);
-            $etatpeTestTechnique= EtapeTestTechnique::where('candidature_id', $id)->first();
-            $Validation = EtapeValidationFinale::where('candidature_id', $id)->first();
-            return view('candidat.candidature_detail', compact('candidature', 'etatpeEntretien', 'etatpeTestTechnique', 'Validation'));
-        } catch (\Exception $e) {
-            return redirect()->route('candidat.candidatures')->with('error', $e->getMessage());
-        }
+            // $etatpeEntretienOral= EtapeEntretienOral::where('candidature_id', $id)->get();
+            // $etatpeTestTechnique= EtapeTestTechnique::where('candidature_id', $id)->first();
+            // $Validation = EtapeValidationFinale::where('candidature_id', $id)->first();
+            return view('candidat.candidature_detail', compact('candidature'));
+        // } catch (\Exception $e) {
+        //     return redirect()->route('candidat.candidatures')->with('error', $e->getMessage());
+        // }
     }
 
     public function edit($id)
