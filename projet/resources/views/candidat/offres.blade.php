@@ -1,13 +1,8 @@
 @extends('layouts.nav')
 
-@section('title', 'Offres d\'emploi - TalentMatcher')
+@section('title', 'Offres d\'emploi')
 
 @section('content')
-<div class="bg-white shadow">
-    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-        <h1 class="text-3xl font-bold text-gray-900">Offres d'emploi</h1>
-    </div>
-</div>
 
 <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
     <div class="px-4 sm:px-0">
@@ -25,7 +20,6 @@
                         </div>
                     </div>
 
-                    <!-- Sector Filter -->
                     <div>
                         <label for="sector-filter" class="block text-sm font-medium text-gray-700 mb-1">Secteur</label>
                         <select id="sector-filter" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
@@ -38,16 +32,15 @@
                         </select>
                     </div>
 
-                    <!-- Tag Filter -->
                     <div>
                         <label for="tag-filter" class="block text-sm font-medium text-gray-700 mb-1">Compétence</label>
                         <select id="tag-filter" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                             <option value="">Toutes les compétences</option>
-                            <!-- Will be populated dynamically -->
+                            <!-- hna ghadi ikono filter dyal tag -->
                         </select>
                     </div>
 
-                    <!-- Status Filter -->
+                 
                     <div>
                         <label for="status-filter" class="block text-sm font-medium text-gray-700 mb-1">Statut</label>
                         <select id="status-filter" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
