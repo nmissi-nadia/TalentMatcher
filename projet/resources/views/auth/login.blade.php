@@ -10,13 +10,27 @@
 <body class="bg-gray-50">
     <div class="flex h-screen">
         <!-- Bannière gauche -->
-        <div class="hidden md:flex md:w-1/2 bg-[#4f46e5] text-white p-8 flex-col">
+         <!-- ajouter deux corner rounded -->
+        <div class="hidden md:flex md:w-1/2 bg-[#4f46e5] text-white p-8 flex-col rounded-r-[30px]">
             <div class="mb-8">
                 <h1 class="text-3xl text-[#ea580c] font-bold mb-4">Trouvez un emploi ou des talents de qualité</h1>
                 <p class="text-lg">Que vous soyez candidat ou recruteur, connectez-vous facilement à la plateforme.</p>
             </div>
-            <div class="flex-grow">
-                <img src="{{ asset('storage/images/img.png') }}" alt="Équipe professionnelle" class="w-full h-[500px] object-cover rounded-lg">
+            
+            <div class="relative overflow-hidden rounded-lg">
+                <img src="{{ asset('storage/images/img.png') }}" alt="Équipe professionnelle" class="w-full h-[500px] object-cover">
+                
+                <div class="absolute inset-0 bg-gradient-to-br from-purple-500/30 to-blue-500/30 mix-blend-overlay"></div>
+                
+                <div class="absolute inset-0 border-8 border-dashed border-[#ea580c]/40 rounded-lg"></div>
+                
+                <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-yellow-300/40 rounded-full blur-xl"></div>
+                
+                <div class="absolute top-0 left-0 w-full h-full bg-black/20 backdrop-filter backdrop-contrast-125"></div>
+                
+                <div class="absolute bottom-0 right-0 bg-white/10 backdrop-blur p-3 rounded-tl-lg">
+                    <span class="text-white font-bold tracking-widest">ÉQUIPE</span>
+                </div>
             </div>
         </div>
 
