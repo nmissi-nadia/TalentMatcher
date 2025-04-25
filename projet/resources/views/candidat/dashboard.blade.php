@@ -49,45 +49,31 @@
     <div class="px-4 py-4 sm:px-0">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="bg-white overflow-hidden shadow rounded-lg">
-                <div class="px-4 py-5 sm:p-6">
-                    <h2 class="text-lg font-medium text-gray-900">Candidatures récentes</h2>
-                    <div class="mt-4">
+        
+                    <div class="bg-white shadow-lg rounded-lg p-6">
+                        <h2 class="text-xl font-bold text-gray-900 mb-4">Candidatures récentes</h2>
                         @if($candidatures->count() > 0)
-                            <div class="flow-root">
-                                <ul role="list" class="-mb-8">
-                                    @foreach($candidatures->take(5) as $candidature)
-                                        <li>
-                                            <div class="relative pb-8">
-                                                <div class="relative flex space-x-3">
-                                                    <div class="flex items-center h-5">
-                                                        <div class="flex items-center justify-center flex-shrink-0 w-10 h-10 rounded-full bg-gray-100">
-                                                            <i class="fas fa-circle text-gray-400"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
-                                                        <div>
-                                                            <p class="text-sm text-gray-500">{{ $candidature->annonce->titre }}</p>
-                                                            <p class="text-sm text-gray-500">{{ $candidature->annonce->recruteur->name }}</p>
-                                                            <p class="text-sm text-gray-500">{{ $candidature->annonce->location }}</p>
-                                                        </div>
-                                                        <div class="text-right text-sm whitespace-nowrap text-gray-500">
-                                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-{{ $candidature->status_color }}-100 text-{{ $candidature->status_color }}-800">
-                                                                {{ $candidature->statut }}
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
+                            <ul class="divide-y divide-gray-200">
+                                @foreach($candidatures->take(5) as $candidature)
+                                    <li class="py-4 flex justify-between items-center">
+                                        <div>
+                                            <h3 class="text-sm font-semibold text-gray-900">{{ $candidature->annonce->titre }}</h3>
+                                            <p class="text-sm text-gray-500">
+                                                {{ $candidature->annonce->recruteur->name }} • {{ $candidature->annonce->location }}
+                                            </p>
+                                        </div>
+                                        <span class="px-4 py-1 text-xs font-medium rounded-full bg-{{ $candidature->status_color }}-100 text-{{ $candidature->status_color }}-800">
+                                            {{ $candidature->statut }}
+                                        </span>
+                                    </li>
+                                @endforeach
+                            </ul>
                         @else
-                            <p class="text-sm text-gray-500 mt-4">Aucune candidature récente</p>
+                            <p class="text-gray-500">Aucune candidature récente</p>
                         @endif
                     </div>
                 </div>
-            </div>
+            
 
           
         </div>
