@@ -162,4 +162,11 @@ class AdminController extends Controller
         $user->forceDelete();
         return redirect()->route('admin.users.supprimes')->with('success', 'Utilisateur supprimé définitivement');
     }
+    // partie pour la gestion des gatégories et des tags
+    public function gestionTags_categorie()
+    {
+        $categories = Categorie::all()->paginate(8);
+        $tags = Tag::all()->paginate(8);
+        return view('Tags_Catégories.index', compact('categories', 'tags'));
+    }
 }
