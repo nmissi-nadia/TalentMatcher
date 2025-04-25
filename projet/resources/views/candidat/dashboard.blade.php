@@ -1,14 +1,8 @@
 @extends('layouts.nav')
 
-@section('title', 'Tableau de Bord Candidat - TalentMatcher')
+@section('title', 'Tableau de Bord Candidat)
 
 @section('content')
-<div class="bg-white shadow">
-    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-        <h1 class="text-3xl font-bold text-gray-900">Tableau de bord</h1>
-    </div>
-</div>
-
 <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
     <!-- Stats Overview -->
     <div class="px-4 py-4 sm:px-0">
@@ -73,13 +67,13 @@
                                                     </div>
                                                     <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
                                                         <div>
-                                                            <p class="text-sm text-gray-500">{{ $candidature->annonce->title }}</p>
-                                                            <p class="text-sm text-gray-500">{{ $candidature->annonce->company }}</p>
+                                                            <p class="text-sm text-gray-500">{{ $candidature->annonce->titre }}</p>
+                                                            <p class="text-sm text-gray-500">{{ $candidature->annonce->recruteur->name }}</p>
                                                             <p class="text-sm text-gray-500">{{ $candidature->annonce->location }}</p>
                                                         </div>
                                                         <div class="text-right text-sm whitespace-nowrap text-gray-500">
                                                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-{{ $candidature->status_color }}-100 text-{{ $candidature->status_color }}-800">
-                                                                {{ $candidature->status_label }}
+                                                                {{ $candidature->statut }}
                                                             </span>
                                                         </div>
                                                     </div>
