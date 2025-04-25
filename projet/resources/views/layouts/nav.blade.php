@@ -110,14 +110,14 @@
                             <a href="{{ route('admin.tags') }}" 
                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
                                 <i class="fas fa-tags mr-3"></i>
-                                Gestion Tags
+                                Gestion Tags_Catégories
                             </a>
                         </li>
                         <li class="mb-2">
                             <a href="{{ route('admin.categories') }}" 
                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
                                 <i class="fas fa-list-ul mr-3"></i>
-                                Gestion Catégories
+                                Modération et Signalement
                             </a>
                         </li>
                     @endif

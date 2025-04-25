@@ -112,7 +112,7 @@ Route::middleware(['auth', 'check.role:admin'])->prefix('admin')->name('admin.')
         Route::get('/annonce/{id}/edit', [AnnonceController::class, 'edit'])->name('annonce.edit');
         Route::delete('/annonce/{id}', [AnnonceController::class, 'delete'])->name('annonce.delete');
         // partie concernat les tags
-        Route::get('/tags', [TagController::class, 'index'])->name('tags');
+        Route::get('/tags_categories', [AdminController::class, 'gestionTags_categorie'])->name('tags');
         Route::post('/tags/create', [TagController::class, 'create'])->name('tags.create');
         Route::delete('/tags/{id}', [TagController::class, 'delete'])->name('tags.delete');
         // partie concernant les categories
