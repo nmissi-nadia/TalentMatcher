@@ -40,6 +40,8 @@
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>
+                    <!-- pagination -->
+                    {{ $categories->links() }}
                 </div>
                 @endforeach
             </div>
@@ -76,6 +78,8 @@
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>
+                    <!-- pagination -->
+                    {{ $tags->links() }}
                 </div>
                 @endforeach
             </div>
