@@ -16,7 +16,7 @@ class CandidatController extends Controller
     public function dashboard()
     {
         $user = Auth::user();
-        $activeoffres = Annonce::where('statut', 'active')->count();
+        $activeoffres = Annonce::where('statut', 'ouverte')->count();
         $candidatures = Candidature::where('candidat_id', Auth::id())->get();
         return view('candidat.dashboard', compact('candidatures', 'activeoffres'));
     }
@@ -98,25 +98,20 @@ class CandidatController extends Controller
     // Postuler à une offre
     public function apply(Request $request, $id)
     {
-        // Récupérer l'offre
+        
         $offre = Annonce::with('candidatures')->findOrFail($id);
         
-        // Vérifier si le candidat est connecté
         if (!Auth::check()) {
             return redirect()->back()->with('error', 'Veuillez vous connecter pour postuler');
         }
-
-        // Vérifier si le candidat a déjà postulé
         if ($offre->candidatures()->where('candidat_id', Auth::id())->exists()) {
             return redirect()->back()->with('error', 'Vous avez déjà postulé à cette offre');
         }
 
-        // Vérifier si l'offre est ouverte
         if ($offre->statut !== 'ouverte') {
             return redirect()->back()->with('error', 'Cette offre n\'est plus ouverte aux candidatures');
         }
 
-        // Validation des données
         $validated = $request->validate([
             'message' => 'nullable|string|max:500',
             'cv' => 'required|file|mimes:pdf,doc,docx|max:5120', // 5MB max
@@ -152,7 +147,7 @@ class CandidatController extends Controller
         $user = Auth::user();
         $candidatures = Candidature::where('candidat_id', $user->id)
             ->with('annonce')
-            ->paginate(10);
+            ->paginate(5);
         
 
         return view('candidat.applications', compact('candidatures'));
