@@ -114,11 +114,16 @@ Route::middleware(['auth', 'check.role:admin'])->prefix('admin')->name('admin.')
         // partie concernat les tags
         Route::get('/tags_categories', [AdminController::class, 'gestionTags_categorie'])->name('tags');
         Route::post('/tags/create', [TagController::class, 'create'])->name('tags.create');
-        Route::delete('/tags/{id}', [TagController::class, 'delete'])->name('tags.delete');
+        // route for store tags
+        Route::post('/tags/edit', [TagController::class, 'edit'])->name('tags.edit');
+        Route::post('/tags/store', [TagController::class, 'store'])->name('tags.store');
+        Route::delete('/tags/{id}', [TagController::class, 'delete'])->name('tags.destroy');
         // partie concernant les categories
         Route::get('/categories', [CategorieController::class, 'index'])->name('categories');
         Route::post('/categories/create', [CategorieController::class, 'create'])->name('categories.create');
-        Route::delete('/categories/{id}', [CategorieController::class, 'delete'])->name('categories.delete');
+        Route::post('/categories/edit', [CategorieController::class, 'edit'])->name('categories.edit');
+        Route::post('/categories/store', [CategorieController::class, 'store'])->name('categories.store');
+        Route::delete('/categories/{id}', [CategorieController::class, 'delete'])->name('categories.destroy');
 });
 
 // API Routes for offre Applications

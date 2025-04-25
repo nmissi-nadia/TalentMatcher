@@ -9,6 +9,7 @@ use App\Models\Candidature;
 use App\Models\Tag;
 use App\Models\Categorie;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Collection;
 
 class AdminController extends Controller
 {
@@ -165,8 +166,8 @@ class AdminController extends Controller
     // partie pour la gestion des gatégories et des tags
     public function gestionTags_categorie()
     {
-        $categories = Categorie::all()->paginate(8);
-        $tags = Tag::all()->paginate(8);
+        $categories = Categorie::paginate(8);
+        $tags = Tag::paginate(8);
         return view('Tags_Catégories.index', compact('categories', 'tags'));
     }
 }
