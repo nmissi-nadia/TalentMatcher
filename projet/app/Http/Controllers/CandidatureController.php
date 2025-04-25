@@ -133,7 +133,7 @@ class CandidatureController extends Controller
     {
         try {
             $this->service->delete($id);
-            return redirect()->route('candidat.applications')->with('success', 'Candidature supprimée avec succès');
+            return redirect()->route('candidat.candidatures')->with('success', 'Candidature supprimée avec succès');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
