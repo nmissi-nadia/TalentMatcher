@@ -114,7 +114,7 @@
                             </a>
                         </li>
                         <li class="mb-2">
-                            <a href="{{ route('admin.categories') }}" 
+                            <a href="{{ route('admin.moderation') }}" 
                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
                                 <i class="fas fa-list-ul mr-3"></i>
                                 Modération et Signalement
