@@ -110,7 +110,7 @@
                 @csrf
                 <div class="mb-4">
                     <label class="block text-sm font-medium mb-2">Nom de la catégorie</label>
-                    <input type="text" name="name" 
+                    <input type="text" name="nom" 
                         class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div class="flex justify-end space-x-2">
@@ -135,17 +135,10 @@
                 @csrf
                 <div class="mb-4">
                     <label class="block text-sm font-medium mb-2">Nom du tag</label>
-                    <input type="text" name="name" 
+                    <input type="text" name="nom" 
                         class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
                 </div>
-                <div class="mb-4">
-                    <label class="block text-sm font-medium mb-2">Catégorie</label>
-                    <select name="category_id" class="w-full px-3 py-2 border rounded-lg">
-                        @foreach($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
+                
                 <div class="flex justify-end space-x-2">
                     <button type="button" onclick="closeModal('addTagModal')"
                         class="px-4 py-2 text-gray-600 hover:text-gray-800">
@@ -161,7 +154,6 @@
     </div>
 </div>
 
-@section('scripts')
 <script>
     function showAddCategoryModal() {
         document.getElementById('addCategoryModal').classList.remove('hidden');
@@ -175,6 +167,6 @@
         document.getElementById(modalId).classList.add('hidden');
     }
 </script>
-@endsection
+
 
  @endsection

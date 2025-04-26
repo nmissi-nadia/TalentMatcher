@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Categorie;
 
 class CategorieController extends Controller
 {
@@ -28,7 +29,7 @@ class CategorieController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|unique:categories,name'
+            'nom' => 'required|unique:categories,nom'
         ]);
 
         Categorie::create($request->all());
