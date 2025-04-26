@@ -36,10 +36,13 @@
                                     class="text-blue-500 hover:text-blue-600 mr-2">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <a href="{{ route('admin.categories.destroy', $category->id) }}"
-                                    class="text-red-500 hover:text-red-600">
-                                    <i class="fas fa-trash"></i>
-                                </a>
+                                <form action="{{ route('admin.categories.destroy', $category->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-500 hover:text-red-600">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                         @endforeach
@@ -83,10 +86,13 @@
                                         class="text-blue-500 hover:text-blue-600 mr-2">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="{{ route('admin.tags.destroy', $tag->id) }}"
-                                        class="text-red-500 hover:text-red-600">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
+                                    <form action="{{ route('admin.tags.destroy', $tag->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-500 hover:text-red-600">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                             @endforeach
