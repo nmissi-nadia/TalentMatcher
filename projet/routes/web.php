@@ -10,6 +10,7 @@ use App\Http\Controllers\CandidatureController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\ModerationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,7 +91,9 @@ Route::middleware(['auth', 'check.role:admin'])->prefix('admin')->name('admin.')
         
         Route::get('/utilisateurs', [AdminController::class, 'utilisateurs'])->name('utilisateurs');
         Route::get('/candidatures', [AdminController::class, 'candidatures'])->name('candidatures');
-        Route::get('/moderation', [AdminController::class, 'moderation'])->name('moderation');
+        // partie concernat moderation
+        Route::get('/moderation', [ModerationController::class, 'index'])->name('moderation');
+        Route::post('/moderation/traiter/{id}', [ModerationController::class, 'traiter'])->name('signalement.traiter');
         Route::get('/annonces', [AdminController::class, 'annonces'])->name('annonces');
         Route::get('/annonce/{id}', [AdminController::class, 'showAnnonce'])->name('annonce');
         // partie concernat par les utilisateurs
