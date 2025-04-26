@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class Signalement extends Model
 {
@@ -18,4 +19,13 @@ class Signalement extends Model
         'traitement_date',
         'traitement_description'
     ];
+    public function utilisateur()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function cible()
+    {
+        return $this->morphTo();
+    }
 }
