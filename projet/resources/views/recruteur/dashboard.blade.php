@@ -1,6 +1,6 @@
 @extends('layouts.nav')
 
-@section('title', 'Tableau de Bord Recruteur - TalentMatcher')
+@section('title', 'Tableau de Bord Recruteur')
 
 @section('content')
 

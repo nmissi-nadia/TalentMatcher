@@ -21,7 +21,7 @@ class NewCandidatureNotification extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct($offre, $candidat)
+    public function __construct(Annonce $offre, User $candidat)
     {
         $this->offre = $offre;
         $this->candidat = $candidat;

@@ -9,6 +9,8 @@ use App\Models\EtapeEntretienOral;
 use App\Models\EtapeTestTechnique;
 use App\Models\EtapeValidationFinale;
 use App\Models\Candidature;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewCandidatureNotification;
 
 class CandidatureController extends Controller
 {
@@ -45,6 +47,14 @@ class CandidatureController extends Controller
                 $validated['cv'] = $request->file('cv')->store('cvs','public');
             }
             $candidature = $this->service->create($validated);
+            // Récupérer l'offre et le recruteur
+            $offre = $candidature->annonce;
+            $recruteur = $offre->recruteur;
+
+            // Envoyer un email au recruteur
+            Mail::to($recruteur->email)->send(
+                    new NewCandidatureNotification($offre, $recruteur)
+                );
             // create etapeTestTechnique & EtapeEntretienOral & EtapeValidationFinale
             $etapeTestTechnique = new EtapeTestTechnique();
             $etapeTestTechnique->candidature_id = $candidature->id;
