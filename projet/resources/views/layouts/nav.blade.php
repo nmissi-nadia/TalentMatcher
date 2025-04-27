@@ -11,20 +11,8 @@
         :root {
             --primary-color: #ea530c;
         }
-        .candidat {
-            background-image: url('{{ asset('storage/images/backcand.jpg') }}');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
         
-        /* Style pour le fond du recruteur */
-        .recruteur {
-            background-image: url('{{ asset('storage/images/backrec.jpg') }}');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
+        
 
     </style>
 </head>
@@ -128,10 +116,10 @@
         <!-- Main Content -->
         <div class="flex-1 flex flex-col overflow-hidden">
             <!-- Header -->
-            <header class="bg-white border-b border-gray-200 flex items-center justify-between px-6 py-4">
+            <header class="bg-[#4f46e4] border-b border-gray-200 flex items-center justify-between px-6 py-4">
                 <div>
                     <h1 class="text-2xl font-bold text-gray-800">@yield('title')</h1>
-                    <p class="text-sm text-gray-600">Bienvenue {{ auth()->user()->name }}</p>
+                    <p class="text-sm text-orange-600">Bienvenue {{ auth()->user()->name }}</p>
                 </div>
                 
                 <div class="flex items-center space-x-4">
@@ -147,7 +135,7 @@
 
             <!-- Main Content -->
             <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
-                <div class="container mx-auto px-6 py-8">
+                <div class="container mx-auto px-6 py-8 bg-blue-100 ">
                     @yield('content')
                 </div>
             </main>
