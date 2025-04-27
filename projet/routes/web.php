@@ -11,6 +11,10 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\ModerationController;
+use App\Models\Annonce;
+use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewCandidatureNotification;
 
 /*
 |--------------------------------------------------------------------------
@@ -135,4 +139,12 @@ Route::middleware(['auth'])->prefix('api')->name('api.')->group(function () {
     Route::get('/candidatures/{id}', [CandidatureController::class, 'show'])->name('candidatures.show');
     Route::put('/candidatures/{id}', [CandidatureController::class, 'update'])->name('candidatures.update');
     Route::delete('/candidatures/{id}', [CandidatureController::class, 'destroy'])->name('candidatures.destroy');
+});
+Route::get('/test-email', function() {
+    $user = User::where('role', 'recruteur')->first();
+    $offre = Annonce::first();
+    
+    Mail::to($user->email)->send(new NewCandidatureNotification($offre, $user));
+    
+    return 'Email test envoyé';
 });

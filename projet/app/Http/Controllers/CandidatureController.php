@@ -49,12 +49,12 @@ class CandidatureController extends Controller
             $candidature = $this->service->create($validated);
             // Récupérer l'offre et le recruteur
             $offre = $candidature->annonce;
-            $recruteur = $offre->recruteur;
-
-            // Envoyer un email au recruteur
+            
+            $recruteur = $offre->user;
+            
             Mail::to($recruteur->email)->send(
-                    new NewCandidatureNotification($offre, $recruteur)
-                );
+                new NewCandidatureNotification($offre, $recruteur)
+            );
             // create etapeTestTechnique & EtapeEntretienOral & EtapeValidationFinale
             $etapeTestTechnique = new EtapeTestTechnique();
             $etapeTestTechnique->candidature_id = $candidature->id;

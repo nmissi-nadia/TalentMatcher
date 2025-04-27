@@ -3,7 +3,7 @@
 @section('content')
     <h1>Nouvelle candidature pour votre offre</h1>
 
-    <p>Bonjour {{ $offre->recruteur->name }},</p>
+    <p>Bonjour ,</p>
 
     <p>Vous avez reçu une nouvelle candidature pour votre offre : <strong>{{ $offre->titre }}</strong></p>
 

@@ -2,47 +2,32 @@
 
 namespace App\Mail;
 
+use App\Models\Annonce;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-use App\Models\Annonce;
-use App\Models\User;
-
-class NewCandidatureNotification extends Mailable
+class NewCandidatureNotification extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
+
     public $offre;
     public $candidat;
 
-    /**
-     * Create a new message instance.
-     */
     public function __construct(Annonce $offre, User $candidat)
     {
         $this->offre = $offre;
         $this->candidat = $candidat;
     }
 
-    /**
-     * Get the message envelope.
-     */
     public function build()
     {
+        \Log::info('Construction du mailable pour l\'offre : ' . $this->offre->titre);
+        \Log::info('Nom du candidat : ' . $this->candidat->name);
+        
         return $this->subject('Nouvelle candidature pour votre offre : ' . $this->offre->titre)
-                   ->view('mail.newcandidature');
-    }
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
-    {
-        return [];
+                ->view('mail.newcandidature');
     }
 }
