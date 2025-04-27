@@ -199,7 +199,9 @@ class CandidatureController extends Controller
     $newStatus = $request->statut;
     $candidature->statut = $newStatus;
     $candidature->save();
-
+    Mail::to($candidature->candidat->email)->send(
+        new CandidatureStatusNotification($candidature, $newStatus)
+    );
     switch ($newStatus) {
         case 'acceptée':
             if (!$candidature->etape_entretien_oral) {

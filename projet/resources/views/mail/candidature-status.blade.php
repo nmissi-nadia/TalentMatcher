@@ -3,7 +3,7 @@
 @section('content')
     <h1>Mise à jour du statut de votre candidature</h1>
 
-    <p>Bonjour {{ $candidature->user->name }},</p>
+    <p>Bonjour {{ $candidature->candidat->name }},</p>
 
     <p>Nous avons le plaisir de vous informer que votre candidature pour l'offre "{{ $candidature->annonce->titre }}" a été mise à jour.</p>
 
@@ -12,7 +12,7 @@
     <p>Les détails de votre candidature sont :</p>
     <ul>
         <li>Offre : {{ $candidature->annonce->titre }}</li>
-        <li>Entreprise : {{ $candidature->annonce->user->name }}</li>
+        <li>Entreprise : {{ $candidature->annonce->recruteur->name }}</li>
         <li>Date de candidature : {{ $candidature->created_at->format('d/m/Y') }}</li>
     </ul>
 
