@@ -2,52 +2,39 @@
 
 namespace App\Mail;
 
+use App\Models\Candidature;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class CandidatureStatusNotification extends Mailable
+class CandidatureStatusNotification extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     */
-    public function __construct()
+    public $candidature;
+    public $statut;
+
+    public function __construct(Candidature $candidature, string $statut)
     {
-        //
+        $this->candidature = $candidature;
+        $this->statut = $statut;
     }
 
-    /**
-     * Get the message envelope.
-     */
-    public function envelope(): Envelope
+    public function build()
     {
-        return new Envelope(
-            subject: 'Candidature Status Notification',
-        );
-    }
+        \Log::info('Construction du mailable de statut pour la candidature : ' . $this->candidature->id);
+        \Log::info('Nouveau statut : ' . $this->statut);
+        
+        $subject = match($this->statut) {
+            'acceptée' => 'Votre candidature a été acceptée',
+            'refusée' => 'Votre candidature a été refusée',
+            'en_attente' => 'Mise à jour du statut de votre candidature',
+            default => 'Mise à jour du statut de votre candidature'
+        };
 
-    /**
-     * Get the message content definition.
-     */
-    public function content(): Content
-    {
-        return new Content(
-            view: 'view.name',
-        );
-    }
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
-    {
-        return [];
+        return $this->subject($subject)
+                   ->view('mail.candidature-status');
     }
 }
