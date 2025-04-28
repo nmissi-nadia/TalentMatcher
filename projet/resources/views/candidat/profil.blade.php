@@ -1,91 +1,69 @@
 @extends('layouts.nav')
 
 @section('content')
-<div class="container mx-auto px-4 py-6">
-   
+<div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+        <div class="px-4 py-5 sm:p-6">
+            <h2 class="text-2xl font-semibold text-gray-900 mb-6">
+                Mon profil
+            </h2>
 
-    <!-- Profile Section -->
-    <div class="bg-white rounded-lg shadow mt-6 p-6">
-        <div class="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-6">
-            <!-- Profile Picture -->
-            <div>
-                <img src="/path/to/profile-image.jpg" alt="Profile" class="w-32 h-32 rounded-full">
-            </div>
-            <!-- User Info -->
-            <div class="text-center md:text-left">
-                <h2 class="text-2xl font-bold">Nadia Dupont</h2>
-                <p class="text-gray-600">Développeuse Full Stack</p>
-                <div class="mt-2 space-x-2">
-                    <span class="bg-blue-100 text-blue-600 px-2 py-1 rounded-full text-sm">HTML</span>
-                    <span class="bg-blue-100 text-blue-600 px-2 py-1 rounded-full text-sm">CSS</span>
-                    <span class="bg-blue-100 text-blue-600 px-2 py-1 rounded-full text-sm">JavaScript</span>
-                    <span class="bg-blue-100 text-blue-600 px-2 py-1 rounded-full text-sm">Laravel</span>
+            <form action="{{ route('candidat.profile.update') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+
+                <!-- Photo de profil -->
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700">Photo de profil</label>
+                    <div class="mt-1 flex items-center">
+                        @if(auth()->user()->photo)
+                            <img src="{{ asset('storage/' . auth()->user()->photo) }}" alt="Photo de profil" class="h-12 w-12 rounded-full object-cover">
+                        @else
+                            <div class="h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center">
+                                <svg class="h-6 w-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                </svg>
+                            </div>
+                        @endif
+                        <div class="ml-4">
+                            <input type="file" name="photo" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <!-- Action Buttons -->
-            <div class="flex space-x-4 mt-4 md:mt-0">
-                <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Modifier Profil</button>
-                <button class="bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300">Déconnexion</button>
-            </div>
+
+                <!-- Informations de base -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Nom</label>
+                        <input type="text" name="name" value="{{ auth()->user()->name }}" class="mt-1 h-10 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Email</label>
+                        <input type="email" name="email" value="{{ auth()->user()->email }}" class="mt-1 h-10 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Téléphone</label>
+                        <input type="tel" name="telephone" value="{{ auth()->user()->telephone }}" class="mt-1 h-10 block w-full rounded-md border-gray-300 shadow-sm border-[#ea530c] focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Secteur</label>
+                        <input type="text" name="secteur" value="{{ auth()->user()->secteur }}" class="mt-1 h-10 block w-full rounded-md border-gray-300 shadow-sm border-[#ea530c] focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    </div>
+                </div>
+
+                
+
+                <!-- Bouton de soumission -->
+                <div class="mt-6">
+                    <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-[#ea530c] hover:bg-[#d44a0b] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#ea530c]">
+                        Mettre à jour
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
-
-    <!-- User Details -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-        <!-- Personal Info -->
-        <div class="bg-white p-6 rounded-lg shadow">
-            <h3 class="font-bold text-xl mb-4">Informations Personnelles</h3>
-            <ul class="text-gray-700 space-y-2">
-                <li><span class="font-semibold">Nom :</span> Nadia Dupont</li>
-                <li><span class="font-semibold">Email :</span> nadia.dupont@example.com</li>
-                <li><span class="font-semibold">Téléphone :</span> +33 6 12 34 56 78</li>
-                <li><span class="font-semibold">Adresse :</span> Paris, France</li>
-            </ul>
-        </div>
-
-        <!-- Skills -->
-        <div class="bg-white p-6 rounded-lg shadow">
-            <h3 class="font-bold text-xl mb-4">Compétences</h3>
-            <ul class="text-gray-700 space-y-2">
-                <li>Création de sites dynamiques avec Laravel</li>
-                <li>Conception de maquettes avec Tailwind CSS</li>
-                <li>Intégration d'API REST et sécurité des données</li>
-                <li>Gestion de bases de données MySQL</li>
-            </ul>
-        </div>
-    </div>
-
-    <!-- Resume and Saved offres -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-        <!-- Resume -->
-        <div class="bg-white p-6 rounded-lg shadow">
-            <h3 class="font-bold text-xl mb-4">CV et Documents</h3>
-            <div class="flex items-center justify-between">
-                <span class="text-gray-600">Mon CV actuel</span>
-                <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Télécharger</button>
-            </div>
-        </div>
-
-        <!-- Saved offres -->
-        <div class="bg-white p-6 rounded-lg shadow">
-            <h3 class="font-bold text-xl mb-4">Offres sauvegardées</h3>
-            <ul class="space-y-4">
-                <li class="flex justify-between items-center">
-                    <span>Développeur Frontend Senior</span>
-                    <a href="#" class="text-blue-600 hover:underline">Voir l'offre</a>
-                </li>
-                <li class="flex justify-between items-center">
-                    <span>Développeur Backend Laravel</span>
-                    <a href="#" class="text-blue-600 hover:underline">Voir l'offre</a>
-                </li>
-                <li class="flex justify-between items-center">
-                    <span>Lead Developer</span>
-                    <a href="#" class="text-blue-600 hover:underline">Voir l'offre</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-
-   
 </div>
 @endsection

@@ -34,17 +34,17 @@ class CandidatController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . Auth::id(),
-            'bio' => 'nullable|string|max:1000',
-            'skills' => 'nullable|string',
-            'cv_file' => 'nullable|mimes:pdf,doc,docx|max:2048'
+            'telephone' => 'nullable|numeric',
+            'secteur' => 'nullable|string',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         $user = Auth::user();
-        $user->update($request->except('cv_file'));
+        $user->update($request->except('photo'));
 
-        if ($request->hasFile('cv_file')) {
-            $path = $request->file('cv_file')->store('cvs', 'public');
-            $user->cv_path = $path;
+        if ($request->hasFile('photo')) {
+            $path = $request->file('photo')->store('photos', 'public');
+            $user->photo = $path;
             $user->save();
         }
 
