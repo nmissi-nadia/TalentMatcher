@@ -82,4 +82,10 @@ class User extends Authenticatable implements JWTSubject
         $this->status = 'banned';
         $this->save();
     }
+    // methodes pour desbannir une utilisateur 
+    public function desbannir()
+    {
+        $this->status = 'active';
+        $this->save();
+    }
 }
