@@ -170,4 +170,11 @@ class AdminController extends Controller
         $tags = Tag::paginate(8);
         return view('Tags_Catégories.index', compact('categories', 'tags'));
     }
+    // bannissement des utilisateurs
+    public function banUser(Request $request, $id)
+{
+    $user = User::findOrFail($id);
+    $user->ban();
+    return redirect()->back()->with('success', 'Utilisateur banni avec succès');
+}
 }
