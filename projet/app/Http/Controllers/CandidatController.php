@@ -53,19 +53,18 @@ class CandidatController extends Controller
 
     // Rechercher des offres d'emploi
     public function search(Request $request)
-{
-    
-    $annonces = Annonce::with(['tags', 'categorie'])->get();
-    $categories = Categorie::all();
-    $tags = Tag::all();
+    {
+        
+        $annonces = Annonce::with(['tags', 'categorie'])->get();
+        $categories = Categorie::all();
+        $tags = Tag::all();
 
-    return response()->json([
-        'annonces' => $annonces,
-        'categories' => $categories,
-        'tags' => $tags
-    ]);
-}
-    
+        return response()->json([
+            'annonces' => $annonces,
+            'categories' => $categories,
+            'tags' => $tags
+        ]);
+    }
 
     // Postuler à une offre
     public function apply(Request $request, $id)
@@ -107,7 +106,7 @@ class CandidatController extends Controller
         $candidature->save();
 
         // Envoyer une notification au recruteur
-        // $offre->recruteur->notify(new NouvelleCandidature($candidature));
+        $offre->recruteur->notify(new NouvelleCandidature($candidature));
 
         return redirect()->route('candidat.candidatures')
             ->with('success', 'Candidature envoyée avec succès');
@@ -115,15 +114,6 @@ class CandidatController extends Controller
 
     
 
-    // Supprimer une candidature
-    public function deleteCandidature($id)
-    {
-        $candidature = Candidature::findOrFail($id);
-        $this->authorize('delete', $candidature);
-        $candidature->delete();
-
-        return redirect()->route('candidat.candidatures')->with('success', 'Candidature supprimée');
-    }
 
     // Afficher les offres recommandées
     public function recommended()
