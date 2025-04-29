@@ -34,6 +34,7 @@ class User extends Authenticatable implements JWTSubject
         'telephone',
         'secteur',
         'photo',
+        'status',
     ];
 
     /**
@@ -69,5 +70,10 @@ class User extends Authenticatable implements JWTSubject
     public function candidatures()
     {
         return $this->hasMany(Candidature::class);
+    }
+    // function pour tester si un utilisateur est banni 
+    public function estBanni()
+    {
+        return $this->status === 'banned';
     }
 }
