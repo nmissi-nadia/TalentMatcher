@@ -177,4 +177,12 @@ class AdminController extends Controller
     $user->ban();
     return redirect()->back()->with('success', 'Utilisateur banni avec succès');
 }
+
+    // desbannissement des utilisateurs
+    public function unbanUser(Request $request, $id)
+{
+    $user = User::findOrFail($id);
+    $user->unban();
+    return redirect()->back()->with('success', 'Utilisateur débanni avec succès');
+}
 }
