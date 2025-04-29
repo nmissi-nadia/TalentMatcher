@@ -3,160 +3,153 @@
 @section('title', 'Gestion des Utilisateurs')
 
 @section('content')
-
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 flex items-center justify-between px-6 py-4">
+        <h1 class="text-xl font-bold text-gray-800">Gestion des Utilisateurs</h1>
+        
+        <div class="flex items-center space-x-4">
+            <div class="relative">
+                <i class="fas fa-bell text-gray-500"></i>
+                <span class="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
+            </div>
+            
+            <div class="relative h-10 w-10 rounded-full overflow-hidden bg-gray-300">
+                <img src="{{ asset('images/avatar.jpg') }}" alt="Avatar" class="h-full w-full object-cover">
+            </div>
+        </div>
+    </header>
 
     <!-- Main Content -->
     <main class="p-6">
-        <!-- Tab Navigation -->
-        <div class="bg-white rounded-lg shadow-sm mb-6">
-            <div class="border-b border-gray-200">
-                <nav class="flex -mb-px">
-                    <button id="tab-all" class="px-6 py-4 border-b-2 border-primary text-primary font-medium">
-                        Tous les utilisateurs
-                    </button>
-                    <button id="tab-recruiters" class="px-6 py-4 text-gray-500 hover:text-primary">
-                        Recruteurs
-                    </button>
-                    <button id="tab-candidates" class="px-6 py-4 text-gray-500 hover:text-primary">
-                        Candidats
-                    </button>
-                </nav>
+        <!-- Search and Filter -->
+        <div class="mb-6">
+            <div class="bg-white rounded-lg shadow-sm p-4">
+                <div class="flex items-center space-x-4">
+                    <!-- Search -->
+                    <div class="flex-1">
+                        <div class="relative">
+                            <input type="text" name="search" 
+                                   class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                   placeholder="Rechercher un utilisateur...">
+                            <i class="fas fa-search absolute right-3 top-2.5 text-gray-400"></i>
+                        </div>
+                    </div>
+
+                    <!-- Status Filter -->
+                    <select name="status" 
+                            class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">Tous les statuts</option>
+                        <option value="active">Actif</option>
+                        <option value="banned">Banni</option>
+                    </select>
+
+                    <!-- Role Filter -->
+                    <select name="role" 
+                            class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">Tous les rôles</option>
+                        <option value="candidat">Candidat</option>
+                        <option value="recruteur">Recruteur</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
             </div>
         </div>
 
-        <!-- Filters -->
-        <div class="bg-white rounded-lg p-6 mb-6 shadow-sm">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Nom d'utilisateur</label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i class="fas fa-user text-gray-400"></i>
-                        </div>
-                        <input type="text" placeholder="Rechercher par nom" class="pl-10 w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-primary">
-                    </div>
-                </div>
-                
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i class="fas fa-envelope text-gray-400"></i>
-                        </div>
-                        <input type="text" placeholder="Rechercher par email" class="pl-10 w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-primary">
-                    </div>
-                </div>
-                
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Type d'utilisateur</label>
-                    <div class="relative">
-                        <select class="w-full border border-gray-300 rounded-md py-2 px-3 appearance-none focus:outline-none focus:ring-2 focus:ring-primary">
-                            <option>Tous les types</option>
-                            <option>Recruteur</option>
-                            <option>Candidat</option>
-                            <option>Administrateur</option>
-                        </select>
-                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                            <i class="fas fa-chevron-down text-gray-400"></i>
-                        </div>
-                    </div>
-                </div>
-                
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Statut</label>
-                    <div class="relative">
-                        <select class="w-full border border-gray-300 rounded-md py-2 px-3 appearance-none focus:outline-none focus:ring-2 focus:ring-primary">
-                            <option>Tous les statuts</option>
-                            <option>Actif</option>
-                            <option>Inactif</option>
-                            <option>En attente</option>
-                        </select>
-                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                            <i class="fas fa-chevron-down text-gray-400"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="mt-4 flex justify-end">
-                <button class="bg-primary hover:bg-[#d44a0b] text-white px-4 py-2 rounded-md transition">
-                    <i class="fas fa-search mr-2"></i>Rechercher
-                </button>
-            </div>
-        </div>
-
-        <!-- Users Table -->
-        <div class="bg-white rounded-lg shadow-sm overflow-hidden mb-6">
-            <div class="flex justify-between items-center px-6 py-4 border-b border-gray-200">
-                <h2 class="font-medium">Liste des utilisateurs</h2>
-                <button class="bg-primary hover:bg-[#d44a0b] text-white px-4 py-2 rounded-md transition">
-                    <i class="fas fa-plus mr-2"></i>Ajouter un utilisateur
-                </button>
-            </div>
-        
-            <table class="w-full">
-                <thead>
-                    <tr class="bg-gray-50 text-left">
-                        <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Utilisateur</th>
-                        <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                        <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Date d'inscription</th>
-                        <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
-                        <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200">
-                    @foreach($users as $user)
-                    <tr>
-                        <td class="px-6 py-4">
-                            <div class="flex items-center">
-                                <div class="h-10 w-10 rounded-full bg-gray-300 overflow-hidden mr-4">
-                                    <img src="{{ asset('storage/images/' . $user->avatar) }}" alt="{{ $user->name }}" class="h-full w-full object-cover">
+        <!-- Users List -->
+        <div class="bg-white rounded-lg shadow-sm">
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rôle</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        @foreach($users as $user)
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    @if($user->photo)
+                                        <img src="{{ asset('storage/' . $user->photo) }}" 
+                                             class="h-8 w-8 rounded-full object-cover mr-3" 
+                                             alt="{{ $user->name }}">
+                                    @else
+                                        <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+                                            <span class="text-blue-600">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
+                                        </div>
+                                    @endif
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900">{{ $user->name }}</div>
+                                        <div class="text-xs text-gray-500">{{ $user->created_at->format('d/m/Y') }}</div>
+                                    </div>
                                 </div>
-                                <div>
-                                    <div class="font-medium text-gray-900">{{ $user->name }}</div>
-                                    <div class="text-sm text-gray-500">{{ $user->email }}</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4">
-                            <span class="px-3 py-1 text-xs rounded-full {{ $user->role === 'recruteur' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800' }}">
-                                {{ ucfirst($user->role) }}
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 text-gray-500">{{ $user->created_at->format('d M Y') }}</td>
-                        <td class="px-6 py-4">
-                            <span class="px-3 py-1 text-xs rounded-full {{ $user->status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
-                                {{ ucfirst($user->status) }}
-                            </span>
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="flex space-x-2">
-                                <a href="{{ route('admin.user.show', $user->id) }}" class="text-primary hover:text-[#d44a0b]">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <a href="{{ route('admin.user.edit', $user->id) }}" class="text-gray-600 hover:text-gray-800">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <form action="{{ route('admin.user.delete', $user->id) }}" method="POST" class="inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:text-red-800" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')">
-                                        <i class="fas fa-trash"></i>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                {{ $user->email }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                                    @if($user->role === 'admin') bg-blue-100 text-blue-800
+                                    @elseif($user->role === 'recruteur') bg-green-100 text-green-800
+                                    @else bg-purple-100 text-purple-800
+                                    @endif">
+                                    {{ ucfirst($user->role) }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                                    @if($user->status === 'active') bg-green-100 text-green-800
+                                    @else bg-red-100 text-red-800
+                                    @endif">
+                                    {{ ucfirst($user->status) }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <div class="flex space-x-2">
+                                    @if($user->status === 'active')
+                                        <form action="{{ route('admin.ban', $user->id) }}" method="POST" class="inline">
+                                            @csrf
+                                            @method('PUT')
+                                            <button type="submit" 
+                                                    class="text-red-600 hover:text-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                                                    onclick="return confirm('Êtes-vous sûr de vouloir bannir cet utilisateur ?')">
+                                                <i class="fas fa-ban"></i>
+                                            </button>
+                                        </form>
+                                    @else
+                                        <form action="{{ route('admin.unban', $user->id) }}" method="POST" class="inline">
+                                            @csrf
+                                            @method('PUT')
+                                            <button type="submit" 
+                                                    class="text-green-600 hover:text-green-800 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                                                    onclick="return confirm('Êtes-vous sûr de vouloir débannir cet utilisateur ?')">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                        </form>
+                                    @endif
+                                    <button class="text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                                        <i class="fas fa-ellipsis-v"></i>
                                     </button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            
-            <!-- Pagination -->
-            <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 flex items-center justify-between">
-            <div class="text-sm text-gray-500">
-    Affichage de {{ $users->first() ? $users->first()->id : 0 }} à {{ $users->last() ? $users->last()->id : 0 }} sur {{ $users->count() }} utilisateurs
-</div>
-                <div class="flex justify-center">
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="mt-4">
+            <div class="flex justify-between items-center">
+                <div class="text-sm text-gray-700">
+                    Affichage de {{ $users->firstItem() }} à {{ $users->lastItem() }} sur {{ $users->total() }} utilisateurs
+                </div>
+                <div>
                     {{ $users->links() }}
                 </div>
             </div>
@@ -164,60 +157,21 @@
     </main>
 @endsection
 
-@push('scripts')
-<script>
-    // Tab Navigation
-    document.addEventListener('DOMContentLoaded', function() {
-        const tabAll = document.getElementById('tab-all');
-        const tabRecruiters = document.getElementById('tab-recruiters');
-        const tabCandidates = document.getElementById('tab-candidates');
-        
-        const activateTab = (activeTab, inactiveTabs) => {
-            activeTab.classList.add('border-b-2', 'border-primary', 'text-primary');
-            activeTab.classList.remove('text-gray-500');
-            
-            inactiveTabs.forEach(tab => {
-                tab.classList.remove('border-b-2', 'border-primary', 'text-primary');
-                tab.classList.add('text-gray-500');
-            });
-        };
-        
-        tabAll.addEventListener('click', function() {
-            activateTab(tabAll, [tabRecruiters, tabCandidates]);
-            filterUsers('all');
-        });
-        
-        tabRecruiters.addEventListener('click', function() {
-            activateTab(tabRecruiters, [tabAll, tabCandidates]);
-            filterUsers('recruteur');
-        });
-        
-        tabCandidates.addEventListener('click', function() {
-            activateTab(tabCandidates, [tabAll, tabRecruiters]);
-            filterUsers('candidat');
-        });
-        // Fonction de filtrage
-function filterUsers(role) {
-    // Récupérer tous les éléments de la table
-    const rows = document.querySelectorAll('tbody tr');
-    
-    // Afficher/masquer les lignes selon le rôle
-    rows.forEach(row => {
-        const userRole = row.querySelector('.user-role').textContent.toLowerCase();
-        if (role === 'all' || userRole === role) {
-            row.style.display = '';
-        } else {
-            row.style.display = 'none';
-        }
-    });
-    
-    // Mettre à jour le texte de pagination
-    const paginationText = document.querySelector('.text-sm.text-gray-500');
-    if (paginationText) {
-        const visibleRows = document.querySelectorAll('tbody tr:not([style*="display: none"])');
-        paginationText.textContent = `Affichage de ${visibleRows.length} utilisateurs`;
+@push('styles')
+<style>
+    /* Custom scrollbar */
+    .overflow-x-auto::-webkit-scrollbar {
+        height: 8px;
     }
-}
-    });
-</script>
+    .overflow-x-auto::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+    .overflow-x-auto::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 4px;
+    }
+    .overflow-x-auto::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+</style>
 @endpush
