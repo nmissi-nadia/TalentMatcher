@@ -53,36 +53,18 @@ class CandidatController extends Controller
 
     // Rechercher des offres d'emploi
     public function search(Request $request)
-    {
-        $query = Annonce::query();
+{
+    
+    $annonces = Annonce::with(['tags', 'categorie'])->get();
+    $categories = Categorie::all();
+    $tags = Tag::all();
 
-        // Filtrer par catégorie
-        if ($request->has('category')) {
-            $query->where('category', $request->category);
-        }
-
-        // Filtrer par localisation
-        if ($request->has('location')) {
-            $query->where('location', 'like', '%' . $request->location . '%');
-        }
-
-        // Filtrer par mots-clés
-        if ($request->has('keywords')) {
-            $query->where('title', 'like', '%' . $request->keywords . '%')
-                  ->orWhere('description', 'like', '%' . $request->keywords . '%');
-        }
-
-        // Filtrer par tags
-        if ($request->has('tags')) {
-            $query->whereHas('tags', function($q) use ($request) {
-                $q->whereIn('tags.id', $request->tags);
-            });
-        }
-
-        $annonces = $query->with('tags')->paginate(10);
-
-        return view('candidat.search', compact('annonces'));
-    }
+    return response()->json([
+        'annonces' => $annonces,
+        'categories' => $categories,
+        'tags' => $tags
+    ]);
+}
     // les offres existes
     public function offres()
     {
