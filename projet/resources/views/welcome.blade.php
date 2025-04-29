@@ -7,6 +7,32 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        .gradient-text {
+            background: linear-gradient(45deg, #ea580c, #4f46e5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #ea580c 0%, #4f46e5 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .pulse-button {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
 </head>
 <body class="bg-gray-50">
     <!-- Navigation -->
@@ -61,12 +87,12 @@
     <header class="pt-24 pb-12 md:pt-32 md:pb-20 bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
         <div class="max-w-screen-xl mx-auto px-4 flex flex-col md:flex-row items-center">
             <div class="md:w-1/2 text-center md:text-left">
-                <h1 class="text-4xl md:text-5xl font-bold mb-6 text-[#ea580e]">Trouvez le talent idéal ou l'emploi parfait</h1>
+                <h1 class="text-4xl md:text-5xl font-bold mb-6 gradient-text">Trouvez le talent idéal ou l'emploi parfait</h1>
                 <p class="text-xl mb-8">Une plateforme simple et efficace qui connecte candidats et recruteurs</p>
                 <div class="flex flex-col sm:flex-row justify-center md:justify-start gap-4">
-                    <a href="/login" class="px-6 py-3 bg-[#ea580c] text-blue-600 rounded-md hover:bg-gray-100 transition duration-300 font-bold text-center">Je suis candidat</a>
-                    <a href="/login" class="px-6 py-3 bg-blue-800 text-white rounded-md hover:bg-blue-900 transition duration-300 font-bold text-center">Je suis recruteur</a>
-                </div>
+                <a href="/login" class="px-6 py-3 bg-gradient-to-r from-[#ea580c] to-[#4f46e5] text-white rounded-md hover:opacity-90 transition-all duration-300 font-bold text-center pulse-button">Je suis candidat</a>
+                <a href="/login" class="px-6 py-3 bg-gradient-to-r from-[#4f46e5] to-[#ea580c] text-white rounded-md hover:opacity-90 transition-all duration-300 font-bold text-center pulse-button">Je suis recruteur</a>
+            </div>
             </div>
             <div class="md:w-1/2 mt-10 md:mt-0">
                 <img src="{{ asset('storage/images/img.png') }}" alt="Plateforme de recrutement" class="rounded-lg shadow-xl">
@@ -76,17 +102,17 @@
     <!-- Stats -->
     <section class="py-12 bg-white">
         <div class="max-w-screen-xl mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                <div class="p-6 rounded-lg hover:shadow-lg transition-shadow duration-300">
-                    <p class="text-4xl font-bold text-blue-600 mb-2"><span id="candidatsCount">0</span>k+</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div class="p-6 rounded-lg card-hover">
+                    <p class="text-4xl font-bold mb-2"><span id="candidatsCount">0</span>k+</p>
                     <p class="text-gray-600 text-lg">Candidats inscrits</p>
                 </div>
-                <div class="p-6 rounded-lg hover:shadow-lg transition-shadow duration-300">
-                    <p class="text-4xl font-bold text-blue-600 mb-2"><span id="entreprisesCount">0</span>k+</p>
+                <div class="p-6 rounded-lg card-hover">
+                    <p class="text-4xl font-bold mb-2"><span id="entreprisesCount">0</span>k+</p>
                     <p class="text-gray-600 text-lg">Entreprises partenaires</p>
                 </div>
-                <div class="p-6 rounded-lg hover:shadow-lg transition-shadow duration-300">
-                    <p class="text-4xl font-bold text-blue-600 mb-2"><span id="matchCount">0</span>k+</p>
+                <div class="p-6 rounded-lg card-hover">
+                    <p class="text-4xl font-bold mb-2"><span id="matchCount">0</span>k+</p>
                     <p class="text-gray-600 text-lg">Recrutements réussis</p>
                 </div>
             </div>
@@ -178,7 +204,7 @@
         <div class="max-w-screen-xl mx-auto px-4">
             <h2 class="text-3xl font-bold text-center mb-12">Ils nous font confiance</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="bg-white p-6 rounded-lg shadow-md card-hover">
                     <div class="flex items-center mb-4">
                         <div class="h-12 w-12 rounded-full bg-gray-300 flex items-center justify-center">
                             <i class="fas fa-user text-gray-600"></i>
@@ -334,7 +360,7 @@
         </div>
     </section>
      <!-- Footer -->
-     <footer class="bg-gray-800 text-white py-12">
+     <footer class="bg-gradient-to-b from-gray-800 to-gray-900 text-white py-12">
         <div class="max-w-screen-xl mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>

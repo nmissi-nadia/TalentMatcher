@@ -7,71 +7,72 @@
 <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
     <div class="px-4 sm:px-0">
         <!-- Search & Filters -->
-        <div class="bg-white overflow-hidden shadow rounded-lg mb-6">
-            <div class="px-4 py-5 sm:p-6">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <!-- Search Bar -->
-                    <div class="md:col-span-4">
-                        <div class="relative rounded-md shadow-sm">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i class="fas fa-search text-gray-400"></i>
-                            </div>
-                            <input type="text" id="search-input" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-12 py-3 sm:text-sm border-gray-300 rounded-md" placeholder="Rechercher par titre, entreprise ou compétence...">
-                        </div>
+<form action="{{ route('candidat.offres') }}" method="GET" class="bg-white overflow-hidden shadow rounded-lg mb-6">
+    <div class="px-4 py-5 sm:p-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <!-- Search Bar -->
+            <div class="md:col-span-4">
+                <div class="relative rounded-md shadow-sm">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-search text-gray-400"></i>
                     </div>
-
-                    <div>
-                        <label for="sector-filter" class="block text-sm font-medium text-gray-700 mb-1">Secteur</label>
-                        <select id="sector-filter" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                            <option value="">Tous les secteurs</option>
-                            <option value="informatique">Informatique</option>
-                            <option value="marketing">Marketing</option>
-                            <option value="finance">Finance</option>
-                            <option value="rh">Ressources Humaines</option>
-                            <option value="design">Design</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label for="tag-filter" class="block text-sm font-medium text-gray-700 mb-1">Compétence</label>
-                        <select id="tag-filter" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                            <option value="">Toutes les compétences</option>
-                            <!-- hna ghadi ikono filter dyal tag -->
-                        </select>
-                    </div>
-
-                 
-                    <div>
-                        <label for="status-filter" class="block text-sm font-medium text-gray-700 mb-1">Statut</label>
-                        <select id="status-filter" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                            <option value="">Tous les statuts</option>
-                            <option value="ouverte">Ouvertes</option>
-                            <option value="fermée">Fermées</option>
-                        </select>
-                    </div>
-
-                    <!-- Sort Filter -->
-                    <div>
-                        <label for="sort-filter" class="block text-sm font-medium text-gray-700 mb-1">Trier par</label>
-                        <select id="sort-filter" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                            <option value="date-desc">Plus récentes</option>
-                            <option value="date-asc">Plus anciennes</option>
-                            <option value="title-asc">Titre (A-Z)</option>
-                            <option value="title-desc">Titre (Z-A)</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="flex justify-end mt-4">
-                    <button id="reset-filters-btn" class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                        Réinitialiser
-                    </button>
-                    <button id="apply-filters-btn" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                        Appliquer les filtres
-                    </button>
+                    <input type="text" name="keywords" value="{{ request('keywords') }}" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-12 py-3 sm:text-sm border-gray-300 rounded-md" placeholder="Rechercher par titre, entreprise ou compétence...">
                 </div>
             </div>
+
+            <div>
+                <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Secteur</label>
+                <select name="category" id="category" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    <option value="">Tous les secteurs</option>
+                    @foreach($categories as $category)
+                        <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
+                            {{ $category->nom }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div>
+                <label for="tags" class="block text-sm font-medium text-gray-700 mb-1">Compétence</label>
+                <select name="tags[]" id="tags" multiple class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    <option value="">Toutes les compétences</option>
+                    @foreach($tags as $tag)
+                        <option value="{{ $tag->id }}" {{ in_array($tag->id, request('tags', [])) ? 'selected' : '' }}>
+                            {{ $tag->nom }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div>
+                <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Statut</label>
+                <select name="status" id="status" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    <option value="">Tous les statuts</option>
+                    <option value="ouverte" {{ request('status') == 'ouverte' ? 'selected' : '' }}>Ouvertes</option>
+                    <option value="fermée" {{ request('status') == 'fermée' ? 'selected' : '' }}>Fermées</option>
+                </select>
+            </div>
+
+            <!-- Sort Filter -->
+            <div>
+                <label for="sort" class="block text-sm font-medium text-gray-700 mb-1">Trier par</label>
+                <select name="sort_field" id="sort" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    <option value="created_at" {{ request('sort_field') == 'created_at' ? 'selected' : '' }}>Date</option>
+                    <option value="title" {{ request('sort_field') == 'title' ? 'selected' : '' }}>Titre</option>
+                </select>
+            </div>
         </div>
+
+        <div class="flex justify-end mt-4">
+            <a href="{{ route('candidat.offres') }}" class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                Réinitialiser
+            </a>
+            <button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-[#ea530c] hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                Appliquer les filtres
+            </button>
+        </div>
+    </div>
+</form>
 
         <!-- Results -->
         <div class="bg-white overflow-hidden shadow rounded-lg mb-6">
