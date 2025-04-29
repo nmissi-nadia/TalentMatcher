@@ -3,21 +3,7 @@
 @section('title', 'Gestion des Utilisateurs')
 
 @section('content')
-    <!-- Header -->
-    <header class="bg-white border-b border-gray-200 flex items-center justify-between px-6 py-4">
-        <h1 class="text-xl font-bold">Gestion des Utilisateurs</h1>
-        
-        <div class="flex items-center space-x-4">
-            <button class="relative">
-                <i class="fas fa-bell text-gray-500"></i>
-                <span class="absolute top-0 right-0 h-2 w-2 bg-primary rounded-full"></span>
-            </button>
-            
-            <div class="h-10 w-10 rounded-full bg-gray-300 overflow-hidden">
-                <img src="{{ asset('images/avatar.jpg') }}" alt="Avatar" class="h-full w-full object-cover">
-            </div>
-        </div>
-    </header>
+
 
     <!-- Main Content -->
     <main class="p-6">
