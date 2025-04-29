@@ -23,13 +23,13 @@
                     <a href="{{ route('candidat.candidatures') }}" class="inline-flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 {{ request()->query('statut') ? '' : 'bg-blue-50 text-blue-600 border-blue-500' }}">
                         Tous
                     </a>
-                    <a href="{{ route('candidat.candidatures', ['statut' => 'en_attente']) }}" class="inline-flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 {{ request()->query('statut') === 'en_attente' ? 'bg-blue-50 text-blue-600 border-blue-500' : '' }}">
+                    <a href="{{ route('candidat.candidatures', ['statut' => 'en attente']) }}" class="inline-flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 {{ request()->query('statut') === 'en_attente' ? 'bg-blue-50 text-blue-600 border-blue-500' : '' }}">
                         En attente
                     </a>
-                    <a href="{{ route('candidat.candidatures', ['statut' => 'accepte']) }}" class="inline-flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 {{ request()->query('statut') === 'accepte' ? 'bg-green-50 text-green-600 border-green-500' : '' }}">
+                    <a href="{{ route('candidat.candidatures', ['statut' => 'acceptée']) }}" class="inline-flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 {{ request()->query('statut') === 'accepté' ? 'bg-green-50 text-green-600 border-green-500' : '' }}">
                         Accepté
                     </a>
-                    <a href="{{ route('candidat.candidatures', ['statut' => 'refuse']) }}" class="inline-flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 {{ request()->query('statut') === 'refuse' ? 'bg-red-50 text-red-600 border-red-500' : '' }}">
+                    <a href="{{ route('candidat.candidatures', ['statut' => 'refusée']) }}" class="inline-flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 {{ request()->query('statut') === 'refusé' ? 'bg-red-50 text-red-600 border-red-500' : '' }}">
                         Refusé
                     </a>
                 </div>
