@@ -50,7 +50,7 @@ Route::middleware(['auth', 'check.role:candidat'])->prefix('candidat')->name('ca
     Route::get('/profile', [CandidatController::class, 'showProfile'])->name('profile');
     Route::post('/profile/update', [CandidatController::class, 'updateProfile'])->name('profile.update');
     // affichage des offres existe
-    Route::get('/offres', [CandidatController::class, 'offres'])->name('offres');
+    Route::get('/offres', [AnnonceController::class, 'offres'])->name('offres');
     // detail d une annonce
     Route::get('/offres/{id}', [AnnonceController::class, 'show'])->name('offre.detail');
     Route::get('/search', [CandidatController::class, 'search'])->name('search');

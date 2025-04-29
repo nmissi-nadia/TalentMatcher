@@ -65,50 +65,7 @@ class CandidatController extends Controller
         'tags' => $tags
     ]);
 }
-    // les offres existes
-    public function offres(Request $request)
-    {
-        $query = Annonce::query();
-        
-        if ($request->filled('category')) {
-            $query->where('categorie_id', $request->category);
-        }
-
-        if ($request->filled('location')) {
-            $query->where('location', 'like', '%' . $request->location . '%');
-        }
-
-        if ($request->filled('keywords')) {
-            $query->where(function($q) use ($request) {
-                $q->where('title', 'like', '%' . $request->keywords . '%')
-                  ->orWhere('description', 'like', '%' . $request->keywords . '%')
-                  ->orWhereHas('tags', function($q) use ($request) {
-                      $q->where('name', 'like', '%' . $request->keywords . '%');
-                  });
-            });
-        }
-
-        if ($request->filled('tags')) {
-            $tagIds = is_array($request->tags) ? $request->tags : [$request->tags];
-            $query->whereHas('tags', function($q) use ($tagIds) {
-                $q->whereIn('tags.id', $tagIds);
-            });
-        }
-
-        if ($request->filled('status')) {
-            $query->where('statut', $request->status);
-        }
-
-        $sortField = $request->input('sort_field', 'created_at');
-        $sortOrder = $request->input('sort_order', 'desc');
-        $query->orderBy($sortField, $sortOrder);
-
-        $offres = $query->with(['recruteur', 'tags', 'categorie'])->paginate(10);
-        $categories = Categorie::all();
-        $tags = Tag::all();
-
-        return view('candidat.offres', compact('offres', 'categories', 'tags'));
-    }
+    
 
     // Postuler à une offre
     public function apply(Request $request, $id)
