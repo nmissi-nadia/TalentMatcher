@@ -48,7 +48,7 @@ Route::get('/offres/{id}', [AnnonceController::class, 'show'])->name('offres.sho
 Route::middleware(['auth', 'check.role:candidat'])->prefix('candidat')->name('candidat.')->group(function () {
     Route::get('/dashboard', [CandidatController::class, 'dashboard'])->name('dashboard');
     Route::get('/profile', [CandidatController::class, 'showProfile'])->name('profile');
-    Route::post('/profile/update', [CandidatController::class, 'updateProfile'])->name('profile.update');
+    Route::put('/profile/update', [CandidatController::class, 'updateProfile'])->name('profile.update');
     // affichage des offres existe
     Route::get('/offres', [AnnonceController::class, 'offres'])->name('offres');
     // detail d une annonce
