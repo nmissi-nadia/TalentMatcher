@@ -10,38 +10,59 @@
         <!-- Search and Filter -->
         <div class="mb-6">
             <div class="bg-white rounded-lg shadow-sm p-4">
-                <div class="flex items-center space-x-4">
-                    <!-- Search -->
-                    <div class="flex-1">
-                        <div class="relative">
-                            <input type="text" name="search" 
-                                   class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                   placeholder="Rechercher un utilisateur...">
-                            <i class="fas fa-search absolute right-3 top-2.5 text-gray-400"></i>
+                <!-- Search and Filter -->
+                <form action="{{ route('admin.utilisateurs') }}" method="GET" class="mb-6">
+                    <div class="bg-white rounded-lg shadow-sm p-4">
+                        <div class="flex items-center space-x-4">
+                            <!-- Search -->
+                            <div class="flex-1">
+                                <div class="relative">
+                                    <input type="text" name="search" 
+                                        value="{{ request('search') }}"
+                                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        placeholder="Rechercher un utilisateur...">
+                                    <i class="fas fa-search absolute right-3 top-2.5 text-gray-400"></i>
+                                </div>
+                            </div>
+
+                            <!-- Status Filter -->
+                            <select name="status" 
+                                    class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="">Tous les statuts</option>
+                                <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>
+                                    Actif
+                                </option>
+                                <option value="banned" {{ request('status') === 'banned' ? 'selected' : '' }}>
+                                    Banni
+                                </option>
+                            </select>
+
+                            <!-- Role Filter -->
+                            <select name="role" 
+                                    class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="">Tous les rôles</option>
+                                <option value="candidat" {{ request('role') === 'candidat' ? 'selected' : '' }}>
+                                    Candidat
+                                </option>
+                                <option value="recruteur" {{ request('role') === 'recruteur' ? 'selected' : '' }}>
+                                    Recruteur
+                                </option>
+                                <option value="admin" {{ request('role') === 'admin' ? 'selected' : '' }}>
+                                    Admin
+                                </option>
+                            </select>
+
+                            <!-- Submit Button -->
+                            <button type="submit" 
+                                    class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                                Rechercher
+                            </button>
                         </div>
                     </div>
-
-                    <!-- Status Filter -->
-                    <select name="status" 
-                            class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        <option value="">Tous les statuts</option>
-                        <option value="active">Actif</option>
-                        <option value="banned">Banni</option>
-                    </select>
-
-                    <!-- Role Filter -->
-                    <select name="role" 
-                            class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        <option value="">Tous les rôles</option>
-                        <option value="candidat">Candidat</option>
-                        <option value="recruteur">Recruteur</option>
-                        <option value="admin">Admin</option>
-                    </select>
-                </div>
+                </form>
             </div>
         </div>
 
-        <!-- Users List -->
         <div class="bg-white rounded-lg shadow-sm">
             <div class="overflow-x-auto">
                 <table class="w-full">
