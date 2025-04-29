@@ -131,6 +131,9 @@ Route::middleware(['auth', 'check.role:admin'])->prefix('admin')->name('admin.')
         Route::post('/categories/edit', [CategorieController::class, 'edit'])->name('categories.edit');
         Route::post('/categories/store', [CategorieController::class, 'store'])->name('categories.store');
         Route::delete('/categories/{id}', [CategorieController::class, 'destroy'])->name('categories.destroy');
+        // traitement de bannir
+        Route::put('/admin/users/{id}/ban', [AdminController::class, 'banUser'])->name('ban');
+Route::put('/admin/users/{id}/unban', [AdminController::class, 'unbanUser'])->name('unban');
 });
 
 // API Routes for offre Applications
