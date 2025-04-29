@@ -113,22 +113,7 @@ class CandidatController extends Controller
             ->with('success', 'Candidature envoyée avec succès');
     }
 
-    // Afficher toutes les candidatures
-    public function candidatures(Request $request)
-    {
-        $query = Candidature::query()
-            ->with(['annonce', 'annonce.recruteur'])
-            ->where('candidat_id', auth()->id());
-
-        $statut = $request->query('statut');
-        if ($statut) {
-            $query->where('statut', $statut);
-        }
-
-        $candidatures = $query->paginate(10);
-
-        return view('candidat.applications', compact('candidatures'));
-    }
+    
 
     // Supprimer une candidature
     public function deleteCandidature($id)

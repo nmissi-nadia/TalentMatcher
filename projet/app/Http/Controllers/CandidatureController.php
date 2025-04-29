@@ -27,6 +27,22 @@ class CandidatureController extends Controller
         $candidatures = $this->service->getAll();
         return view('candidat.applications', compact('candidatures'));
     }
+    // Afficher toutes les candidatures
+    public function candidatures(Request $request)
+    {
+        $query = Candidature::query()
+            ->with(['annonce', 'annonce.recruteur'])
+            ->where('candidat_id', auth()->id());
+
+        $statut = $request->query('statut');
+        if ($statut) {
+            $query->where('statut', $statut);
+        }
+
+        $candidatures = $query->paginate(10);
+
+        return view('candidat.applications', compact('candidatures'));
+    }
 
     public function create($annonceId)
     {
