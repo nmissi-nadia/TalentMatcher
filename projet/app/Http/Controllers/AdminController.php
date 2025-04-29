@@ -83,9 +83,27 @@ class AdminController extends Controller
             'categoryStats' => $categoryStats
         ]);
     }
-    public function utilisateurs()
+    // gestion des utilisateurs
+    public function utilisateurs(Request $request)
     {
-        $users = User::orderBy('created_at', 'desc')->paginate(10);
+        $query = User::query();
+        
+        if ($request->search) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->status) {
+            $query->where('status', $request->status);
+        }
+        if ($request->role) {
+            $query->where('role', $request->role);
+        }
+        $users = $query->paginate(5);
+
         return view('admin.utilisateurs', compact('users'));
     }
     public function candidatures()
@@ -149,13 +167,7 @@ class AdminController extends Controller
             ->paginate(10);
         return view('admin.utilisateurs_supprimes', compact('users'));
     }
-    
-    public function restaurerUtilisateur($id)
-    {
-        $user = User::withTrashed()->findOrFail($id);
-        $user->restore();
-        return redirect()->route('admin.users.supprimes')->with('success', 'Utilisateur restauré avec succès');
-    }
+   
     
     public function supprimerDefinitivement($id)
     {
