@@ -121,20 +121,7 @@ class AdminController extends Controller
             
         return view('admin.moderation', compact('signalements'));
     }
-    public function annonces()
-    {
-        $annonces = Annonce::with(['recruteur', 'tags'])
-        ->orderBy('created_at', 'desc')
-        ->get();
-
-    $stats = [
-        'total' => $annonces->count(),
-        'actives' => $annonces->where('statut', 'ouverte')->count(),
-        'expirees' => $annonces->where('statut', 'fermee')->count()
-    ];
-
-    return view('admin.annoces', compact('annonces', 'stats'));
-    }
+    
 
     public function annoncesActives()
     {

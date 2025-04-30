@@ -100,6 +100,7 @@ Route::middleware(['auth', 'check.role:admin','verify.user.status'])->prefix('ad
         Route::post('/moderation/traiter/{id}', [ModerationController::class, 'traiter'])->name('signalement.traiter');
         Route::get('/annonces', [AdminController::class, 'annonces'])->name('annonces');
         Route::get('/annonce/{id}', [AdminController::class, 'showAnnonce'])->name('annonce');
+        Route::delete('/annonce/{id}', [AdminController::class, 'deleteAnnonce'])->name('annonce.delete');
         // partie concernat par les utilisateurs
         Route::get('/utilisateurs', [AdminController::class, 'utilisateurs'])->name('utilisateurs');
         Route::get('/utilisateurs/{id}', [AdminController::class, 'show'])->name('user.show');
@@ -111,7 +112,7 @@ Route::middleware(['auth', 'check.role:admin','verify.user.status'])->prefix('ad
         Route::delete('/utilisateurs/{id}', [AdminController::class, 'delete'])->name('user.delete');
         Route::post('/utilisateurs/restore/{id}', [AdminController::class, 'restaurerUtilisateur'])->name('admin.users.restore');
         Route::delete('/utilisateurs/force-delete/{id}', [AdminController::class, 'supprimerDefinitivement'])->name('admin.users.force-delete');
-        Route::get('/annonces', [AdminController::class, 'annonces'])->name('annonces');
+        Route::get('/annonces', [AnnonceController::class, 'annoncesAdmin'])->name('annonces');
         Route::get('/annonces/actives', [AdminController::class, 'annoncesActives'])->name('annonces.actives');
         Route::get('/annonces/expirees', [AdminController::class, 'annoncesExpirees'])->name('annonces.expirees');
         Route::get('/annonces/create', [AnnonceController::class, 'create'])->name('annonce.create');

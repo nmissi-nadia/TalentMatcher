@@ -96,6 +96,13 @@
                             </a>
                         </li>
                         <li class="mb-2">
+                            <a href="{{ route('admin.annonces') }}" 
+                               class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                                <i class="fas fa-briefcase mr-3"></i>
+                                Gestion Offres
+                            </a>
+                        </li>
+                        <li class="mb-2">
                             <a href="{{ route('admin.tags') }}" 
                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
                                 <i class="fas fa-tags mr-3"></i>

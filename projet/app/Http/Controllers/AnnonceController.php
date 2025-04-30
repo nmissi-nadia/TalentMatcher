@@ -9,6 +9,7 @@ use App\Interfaces\AnnonceRepositoryInterface;
 use App\Models\Annonce;
 use App\Models\Categorie;
 use App\Models\Tag;
+use Illuminate\Database\Eloquent\Collection;
 
 class AnnonceController extends Controller
 {
@@ -155,5 +156,19 @@ class AnnonceController extends Controller
     {
         $annonces = $this->service->getByStatut($statut);
         return view('candidat.offres', compact('annonces'));
+    }
+    public function annoncesAdmin()
+    {
+        $annonces = Annonce::with(['recruteur', 'tags'])
+        ->orderBy('created_at', 'desc')
+        ->paginate(6);
+
+    $stats = [
+        'total' => $annonces->count(),
+        'actives' => $annonces->where('statut', 'ouverte')->count(),
+        'expirees' => $annonces->where('statut', 'fermée')->count()
+    ];
+
+    return view('admin.annoces', compact('annonces', 'stats'));
     }
 }
