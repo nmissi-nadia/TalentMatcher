@@ -36,6 +36,16 @@ class AnnonceController extends Controller
         }
     }
 
+    public function showAdmin($id)
+    {
+        try {
+            $annonce = $this->service->get($id);
+            return view('admin.annonce', compact('annonce'));
+        } catch (\Exception $e) {
+            return redirect()->route('admin.annonces')->with('message', $e->getMessage());
+        }
+    }
+
     public function create()
     {
         return view('recruteur.offre-form');
@@ -158,15 +168,17 @@ class AnnonceController extends Controller
         return view('candidat.offres', compact('annonces'));
     }
     public function annoncesAdmin()
+
     {
+        $annonce=Annonce::all();
         $annonces = Annonce::with(['recruteur', 'tags'])
         ->orderBy('created_at', 'desc')
         ->paginate(6);
 
     $stats = [
-        'total' => $annonces->count(),
-        'actives' => $annonces->where('statut', 'ouverte')->count(),
-        'expirees' => $annonces->where('statut', 'fermée')->count()
+        'total' => $annonce->count(),
+        'actives' => $annonce->where('statut', 'ouverte')->count(),
+        'expirees' => $annonce->where('statut', 'fermée')->count()
     ];
 
     return view('admin.annoces', compact('annonces', 'stats'));
