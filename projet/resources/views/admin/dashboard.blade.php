@@ -4,7 +4,7 @@
 
 @section('content')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Dashboard Content -->
+ 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- Statistiques des utilisateurs -->
         <div class="bg-white rounded-lg shadow p-6">

@@ -134,7 +134,8 @@ Route::middleware(['auth', 'check.role:admin','verify.user.status'])->prefix('ad
         Route::delete('/categories/{id}', [CategorieController::class, 'destroy'])->name('categories.destroy');
         // traitement de bannir
         Route::put('/admin/users/{id}/ban', [AdminController::class, 'banUser'])->name('ban');
-Route::put('/admin/users/{id}/unban', [AdminController::class, 'unbanUser'])->name('unban');
+        Route::put('/admin/users/{id}/unban', [AdminController::class, 'unbanUser'])->name('unban');
+        Route::get('/admin/stats-pdf', [AdminController::class, 'downloadStatsPDF'])->name('admin.stats.pdf');
 });
 
 // API Routes for offre Applications

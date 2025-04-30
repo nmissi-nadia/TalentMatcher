@@ -10,6 +10,8 @@ use App\Models\Tag;
 use App\Models\Categorie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -179,9 +181,30 @@ class AdminController extends Controller
 
     // desbannissement des utilisateurs
     public function unbanUser(Request $request, $id)
-{
-    $user = User::findOrFail($id);
-    $user->unban();
-    return redirect()->back()->with('message', 'Utilisateur débanni avec succès');
-}
+    {
+        $user = User::findOrFail($id);
+        $user->unban();
+        return redirect()->back()->with('message', 'Utilisateur débanni avec succès');
+    }
+    public function downloadStatsPDF()
+    {
+        // Récupérer les statistiques
+        $stats = [
+            'total_users' => User::count(),
+            'active_users' => User::where('statut', 'actif')->count(),
+            'total_announces' => Annonce::count(),
+            'active_announces' => Annonce::where('statut', 'ouverte')->count(),
+            'total_applications' => Candidature::count(),
+            'new_users_last_month' => User::where('created_at', '>=', Carbon::now()->subMonth())->count(),
+            'new_announces_last_month' => Annonce::where('created_at', '>=', Carbon::now()->subMonth())->count(),
+            'top_categories' => Categorie::withCount('annonces')->orderBy('annonces_count', 'desc')->take(5)->get(),
+            'top_competences' => Tag::withCount('annonces')->orderBy('annonces_count', 'desc')->take(5)->get(),
+        ];
+
+        // Créer le PDF
+        $pdf = Pdf::loadView('admin.stats-pdf', compact('stats'));
+
+        // Télécharger le PDF
+        return $pdf->download('stats-platforme-' . Carbon::now()->format('Y-m-d') . '.pdf');
+    }
 }
