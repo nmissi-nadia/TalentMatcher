@@ -191,7 +191,7 @@ class AdminController extends Controller
         // Récupérer les statistiques
         $stats = [
             'total_users' => User::count(),
-            'active_users' => User::where('statut', 'actif')->count(),
+            'active_users' => User::where('status', 'actif')->count(),
             'total_announces' => Annonce::count(),
             'active_announces' => Annonce::where('statut', 'ouverte')->count(),
             'total_applications' => Candidature::count(),
