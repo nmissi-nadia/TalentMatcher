@@ -135,7 +135,7 @@ Route::middleware(['auth', 'check.role:admin','verify.user.status'])->prefix('ad
         // traitement de bannir
         Route::put('/admin/users/{id}/ban', [AdminController::class, 'banUser'])->name('ban');
         Route::put('/admin/users/{id}/unban', [AdminController::class, 'unbanUser'])->name('unban');
-        Route::get('/admin/stats-pdf', [AdminController::class, 'downloadStatsPDF'])->name('admin.stats.pdf');
+        Route::get('/admin/stats-pdf', [AdminController::class, 'downloadStatsPDF'])->name('stats.pdf');
 });
 
 // API Routes for offre Applications

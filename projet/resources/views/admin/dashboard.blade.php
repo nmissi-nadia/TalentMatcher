@@ -54,6 +54,9 @@
             <canvas id="categoriesChart" class="w-full h-64"></canvas>
         </div>
     </div>
+    <div class="mt-8 flex justify-end">
+        <a href="{{ route('admin.stats.pdf') }}" class="bg-[#ea530c] text-white px-4 py-2 rounded-md">Générer PDF</a>
+    </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
