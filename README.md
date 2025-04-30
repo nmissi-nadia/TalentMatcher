@@ -39,7 +39,7 @@ La plateforme de recrutement "TalentMatcher" vise à simplifier et accélérer l
 ## 🔧 Technologies utilisées
 - **Frontend** : HTML, CSS, Tailwind CSS, JavaScript.
 - **Backend** : PHP (Laravel Framework).
-- **Base de données** : MySQL.
+- **Base de données** : PostgreSQL.
 - **Hébergement** : Serveur cloud sécurisé (proposé par AWS ou autres alternatives).
 
 ---
@@ -50,12 +50,12 @@ La plateforme de recrutement "TalentMatcher" vise à simplifier et accélérer l
 - **PHP 8+**
 - **Composer**
 - **Node.js** (pour les dépendances frontend)
-- **MySQL**
+- **PostgreSQL**
 
 ### Étapes d'installation
 1. Clonez le repository :
    ```bash
-   git clone https://github.com/username/TalentMatcher.git
+   git clone https://github.com/nmissi-nadia/TalentMatcher.git
    ```
 2. Installez les dépendances backend :
    ```bash
