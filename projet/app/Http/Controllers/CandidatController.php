@@ -48,7 +48,7 @@ class CandidatController extends Controller
             $user->save();
         }
 
-        return redirect()->route('candidat.profile')->with('success', 'Profil mis à jour avec succès');
+        return redirect()->route('candidat.profile')->with('message', 'Profil mis à jour avec succès');
     }
 
     // Rechercher des offres d'emploi
@@ -73,14 +73,14 @@ class CandidatController extends Controller
         $offre = Annonce::with('candidatures')->findOrFail($id);
         
         if (!Auth::check()) {
-            return redirect()->back()->with('error', 'Veuillez vous connecter pour postuler');
+            return redirect()->back()->with('message', 'Veuillez vous connecter pour postuler');
         }
         if ($offre->candidatures()->where('candidat_id', Auth::id())->exists()) {
-            return redirect()->back()->with('error', 'Vous avez déjà postulé à cette offre');
+            return redirect()->back()->with('message', 'Vous avez déjà postulé à cette offre');
         }
 
         if ($offre->statut !== 'ouverte') {
-            return redirect()->back()->with('error', 'Cette offre n\'est plus ouverte aux candidatures');
+            return redirect()->back()->with('message', 'Cette offre n\'est plus ouverte aux candidatures');
         }
 
         $validated = $request->validate([
@@ -109,7 +109,7 @@ class CandidatController extends Controller
         $offre->recruteur->notify(new NouvelleCandidature($candidature));
 
         return redirect()->route('candidat.candidatures')
-            ->with('success', 'Candidature envoyée avec succès');
+            ->with('message', 'Candidature envoyée avec succès');
     }
 
     

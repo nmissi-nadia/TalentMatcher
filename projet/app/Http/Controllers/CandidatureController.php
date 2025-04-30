@@ -82,9 +82,9 @@ class CandidatureController extends Controller
             $etapeValidationFinale = new EtapeValidationFinale();
             $etapeValidationFinale->candidature_id = $candidature->id;
             $etapeValidationFinale->save();
-            return redirect()->route('candidat.candidatures')->with('success', 'Candidature envoyée avec succès');
+            return redirect()->route('candidat.candidatures')->with('message', 'Candidature envoyée avec succès');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', $e->getMessage())->withInput();
+            return redirect()->back()->with('message', $e->getMessage())->withInput();
         }
     }
 
@@ -98,7 +98,7 @@ class CandidatureController extends Controller
             }
             return response()->download(storage_path('app/public/' . $candidature->cv));
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', $e->getMessage());
+            return redirect()->back()->with('message', $e->getMessage());
         }
     }
     public function show($id)
@@ -125,7 +125,7 @@ class CandidatureController extends Controller
             $Validation = EtapeValidationFinale::where('candidature_id', $id)->first();
             return view('recruteur.candidate-detail', compact('candidature','etatpeEntretienOral','etatpeTestTechnique','Validation'));
         } catch (\Exception $e) {
-            return redirect()->route('recruteur.candidatures')->with('error', $e->getMessage());
+            return redirect()->route('recruteur.candidatures')->with('message', $e->getMessage());
         }
     }
 
@@ -135,7 +135,7 @@ class CandidatureController extends Controller
             $candidature = $this->service->get($id);
             return view('candidat.edit-application', compact('candidature'));
         } catch (\Exception $e) {
-            return redirect()->route('candidat.candidatures')->with('error', $e->getMessage());
+            return redirect()->route('candidat.candidatures')->with('message', $e->getMessage());
         }
     }
 
@@ -150,9 +150,9 @@ class CandidatureController extends Controller
 
         try {
             $candidature = $this->service->update($id, $validated);
-            return redirect()->route('candidat.applications')->with('success', 'Candidature mise à jour avec succès');
+            return redirect()->route('candidat.applications')->with('message', 'Candidature mise à jour avec succès');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', $e->getMessage())->withInput();
+            return redirect()->back()->with('message', $e->getMessage())->withInput();
         }
     }
 
@@ -160,9 +160,9 @@ class CandidatureController extends Controller
     {
         try {
             $this->service->delete($id);
-            return redirect()->route('candidat.candidatures')->with('success', 'Candidature supprimée avec succès');
+            return redirect()->route('candidat.candidatures')->with('message', 'Candidature supprimée avec succès');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', $e->getMessage());
+            return redirect()->back()->with('message', $e->getMessage());
         }
     }
 
@@ -177,9 +177,9 @@ class CandidatureController extends Controller
             Mail::to($candidature->user->email)->send(
                 new CandidatureStatusNotification($candidature, $validated['statut'])
             );
-            return redirect()->back()->with('success', 'Statut de la candidature mis à jour avec succès');
+            return redirect()->back()->with('message', 'Statut de la candidature mis à jour avec succès');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', $e->getMessage());
+            return redirect()->back()->with('message', $e->getMessage());
         }
     }
 
@@ -241,6 +241,6 @@ class CandidatureController extends Controller
             break;
     }
 
-    return redirect()->back()->with('success', 'Statut mis à jour avec succès');
+    return redirect()->back()->with('message', 'Statut mis à jour avec succès');
 }
 }

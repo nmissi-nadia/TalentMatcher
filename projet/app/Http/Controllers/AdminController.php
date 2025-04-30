@@ -173,7 +173,7 @@ class AdminController extends Controller
     {
         $user = User::withTrashed()->findOrFail($id);
         $user->forceDelete();
-        return redirect()->route('admin.users.supprimes')->with('success', 'Utilisateur supprimé définitivement');
+        return redirect()->route('admin.users.supprimes')->with('message', 'Utilisateur supprimé définitivement');
     }
     // partie pour la gestion des gatégories et des tags
     public function gestionTags_categorie()
@@ -187,7 +187,7 @@ class AdminController extends Controller
 {
     $user = User::findOrFail($id);
     $user->ban();
-    return redirect()->back()->with('success', 'Utilisateur banni avec succès');
+    return redirect()->back()->with('message', 'Utilisateur banni avec succès');
 }
 
     // desbannissement des utilisateurs
@@ -195,6 +195,6 @@ class AdminController extends Controller
 {
     $user = User::findOrFail($id);
     $user->unban();
-    return redirect()->back()->with('success', 'Utilisateur débanni avec succès');
+    return redirect()->back()->with('message', 'Utilisateur débanni avec succès');
 }
 }

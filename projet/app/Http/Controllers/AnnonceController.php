@@ -31,7 +31,7 @@ class AnnonceController extends Controller
             $offre = $this->service->get($id);
             return view('candidat.offre-detail', compact('offre'));
         } catch (\Exception $e) {
-            return redirect()->route('candidat.offres')->with('error', $e->getMessage());
+            return redirect()->route('candidat.offres')->with('message', $e->getMessage());
         }
     }
 
@@ -96,7 +96,7 @@ class AnnonceController extends Controller
 
         try {
             $annonce = $this->service->create($validated);
-            return redirect()->route('recruteur.offres')->with('success', 'Annonce créée avec succès');
+            return redirect()->route('recruteur.offres')->with('message', 'Annonce créée avec succès');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage())->withInput();
         }
@@ -122,9 +122,9 @@ class AnnonceController extends Controller
 
         try {
             $annonce = $this->service->update($id, $validated);
-            return redirect()->route('recruteur.offres')->with('success', 'Annonce mise à jour avec succès');
+            return redirect()->route('recruteur.offres')->with('message', 'Annonce mise à jour avec succès');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', $e->getMessage())->withInput();
+            return redirect()->back()->with('message', $e->getMessage())->withInput();
         }
     }
 
@@ -132,9 +132,9 @@ class AnnonceController extends Controller
     {
         try {
             $this->service->delete($id);
-            return redirect()->route('recruteur.offres')->with('success', 'Annonce supprimée avec succès');
+            return redirect()->route('recruteur.offres')->with('message', 'Annonce supprimée avec succès');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', $e->getMessage());
+            return redirect()->back()->with('message', $e->getMessage());
         }
     }
 

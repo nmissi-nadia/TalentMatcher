@@ -43,7 +43,7 @@ class AuthController extends Controller
             "role" => $request->role
         ]);
         Mail::to($user->email)->send(new WelcomeEmail($user));
-        return redirect()->route('login')->with('success', 'Inscription réussie. Veuillez vous connecter.');
+        return redirect()->route('login')->with('message', 'Inscription réussie. Veuillez vous connecter.');
     }
     
     // Handle login
@@ -68,7 +68,7 @@ class AuthController extends Controller
                 case 'candidat':
                     return redirect()->route('candidat.dashboard');
                 default:
-                    return redirect()->route('login')->with('error', 'Rôle utilisateur invalide');
+                    return redirect()->route('login')->with('message', 'Rôle utilisateur invalide');
             }
         }
 
