@@ -1,15 +1,25 @@
-<!-- resources/views/auth/login.blade.php -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion - Plateforme de Recrutement</title>
+    <title>Connexion - TalentMatcher - Plateforme de Recrutement</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50">
     <div class="flex h-screen">
-        <!-- Bannière gauche -->
+        @if(session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Erreur!',
+                text: '{{ session('error') }}',
+                confirmButtonText: 'OK' 
+            });
+        </script>
+    @endif
+        <!-- Banniere gauche -->
          <!-- ajouter deux corner rounded -->
         <div class="hidden md:flex md:w-1/2 bg-[#4f46e5] text-white p-8 flex-col rounded-r-[30px]">
             <div class="mb-8">
