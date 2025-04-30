@@ -113,11 +113,11 @@ class RecruteurController extends Controller
                 return redirect()->back()
                     ->withInput()
                     ->withErrors($e->errors())
-                    ->with('error', 'Veuillez corriger les erreurs dans le formulaire');
+                    ->with('message', 'Veuillez corriger les erreurs dans le formulaire');
             } catch (\Exception $e) {
                 return redirect()->back()
                     ->withInput()
-                    ->with('error', 'Erreur lors de la création de l\'offre: ' . $e->getMessage());
+                    ->with('message', 'Erreur lors de la création de l\'offre: ' . $e->getMessage());
             }
         }
 
@@ -160,7 +160,7 @@ class RecruteurController extends Controller
 
         $record->update($request->all());
 
-        return redirect()->back()->with('success', 'Étape mise à jour avec succès');
+        return redirect()->back()->with('message', 'Étape mise à jour avec succès');
     }
 
     public function stats()

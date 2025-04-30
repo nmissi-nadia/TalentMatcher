@@ -45,7 +45,7 @@ Route::get('/offres', [AnnonceController::class, 'index'])->name('offres.index')
 Route::get('/offres/{id}', [AnnonceController::class, 'show'])->name('offres.show');
 
 // Candidate Routes (Protected by Auth Middleware)
-Route::middleware(['auth', 'check.role:candidat'])->prefix('candidat')->name('candidat.')->group(function () {
+Route::middleware(['auth', 'check.role:candidat','verify.user.status'])->prefix('candidat')->name('candidat.')->group(function () {
     Route::get('/dashboard', [CandidatController::class, 'dashboard'])->name('dashboard');
     Route::get('/profile', [CandidatController::class, 'showProfile'])->name('profile');
     Route::put('/profile/update', [CandidatController::class, 'updateProfile'])->name('profile.update');
@@ -62,7 +62,7 @@ Route::middleware(['auth', 'check.role:candidat'])->prefix('candidat')->name('ca
 });
 
 // Recruiter Routes (Protected by Auth Middleware)
-Route::middleware(['auth', 'check.role:recruteur'])->prefix('recruteur')->name('recruteur.')->group(function () {
+Route::middleware(['auth', 'check.role:recruteur','verify.user.status'])->prefix('recruteur')->name('recruteur.')->group(function () {
     Route::get('/dashboard', [RecruteurController::class, 'dashboard'])->name('dashboard');
     Route::get('/offres', [RecruteurController::class, 'annonces'])->name('offres');
     Route::get('/annonces/create', [RecruteurController::class, 'createAnnonce'])->name('annonces.create');
@@ -87,7 +87,7 @@ Route::middleware(['auth', 'check.role:recruteur'])->prefix('recruteur')->name('
 });
 
 // Admin Routes (Protected by Auth and Admin Role Middleware)
-Route::middleware(['auth', 'check.role:admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'check.role:admin','verify.user.status'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
   
     // teste

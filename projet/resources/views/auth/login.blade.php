@@ -9,12 +9,12 @@
 </head>
 <body class="bg-gray-50">
     <div class="flex h-screen">
-        @if(session('error'))
+        @if(session('message'))
         <script>
             Swal.fire({
-                icon: 'error',
+                icon: 'message',
                 title: 'Erreur!',
-                text: '{{ session('error') }}',
+                text: '{{ session('message') }}',
                 confirmButtonText: 'OK' 
             });
         </script>

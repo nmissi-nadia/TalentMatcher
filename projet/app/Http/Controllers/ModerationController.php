@@ -32,6 +32,6 @@ class ModerationController extends Controller
             'traitement_date' => now()
         ]);
 
-        return redirect()->back()->with('success', 'Le signalement a été traité avec succès.');
+        return redirect()->back()->with('message', 'Le signalement a été traité avec succès.');
     }
 }

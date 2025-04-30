@@ -52,7 +52,7 @@ class EtapeEntretienController extends Controller
         $etape->save();
 
         return redirect()->route('recruteur.candidatures.etapes', $candidature->id)
-            ->with('success', 'Étape d\'entretien créée avec succès');
+            ->with('message', 'Étape d\'entretien créée avec succès');
     }
 
     /**
@@ -85,7 +85,7 @@ class EtapeEntretienController extends Controller
         $etape->update($request->validated());
 
         return redirect()->route('recruteur.candidatures.etapes', $etape->candidature->id)
-            ->with('success', 'Étape d\'entretien mise à jour avec succès');
+            ->with('message', 'Étape d\'entretien mise à jour avec succès');
     }
 
     /**
@@ -99,7 +99,7 @@ class EtapeEntretienController extends Controller
         $etape->delete();
 
         return redirect()->route('recruteur.candidatures.etapes', $candidatureId)
-            ->with('success', 'Étape d\'entretien supprimée avec succès');
+            ->with('message', 'Étape d\'entretien supprimée avec succès');
     }
 
     /**
@@ -117,7 +117,7 @@ class EtapeEntretienController extends Controller
         $etape->save();
 
         return redirect()->route('recruteur.candidatures.etapes', $etape->candidature->id)
-            ->with('success', 'Statut de l\'entretien mis à jour avec succès');
+            ->with('message', 'Statut de l\'entretien mis à jour avec succès');
     }
 
     /**
@@ -151,7 +151,7 @@ class EtapeEntretienController extends Controller
         // $candidat->notify(new InterviewScheduled($etape));
 
         return redirect()->route('recruteur.candidatures.etapes', $candidature->id)
-            ->with('success', 'Entretien programmé avec succès');
+            ->with('message', 'Entretien programmé avec succès');
     }
 
     /**

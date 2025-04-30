@@ -21,7 +21,7 @@ class VerifyUserStatus
                 Auth::logout();
                 
                 return redirect()->route('login')
-                    ->with('error', 'Votre compte a été banni. Veuillez contacter l\'administration.');
+                    ->with('message', 'Votre compte a été banni. Veuillez contacter l\'administration.');
             }
         }
 

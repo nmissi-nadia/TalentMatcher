@@ -142,12 +142,12 @@
             </main>
         </div>
     </div>
-    @if(session('error'))
+    @if(session('message'))
     <script>
         Swal.fire({
-            icon: 'error',
-            title: 'Erreur!',
-            text: '{{ session('error') }}',
+            icon: 'message',
+            title: 'Message!',
+            text: '{{ session('message') }}',
             confirmButtonText: 'OK' 
         });
     </script>

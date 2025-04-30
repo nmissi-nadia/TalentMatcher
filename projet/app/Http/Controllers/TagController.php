@@ -34,7 +34,7 @@ class TagController extends Controller
 
         Tag::create($request->all());
 
-        return redirect()->back()->with('success', 'Tag créé avec succès');
+        return redirect()->back()->with('message', 'Tag créé avec succès');
     }
 
     /**
@@ -62,7 +62,7 @@ class TagController extends Controller
     {
         $tag = Tag::findOrFail($id);
         $tag->update($request->all());
-        return redirect()->back()->with('success', 'Tag mis à jour avec succès');
+        return redirect()->back()->with('message', 'Tag mis à jour avec succès');
     }
 
     /**
@@ -72,6 +72,6 @@ class TagController extends Controller
     {
         $tag = Tag::findOrFail($id);
         $tag->delete();
-        return redirect()->back()->with('success', 'Tag supprimé avec succès');
+        return redirect()->back()->with('message', 'Tag supprimé avec succès');
     }
 }
