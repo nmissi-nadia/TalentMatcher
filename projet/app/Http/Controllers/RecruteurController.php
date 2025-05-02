@@ -193,6 +193,11 @@ class RecruteurController extends Controller
         $tags = Tag::all();
         return view('recruteur.manage_tags', compact('tags'));
     }
-
+    // les information d une utilisateur candidat
+    public function Candidatprofile($id)
+    {
+        $candidat = User::findOrFail($id);
+        return view('recruteur.candidat-profile', compact('candidat'));
+    }
    
 }

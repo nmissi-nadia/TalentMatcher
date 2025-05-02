@@ -84,7 +84,7 @@ Route::middleware(['auth', 'check.role:recruteur','verify.user.status'])->prefix
     Route::post('/tags/create', [RecruteurController::class, 'createTag'])->name('tags.create');
     // telecharger le cv
     Route::get('/candidatures/{id}/cv', [CandidatureController::class, 'downloadCV'])->name('candidatures.cv');
-    Route::get('/recruteur/candidats/{candidat}', [RecruteurController::class, 'showCandidat'])->name('recruteur.candidat.show');
+    Route::get('/recruteur/candidats/{candidat}', [RecruteurController::class, 'Candidatprofile'])->name('recruteur.candidat.show');
     Route::get('/profile', [RecruteurController::class, 'showProfile'])->name('profile');
     Route::get('/profile/edit', [RecruteurController::class, 'editProfile'])->name('profile.edit');
     Route::put('/profile/update', [RecruteurController::class, 'updateProfile'])->name('profile.update');
