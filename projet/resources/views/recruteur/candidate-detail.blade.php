@@ -24,6 +24,10 @@
                         <div>
                             <p class="text-sm text-gray-500">Candidat</p>
                             <p class="text-sm text-gray-900">{{ $candidature->candidat->name }}</p>
+                            <a href="{{ route('recruteur.candidat.show', $candidature->candidat) }}" 
+                            class="text-blue-600 hover:text-blue-800">
+                                Voir le profil
+                            </a>
                         </div>
                         <div>
                             <p class="text-sm text-gray-500">Offre d'emploi</p>
