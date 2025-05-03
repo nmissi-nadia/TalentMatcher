@@ -22,6 +22,25 @@ class ModerationController extends Controller
 
         return view('admin.moderation', compact('signalements', 'stats'));
     }
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'type' => 'required|in:annonce,candidature,profil',
+            'id' => 'required|integer',
+            'raison' => 'required|string|max:255',
+            'details' => 'nullable|string',
+        ]);
+
+        Signalement::create([
+            'user_id' => Auth::id(),
+            'type' => $validated['type'],
+            'item_id' => $validated['id'],
+            'raison' => $validated['raison'],
+            'details' => $validated['details'],
+        ]);
+
+        return redirect()->back()->with('message', 'Signalement envoyé avec succès');
+    }
     public function traiter(Request $request, $id)
     {
         $signalement = Signalement::findOrFail($id);
