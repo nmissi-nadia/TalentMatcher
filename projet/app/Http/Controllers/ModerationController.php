@@ -43,7 +43,7 @@ class ModerationController extends Controller
                        ($validated['type'] === 'candidature' ? Candidature::class : User::class),
         'motif' => $validated['motif'],
         'description' => $validated['description'],
-        'statut' => 'pending'
+        'statut' => 'en attente'
     ]);
 
     return redirect()->back()->with('message', 'Signalement envoyé avec succès');

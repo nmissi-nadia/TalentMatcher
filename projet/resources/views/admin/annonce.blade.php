@@ -127,7 +127,6 @@
         </div>
         @endif
         
-        @if(auth()->user()->role === 'admin')
         <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
             <div class="p-6">
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">Signaler cette annonce</h2>
@@ -158,7 +157,7 @@
                 </form>
             </div>
         </div>
-        @endif
+     
     </div>
 </div>
 @endsection
