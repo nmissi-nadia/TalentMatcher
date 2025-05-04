@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Signalement;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Annonce;
+use App\Models\Candidature;
+use App\Models\User;
 
 class ModerationController extends Controller
 {

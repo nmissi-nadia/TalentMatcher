@@ -40,10 +40,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Public offre Listings
 Route::get('/offres', [AnnonceController::class, 'index'])->name('offres.index');
 Route::get('/offres/{id}', [AnnonceController::class, 'show'])->name('offres.show');
-
+// les routes pour les users quelconque mais authentifié
+Route::middleware(['auth','verify.user.status'])->group(function () {
+    // pour les signalement
+    Route::post('/signalements', [ModerationController::class, 'store'])->name('signalements.store');
+  
+});
 // Candidate Routes (Protected by Auth Middleware)
 Route::middleware(['auth', 'check.role:candidat','verify.user.status'])->prefix('candidat')->name('candidat.')->group(function () {
     Route::get('/dashboard', [CandidatController::class, 'dashboard'])->name('dashboard');
