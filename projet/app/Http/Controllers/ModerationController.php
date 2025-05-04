@@ -19,35 +19,39 @@ class ModerationController extends Controller
 
         $stats = [
             'total' => Signalement::count(),
-            'en_attente' => Signalement::where('statut', 'an_attente')->count(),
-            'resolus' => Signalement::where('statut', 'resolus')->count(),
-            'rejetes' => Signalement::where('statut', 'rejetes')->count()
+            'en_attente' => Signalement::where('statut', 'pending')->count(),
+            'resolus' => Signalement::where('statut', 'resolved')->count(),
+            'rejetes' => Signalement::where('statut', 'rejected')->count()
         ];
 
         return view('admin.moderation', compact('signalements', 'stats'));
     }
     public function store(Request $request)
-{
-    $validated = $request->validate([
-        'type' => 'required|in:annonce,candidature,profil',
-        'id' => 'required|integer',
-        'motif' => 'required|string|max:255',
-        'description' => 'nullable|string',
-    ]);
+    {
+        $validated = $request->validate([
+            'type' => 'required|in:annonce,candidature,profil',
+            'id' => 'required|integer',
+            'motif' => 'required|string|max:255',
+            'description' => 'nullable|string',
+        ]);
 
-    Signalement::create([
-        'user_id' => Auth::id(),
-        'type' => $validated['type'],
-        'cible_id' => $validated['id'],
-        'cible_type' => $validated['type'] === 'annonce' ? Annonce::class :
-                       ($validated['type'] === 'candidature' ? Candidature::class : User::class),
-        'motif' => $validated['motif'],
-        'description' => $validated['description'],
-        'statut' => 'en attente'
-    ]);
+        $typeMapping = [
+            'annonce' => Annonce::class,
+            'candidature' => Candidature::class,
+            'profil' => User::class
+        ];
 
-    return redirect()->back()->with('message', 'Signalement envoyé avec succès');
-}
+        $signalement = new Signalement();
+        $signalement->user_id = Auth::id();
+        $signalement->cible_type = $typeMapping[$validated['type']];
+        $signalement->cible_id = $validated['id'];
+        $signalement->motif = $validated['motif'];
+        $signalement->description = $validated['description'];
+        $signalement->statut = 'pending';
+        $signalement->save();
+
+        return redirect()->back()->with('message', 'Signalement envoyé avec succès');
+    }
     public function traiter(Request $request, $id)
     {
         $signalement = Signalement::findOrFail($id);
