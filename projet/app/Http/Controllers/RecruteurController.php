@@ -145,22 +145,8 @@ class RecruteurController extends Controller
     public function manageEtapes($candidatureId)
     {
         $candidature = Candidature::findOrFail($candidatureId);
-        $this->authorize('update', $candidature);
 
         return view('recruteur.manage_etapes', compact('candidature'));
-    }
-
-    public function updateEtape(Request $request, $etapeId)
-    {
-        $etape = $request->etape_type;
-        $model = "App\\Models\\Etape" . ucfirst($etape);
-
-        $record = $model::findOrFail($etapeId);
-        $this->authorize('update', $record);
-
-        $record->update($request->all());
-
-        return redirect()->back()->with('message', 'Étape mise à jour avec succès');
     }
 
     public function stats()

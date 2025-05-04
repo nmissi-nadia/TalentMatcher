@@ -34,14 +34,7 @@ class Annonce extends Model
     {
         return $this->hasMany(Candidature::class);
     }
-    public function etapes()
-    {
-        return $this->hasMany(Etape::class);
-    }
-    public function etapesEntretien()
-    {
-        return $this->hasMany(EtapeEntretien::class);
-    }
+    
     public function etapesTestTechnique()
     {
         return $this->hasMany(EtapeTestTechnique::class);

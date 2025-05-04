@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Annonce;
 use App\Models\User;
-use App\Models\EtapeEntretienOral;
 use App\Models\EtapeTestTechnique;
 use App\Models\EtapeValidationFinale;
 
@@ -34,10 +33,7 @@ class Candidature extends Model
         return $this->hasOne(EtapeTestTechnique::class);
     }
 
-    public function entretienOral()
-    {
-        return $this->hasOne(EtapeEntretienOral::class);
-    }
+
 
     public function validation()
     {

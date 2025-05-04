@@ -166,22 +166,6 @@ class CandidatureController extends Controller
         }
     }
 
-    public function updateStatus(Request $request, $id)
-    {
-        $validated = $request->validate([
-            'statut' => 'required|in:en_attente,acceptee,refusee',
-        ]);
-
-        try {
-            $candidature = $this->service->update($id, ['statut' => $validated['statut']]);
-            Mail::to($candidature->user->email)->send(
-                new CandidatureStatusNotification($candidature, $validated['statut'])
-            );
-            return redirect()->back()->with('message', 'Statut de la candidature mis à jour avec succès');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('message', $e->getMessage());
-        }
-    }
 
     public function stats()
     {
@@ -205,7 +189,6 @@ class CandidatureController extends Controller
     public function updateCandidatureStatus(Request $request, $id)
 {
     $candidature = Candidature::findOrFail($id);
-    // $this->authorize('update', $candidature);
 
     $request->validate([
         'statut' => 'required|in:en attente,acceptée,refusée'
@@ -220,10 +203,10 @@ class CandidatureController extends Controller
     );
     switch ($newStatus) {
         case 'acceptée':
-            if (!$candidature->etape_entretien_oral) {
-                $etapeEntretienOral = new EtapeEntretienOral();
-                $etapeEntretienOral->candidature_id = $candidature->id;
-                $etapeEntretienOral->save();
+            if (!$candidature->etape_test_technique) {
+                $etapeTestTechnique = new EtapeTestTechnique();
+                $etapeTestTechnique->candidature_id = $candidature->id;
+                $etapeTestTechnique->save();
             }
             break;
 
