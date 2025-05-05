@@ -82,6 +82,41 @@ class EtapeTestTechniqueController extends Controller
         return redirect()->back()->with('message', 'Étape mise à jour avec succès');
     
     }
+    public function updateStatus(Request $request, $candidatureId)
+        {
+            $candidature = Candidature::with('etape_test_technique')->findOrFail($candidatureId);
+            $etape = $candidature->etape_test_technique;
+
+            $request->validate([
+                'statut' => 'required|in:en attente,accepté,refusé',
+                'commentaire' => 'nullable|string',
+            ]);
+
+            // Mettre à jour le statut du test
+            $etape->statut = $request->statut;
+            $etape->commentaire = $request->commentaire;
+            $etape->save();
+
+            // Si le test est terminé
+            if ($request->statut === 'accepté') {
+                $etapeValidationFinale = $candidature->etape_validation_finale;
+                    $etapeValidationFinale->statut = 'acceptée';
+                    $etapeValidationFinale->commentaire = 'Félicitations ! Vous avez réussi le test technique et votre candidature est acceptée.';
+            } elseif ($request->statut === 'refusé') {
+                $etapeValidationFinale = $candidature->etape_validation_finale;
+                    $etapeValidationFinale->statut = 'refusée';
+                    $etapeValidationFinale->commentaire = 'Nous avons le regret de vous informer que votre test technique n\'a pas été réussi.';
+            }
+                $etapeValidationFinale->save();
+
+                // Envoyer une notification au candidat
+                Mail::to($candidature->candidat->email)->send(
+                    new UpdateStatusNotification($candidature, $request->statut)
+                );
+            
+
+            return redirect()->back()->with('message', 'Statut du test mis à jour avec succès');
+        }
 
     /**
      * Remove the specified resource from storage.

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Services\CandidatureService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\EtapeEntretienOral;
 use App\Models\EtapeTestTechnique;
 use App\Models\EtapeValidationFinale;
 use App\Models\Candidature;
@@ -76,9 +75,6 @@ class CandidatureController extends Controller
             $etapeTestTechnique = new EtapeTestTechnique();
             $etapeTestTechnique->candidature_id = $candidature->id;
             $etapeTestTechnique->save();
-            $etapeEntretienOral = new EtapeEntretienOral();
-            $etapeEntretienOral->candidature_id = $candidature->id;
-            $etapeEntretienOral->save();
             $etapeValidationFinale = new EtapeValidationFinale();
             $etapeValidationFinale->candidature_id = $candidature->id;
             $etapeValidationFinale->save();
@@ -106,11 +102,9 @@ class CandidatureController extends Controller
         // try {
             $candidature = $this->service->get($id);
            
-            $etatpeEntretienOral= EtapeEntretienOral::where('candidature_id', $id)->first();
-       
             $etatpeTestTechnique= EtapeTestTechnique::where('candidature_id', $id)->first();
             $Validation = EtapeValidationFinale::where('candidature_id', $id)->first();
-            return view('candidat.candidature_detail', compact('candidature','etatpeEntretienOral','etatpeTestTechnique','Validation'));
+            return view('candidat.candidature_detail', compact('candidature','etatpeTestTechnique','Validation'));
         // } catch (\Exception $e) {
         //     return redirect()->route('candidat.candidatures')->with('error', $e->getMessage());
         // }
@@ -120,10 +114,9 @@ class CandidatureController extends Controller
         try {
             $candidature = $this->service->get($id);
            
-            $etatpeEntretienOral= EtapeEntretienOral::where('candidature_id', $id)->first();
             $etatpeTestTechnique= EtapeTestTechnique::where('candidature_id', $id)->first();
             $Validation = EtapeValidationFinale::where('candidature_id', $id)->first();
-            return view('recruteur.candidate-detail', compact('candidature','etatpeEntretienOral','etatpeTestTechnique','Validation'));
+            return view('recruteur.candidate-detail', compact('candidature','etatpeTestTechnique','Validation'));
         } catch (\Exception $e) {
             return redirect()->route('recruteur.candidatures')->with('message', $e->getMessage());
         }
@@ -187,43 +180,54 @@ class CandidatureController extends Controller
     }
     // update status of candidature
     public function updateCandidatureStatus(Request $request, $id)
-{
-    $candidature = Candidature::findOrFail($id);
+    {
+        $candidature = Candidature::findOrFail($id);
+        
+        $request->validate([
+            'statut' => 'required|in:en_attente,acceptée,refusée',
+            'commentaire' => 'required_if:statut,acceptée|string',
+            'lien_entretien' => 'required_if:statut,acceptée|url',
+        ]);
 
-    $request->validate([
-        'statut' => 'required|in:en attente,acceptée,refusée'
-    ]);
+        $candidature->statut = $request->statut;
+        $candidature->save();
 
-    $currentStatus = $candidature->statut;
-    $newStatus = $request->statut;
-    $candidature->statut = $newStatus;
-    $candidature->save();
-    Mail::to($candidature->candidat->email)->send(
-        new CandidatureStatusNotification($candidature, $newStatus)
-    );
-    switch ($newStatus) {
-        case 'acceptée':
-            if (!$candidature->etape_test_technique) {
-                $etapeTestTechnique = new EtapeTestTechnique();
-                $etapeTestTechnique->candidature_id = $candidature->id;
-                $etapeTestTechnique->save();
-            }
-            break;
-
-        case 'refusée':
+        // Scénario 1: Refusée
+        if ($request->statut === 'refusée') {
+            // Créer l'étape de validation finale avec statut refusée
             if (!$candidature->etape_validation_finale) {
                 $etapeValidationFinale = new EtapeValidationFinale();
                 $etapeValidationFinale->candidature_id = $candidature->id;
                 $etapeValidationFinale->statut = 'refusée';
+                $etapeValidationFinale->commentaire = 'Nous vous remercions pour votre intérêt, mais votre candidature n\'a pas été retenue cette fois-ci. Nous vous souhaitons bonne chance dans vos futures opportunités.';
                 $etapeValidationFinale->save();
             }
-            break;
+        }
+        // Scénario 2: Acceptée
+        else if ($request->statut === 'acceptée') {
+            // Créer l'étape de test technique
+            if (!$candidature->etape_test_technique) {
+                $etapeTestTechnique = new EtapeTestTechnique();
+                $etapeTestTechnique->candidature_id = $candidature->id;
+                $etapeTestTechnique->statut = 'en attente';
+                $etapeTestTechnique->lien_entretien = $request->lien_entretien;
+                $etapeTestTechnique->commentaire = $request->commentaire;
+                $etapeTestTechnique->save();
+            }
+            // Créer l'étape de validation finale (statut initial: en_attente)
+            if (!$candidature->etape_validation_finale) {
+                $etapeValidationFinale = new EtapeValidationFinale();
+                $etapeValidationFinale->candidature_id = $candidature->id;
+                $etapeValidationFinale->statut = 'en attente';
+                $etapeValidationFinale->save();
+            }
+        }
 
-        
-            
-            break;
+        // Envoyer une notification au candidat
+        Mail::to($candidature->candidat->email)->send(
+            new CandidatureStatusNotification($candidature, $request->statut)
+        );
+
+        return redirect()->back()->with('message', 'Statut mis à jour avec succès');
     }
-
-    return redirect()->back()->with('message', 'Statut mis à jour avec succès');
-}
 }

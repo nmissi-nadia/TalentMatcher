@@ -11,6 +11,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\ModerationController;
+use App\Http\Controllers\EtapeTestTechniqueController;
 use App\Models\Annonce;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
@@ -80,7 +81,8 @@ Route::middleware(['auth', 'check.role:recruteur','verify.user.status'])->prefix
     Route::get('/candidatures/{id}', [CandidatureController::class, 'showrec'])->name('candidature.show');
     // ajouter l'au
     Route::put('/candidatures/{id}/status', [CandidatureController::class, 'updateCandidatureStatus'])->name('candidature.status');
-    Route::get('/candidatures/{id}/etapes', [RecruteurController::class, 'manageEtapes'])->name('candidatures.etapes');
+    Route::post('/recruteur/candidature/{id}/update-status', [CandidatureController::class, 'updateCandidatureStatus'])->name('recruteur.update.candidature.status');
+Route::post('/recruteur/test/{id}/update-status', [EtapeTestTechniqueController::class, 'updateStatus'])->name('recruteur.update.test.status');
     Route::post('/etapes/{id}/update', [RecruteurController::class, 'updateEtape'])->name('etapes.update');
     // partie concernat les tags
     Route::get('/stats', [RecruteurController::class, 'stats'])->name('stats');
@@ -88,7 +90,7 @@ Route::middleware(['auth', 'check.role:recruteur','verify.user.status'])->prefix
     Route::post('/tags/create', [RecruteurController::class, 'createTag'])->name('tags.create');
     // telecharger le cv
     Route::get('/candidatures/{id}/cv', [CandidatureController::class, 'downloadCV'])->name('candidatures.cv');
-    Route::get('/recruteur/candidats/{candidat}', [RecruteurController::class, 'Candidatprofile'])->name('recruteur.candidat.show');
+    Route::get('/recruteur/candidats/{candidat}', [RecruteurController::class, 'Candidatprofile'])->name('candidat.show');
     Route::get('/profile', [RecruteurController::class, 'showProfile'])->name('profile');
     Route::get('/profile/edit', [RecruteurController::class, 'editProfile'])->name('profile.edit');
     Route::put('/profile/update', [RecruteurController::class, 'updateProfile'])->name('profile.update');

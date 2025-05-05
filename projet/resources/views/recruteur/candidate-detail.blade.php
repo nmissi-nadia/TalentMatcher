@@ -127,8 +127,8 @@
                                 <div>
                                     <p class="text-sm text-gray-500">Statut</p>
                                     <span class="px-2 py-1 text-xs font-semibold rounded-full 
-                                        @if($etatpeTestTechnique->statut === 'en_attente') bg-yellow-100 text-yellow-800
-                                        @elseif($etatpeTestTechnique->statut === 'en_cours') bg-blue-100 text-blue-800
+                                        @if($etatpeTestTechnique->statut === 'en attente') bg-yellow-100 text-yellow-800
+                                        @elseif($etatpeTestTechnique->statut === 'en cours') bg-blue-100 text-blue-800
                                         @else bg-green-100 text-green-800 @endif">
                                         {{ ucfirst($etatpeTestTechnique->statut) }}
                                     </span>
@@ -153,34 +153,6 @@
                         </div>
                     @endif
 
-                    @if($etatpeEntretienOral)
-                        <div class="bg-gray-50 p-4 rounded-lg">
-                            <h3 class="text-lg font-medium mb-4">Entretien Oral</h3>
-                            <div class="space-y-4">
-                                <div>
-                                    <p class="text-sm text-gray-500">Statut</p>
-                                    <span class="px-2 py-1 text-xs font-semibold rounded-full 
-                                        @if($etatpeEntretienOral->statut === 'en attente') bg-yellow-100 text-yellow-800
-                                        @elseif($etatpeEntretienOral->statut === 'en cours') bg-blue-100 text-blue-800
-                                        @else bg-green-100 text-green-800 @endif">
-                                        {{ ucfirst($etatpeEntretienOral->statut) }}
-                                    </span>
-                                </div>
-                                @if($etatpeEntretienOral->statut === 'en_cours')
-                                    <div>
-                                        <p class="text-sm text-gray-500">Adresse</p>
-                                        <p class="text-sm text-gray-900">{{ $etatpeEntretienOral->adresse }}</p>
-                                    </div>
-                                @endif
-                                @if($etatpeEntretienOral->commentaire)
-                                    <div>
-                                        <p class="text-sm text-gray-500">Commentaire</p>
-                                        <p class="text-sm text-gray-900">{{ $etatpeEntretienOral->commentaire }}</p>
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-                    @endif
 
                     @if($Validation)
                         <div class="bg-gray-50 p-4 rounded-lg">
@@ -189,8 +161,8 @@
                                 <div>
                                     <p class="text-sm text-gray-500">Statut</p>
                                     <span class="px-2 py-1 text-xs font-semibold rounded-full 
-                                        @if($Validation->statut === 'en_attente') bg-yellow-100 text-yellow-800
-                                        @elseif($Validation->statut === 'en_cours') bg-blue-100 text-blue-800
+                                        @if($Validation->statut === 'en attente') bg-yellow-100 text-yellow-800
+                                        @elseif($Validation->statut === 'en cours') bg-blue-100 text-blue-800
                                         @else bg-green-100 text-green-800 @endif">
                                         {{ ucfirst($Validation->statut) }}
                                     </span>
