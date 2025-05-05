@@ -45,15 +45,42 @@ class EtapeTestTechniqueController extends Controller
      */
     public function edit(EtapeTestTechnique $etapeTestTechnique)
     {
-        //
+        
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateEtapeTestTechniqueRequest $request, EtapeTestTechnique $etapeTestTechnique)
+    public function update(Request $request,$candidatureId)
     {
-        //
+        $candidature = Candidature::with('etape_test_technique')->findOrFail($candidatureId);
+        $etape = $candidature->etape_test_technique;
+
+        $request->validate([
+            'statut' => 'required|in:en_attente,en_cours,terminé,refusé',
+            'commentaire' => 'nullable|string',
+            'note' => 'nullable|numeric|min:0|max:20'
+        ]);
+
+        $etape->update($request->all());
+
+        // Si le test est terminé et réussi, passer à l'étape de validation finale
+        if ($request->statut === 'terminé' && $request->note >= 12) {
+            if (!$candidature->etape_validation_finale) {
+                $etapeValidationFinale = new EtapeValidationFinale();
+                $etapeValidationFinale->candidature_id = $candidature->id;
+                $etapeValidationFinale->statut = 'acceptée';
+                $etapeValidationFinale->save();
+
+                // Envoyer une notification au candidat
+                Mail::to($candidature->candidat->email)->send(
+                    new TestTechniqueSuccessNotification($candidature)
+                );
+            }
+        }
+
+        return redirect()->back()->with('message', 'Étape mise à jour avec succès');
+    
     }
 
     /**
