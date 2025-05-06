@@ -4,31 +4,27 @@
 <!-- Container principal -->
 <div class="container mx-auto px-4 py-8">
     <div class="bg-white rounded-xl shadow-lg p-8 border-l-4 border-[#ea480c]">
-        <!-- L'en-tête mta3 candidature -->
+   
         <div class="mb-8 transform transition-all duration-300 hover:scale-102">
             <h2 class="text-3xl font-bold mb-4 text-gray-800 flex items-center">
                 <span class="mr-2"></span> Détails de la Candidature
             </h2>
-            <!-- Separator jmil bach nferqo bin l3anwan o l'contenu -->
             <div class="h-1 w-32 bg-blue-500 rounded-full mb-6"></div>
             
-            <!-- Grid dial les informations de base -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Titre dial l'offre mn database -->
                 <div class="bg-gray-50 p-4 rounded-lg transition-all duration-300 hover:shadow-md">
                     <p class="font-semibold text-gray-600">Offre :</p>
                     <p class="text-lg">{{ $candidature->annonce->titre }}</p>
                 </div>
-                <!-- Date dial candidature formattée -->
+                
                 <div class="bg-gray-50 p-4 rounded-lg transition-all duration-300 hover:shadow-md">
                     <p class="font-semibold text-gray-600">Date de Candidature :</p>
                     <p class="text-lg">{{ $candidature->created_at->format('d/m/Y') }}</p>
                 </div>
-                <!-- Statut dial candidature m3a couleur dynamique -->
+                
                 <div class="bg-gray-50 p-4 rounded-lg transition-all duration-300 hover:shadow-md">
                     <p class="font-semibold text-gray-600">Statut :</p>
                     <div class="flex items-center mt-1">
-                        <!-- Darna point colored 7sab statut -->
                         <span class="w-3 h-3 rounded-full mr-2 bg-{{ $candidature->statut === 'accepte' ? 'green' : ($candidature->statut === 'refuse' ? 'red' : 'blue') }}-500"></span>
                         <p class="text-{{ $candidature->statut === 'accepte' ? 'green' : ($candidature->statut === 'refuse' ? 'red' : 'blue') }}-600 font-medium">
                             {{ ucfirst($candidature->statut) }}
@@ -36,7 +32,7 @@
                     </div>
                 </div>
                 
-                <!-- Lbutton bach iretirer lcandidature -->
+                
                 <div class="bg-gray-50 p-4 rounded-lg transition-all duration-300 hover:shadow-md">
                     <p class="font-semibold text-gray-600">Action :</p>
                     <form action="{{ route('candidat.candidatures.delete', $candidature->id) }}" method="POST">
@@ -50,48 +46,12 @@
             </div>
         </div>
 
-        @if($candidature->statut === 'en attente')
-            <div class="mt-8">
-                <h2 class="text-xl font-semibold mb-4">Gestion de la candidature</h2>
-                <form action="{{ route('recruteur.update.candidature.status', $candidature->id) }}" method="POST">
-                    @csrf
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Statut</label>
-                            <select name="statut" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                                <option value="acceptée">Accepter</option>
-                                <option value="refusée">Refuser</option>
-                            </select>
-                        </div>
-                        <div class="hidden" id="acceptForm">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Lien du test technique</label>
-                                <input type="url" name="lien_entretien" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" placeholder="https://...">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Commentaire pour le candidat</label>
-                                <textarea name="commentaire" rows="3" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"></textarea>
-                            </div>
-                        </div>
-                        <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            Mettre à jour
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <script>
-                document.querySelector('select[name="statut"]').addEventListener('change', function() {
-                    const acceptForm = document.getElementById('acceptForm');
-                    acceptForm.style.display = this.value === 'acceptée' ? 'block' : 'none';
-                });
-            </script>
-        @endif
-        <!-- Début de la section résultat -->
+    
+        
         <div class="mt-8">
             <h2 class="text-xl font-semibold mb-6">Résultats de la candidature</h2>
 
-            <!-- Affichage du statut de la candidature -->
+            
             <div class="bg-gray-50 p-6 rounded-lg mb-8">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
