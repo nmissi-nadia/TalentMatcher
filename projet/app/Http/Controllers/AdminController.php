@@ -175,7 +175,7 @@ class AdminController extends Controller
     public function banUser(Request $request, $id)
 {
     $user = User::findOrFail($id);
-    $user->ban();
+    $user->bannir();
     return redirect()->back()->with('message', 'Utilisateur banni avec succès');
 }
 
@@ -183,7 +183,7 @@ class AdminController extends Controller
     public function unbanUser(Request $request, $id)
     {
         $user = User::findOrFail($id);
-        $user->unban();
+        $user->debannir();
         return redirect()->back()->with('message', 'Utilisateur débanni avec succès');
     }
     public function downloadStatsPDF()

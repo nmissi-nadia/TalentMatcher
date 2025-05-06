@@ -15,7 +15,7 @@
             background-clip: text;
         }
         .hero-gradient {
-            background: linear-gradient(135deg, #2ED573 0%, #1E90FF 100%);
+            background: #3454ff;
         }
         .card-hover {
             transition: all 0.3s ease;
@@ -265,13 +265,13 @@
         </div>
     </section>
     <!-- Call to Action -->
-    <section class="py-16 bg-gradient-to-r from-[#2ED573] to-[#1E90FF] text-white">
+    <section class="py-16 bg-[#3454ff] text-white">
         <div class="max-w-screen-xl mx-auto px-4 text-center">
             <h2 class="text-3xl font-bold mb-6">Prêt à booster votre carrière ou vos recrutements ?</h2>
             <p class="text-xl mb-8 max-w-3xl mx-auto opacity-90">Rejoignez des milliers d'utilisateurs satisfaits et commencez dès aujourd'hui à transformer votre approche du recrutement.</p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
                 <a href="#" class="px-8 py-4 bg-white text-[#2ED573] rounded-lg hover:bg-gray-100 transition duration-300 font-bold shadow-lg hover:scale-[1.02]">Je suis candidat</a>
-                <a href="#" class="px-8 py-4 bg-[#187bcd] text-white rounded-lg hover:bg-[#1565b7] transition duration-300 font-bold shadow-lg border border-white/20 hover:scale-[1.02]">Je suis recruteur</a>
+                <a href="#" class="px-8 py-4 bg-[#ea530c] text-white rounded-lg hover:bg-[#1565b7] transition duration-300 font-bold shadow-lg border border-white/20 hover:scale-[1.02]">Je suis recruteur</a>
             </div>
         </div>
     </section>
@@ -360,7 +360,7 @@
         </div>
     </section>
      <!-- Footer -->
-     <footer class="bg-gradient-to-r from-[#1E90FF] to-[#2ED573] text-white py-12">
+     <footer class="bg-[#3454ff] text-white py-12">
         <div class="max-w-screen-xl mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>

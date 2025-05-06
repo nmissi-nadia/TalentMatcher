@@ -28,6 +28,7 @@ class AnnonceRepository implements AnnonceRepositoryInterface
 
     public function show($id)
     {
+        
         return Annonce::findOrFail($id);
     }
 

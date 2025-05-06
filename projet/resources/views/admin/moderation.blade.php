@@ -86,7 +86,7 @@
                     <td class="px-6 py-4">
                         <div class="flex items-center">
                             <div class="h-10 w-10 rounded-full bg-gray-300 overflow-hidden mr-4">
-                                <img src="{{ $signalement->utilisateur->avatar ?? asset('images/default-avatar.png') }}" 
+                                <img src="{{ asset('storage/' . $signalement->utilisateur->photo) }}" 
                                      alt="{{ $signalement->utilisateur->name }}" 
                                      class="h-full w-full object-cover">
                             </div>
@@ -136,8 +136,8 @@
             <div class="mb-4">
                 <label class="block text-sm font-medium mb-2">Statut</label>
                 <select name="statut" class="w-full px-3 py-2 border rounded-lg">
-                    <option value="resolved">Résolu</option>
-                    <option value="rejected">Rejeté</option>
+                    <option value="resolved">Résolus</option>
+                    <option value="rejected">Rejetés</option>
                 </select>
             </div>
 
@@ -161,11 +161,9 @@
     </div>
 </div>
 
-@endsection
-
-@section('scripts')
 <script>
     function showTreatmentModal(signalementId) {
+        
         document.getElementById('signalementId').value = signalementId;
         document.getElementById('treatmentModal').classList.remove('hidden');
     }
@@ -174,12 +172,10 @@
         document.getElementById('treatmentModal').classList.add('hidden');
     }
 
-    // Gestion du filtre de statut
     document.getElementById('status').addEventListener('change', function(e) {
         window.location.href = `?status=${e.target.value}`;
     });
 
-    // Gestion de la recherche
     document.querySelector('input[placeholder="Rechercher..."]').addEventListener('input', function(e) {
         window.location.href = `?search=${e.target.value}`;
     });

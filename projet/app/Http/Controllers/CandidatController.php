@@ -103,7 +103,9 @@ class CandidatController extends Controller
 
         $candidature->save();
 
-        $offre->recruteur->notify(new NouvelleCandidature($candidature));
+        Mail::to($offre->recruteur->email)->send(
+            new NewCandidatureNotification($offre, Auth::user())
+        );
 
         return redirect()->route('candidat.candidatures')
             ->with('message', 'Candidature envoyée avec succès');

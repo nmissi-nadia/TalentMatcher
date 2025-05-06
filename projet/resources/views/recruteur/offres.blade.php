@@ -43,13 +43,6 @@
                         </div>
                         
                         <div class="mt-6 pt-4 border-t border-gray-100 flex justify-between">
-                            <a href="{{ route('recruteur.annonces.manage', $annonce->id) }}" class="text-blue-600 hover:text-blue-800 flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                                </svg>
-                                Gérer
-                            </a>
-                            
                             <div class="flex space-x-4">
                                 <a href="{{ route('recruteur.annonces.edit', $annonce->id) }}" class="text-yellow-600 hover:text-yellow-800 flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">

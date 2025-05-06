@@ -117,7 +117,11 @@ class AnnonceController extends Controller
     {
         try {
             $annonce = $this->service->get($id);
-            return view('recruteur.offre-form', compact('annonce'));
+            // Ajout de la categorie
+            $categories = Categorie::all();
+            // Ajout des tags
+            $tags = Tag::all();
+            return view('recruteur.offre-form', compact('annonce','categories','tags'));
         } catch (\Exception $e) {
             return redirect()->route('recruteur.offres')->with('error', $e->getMessage());
         }

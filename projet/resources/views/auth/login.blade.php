@@ -13,7 +13,7 @@
         <script>
             Swal.fire({
                 icon: 'message',
-                title: 'Erreur!',
+                title: 'Message!',
                 text: '{{ session('message') }}',
                 confirmButtonText: 'OK' 
             });

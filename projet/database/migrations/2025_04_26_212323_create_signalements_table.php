@@ -17,7 +17,7 @@ return new class extends Migration
             $table->morphs('cible_type', 'cible_id');
             $table->string('motif')->comment('Raison du signalement');
             $table->text('description')->nullable()->comment('Détails supplémentaires du signalement');
-            $table->enum('statut', ['en_attente', 'traité', 'refusé'])->default('en_attente');
+            $table->enum('statut', ['pending', 'resolved', 'rejected'])->default('pending');
             $table->dateTime('traitement_date')->nullable();
             $table->text('traitement_description')->nullable();
             $table->timestamps();

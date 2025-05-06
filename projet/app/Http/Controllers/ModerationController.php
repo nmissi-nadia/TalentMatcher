@@ -54,8 +54,8 @@ class ModerationController extends Controller
     }
     public function traiter(Request $request, $id)
     {
-        $signalement = Signalement::findOrFail($id);
-        
+        $signalement = Signalement::findOrFail($request->signalement_id);
+        // dd($signalement);
         $signalement->update([
             'statut' => $request->statut,
             'traitement_description' => $request->description,
