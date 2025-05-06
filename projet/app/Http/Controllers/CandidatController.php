@@ -88,7 +88,6 @@ class CandidatController extends Controller
             'cv' => 'required|file|mimes:pdf,doc,docx|max:5120', // 5MB max
         ]);
 
-        // Créer la candidature
         $candidature = new Candidature([
             'annonce_id' => $offre->id,
             'candidat_id' => Auth::id(),
@@ -97,7 +96,6 @@ class CandidatController extends Controller
 
         ]);
 
-        // Sauvegarder le CV
         if ($request->hasFile('cv')) {
             $cvPath = $request->file('cv')->store('cvs', 'public');
             $candidature->cv = $cvPath;
@@ -105,27 +103,11 @@ class CandidatController extends Controller
 
         $candidature->save();
 
-        // Envoyer une notification au recruteur
         $offre->recruteur->notify(new NouvelleCandidature($candidature));
 
         return redirect()->route('candidat.candidatures')
             ->with('message', 'Candidature envoyée avec succès');
     }
 
-    
-
-
-    // Afficher les offres recommandées
-    public function recommended()
-    {
-        $user = Auth::user();
-        $tags = $user->tags;
-        $annonces = Annonce::whereHas('tags', function($q) use ($tags) {
-            $q->whereIn('tags.id', $tags->pluck('id'));
-        })
-        ->with('tags')
-        ->paginate(10);
-
-        return view('candidat.recommended', compact('annonces'));
-    }
+ 
 }

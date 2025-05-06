@@ -142,13 +142,6 @@ class RecruteurController extends Controller
 
     
 
-    public function manageEtapes($candidatureId)
-    {
-        $candidature = Candidature::findOrFail($candidatureId);
-
-        return view('recruteur.manage_etapes', compact('candidature'));
-    }
-
     public function stats()
     {
         $user = Auth::user();
@@ -174,11 +167,7 @@ class RecruteurController extends Controller
         return view('recruteur.stats', compact('stats'));
     }
 
-    public function manageTags()
-    {
-        $tags = Tag::all();
-        return view('recruteur.manage_tags', compact('tags'));
-    }
+    
     // les information d une utilisateur candidat
     public function Candidatprofile($id)
     {
